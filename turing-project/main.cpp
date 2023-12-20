@@ -1,5 +1,5 @@
 #include "constants.h"
-#include "turing.h"
+#include "tm.h"
 #include <iostream>
 
 void usage() {
@@ -45,8 +45,9 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    TuringMachine tmachine(tm_path, verbose);
-    tmachine.run(input);
+    TuringMachine tm;
+    tm.parse(tm_path, verbose);
+    tm.run(input, verbose);
 
     return 0;
 }
