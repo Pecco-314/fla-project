@@ -23,6 +23,10 @@ class Code {
     Cursor end() const;
     InlineCursor end(int lno) const;
     char charAt(const Cursor &cs) const;
+    void printLine(int lno) const;
+    void printLines(int st_lno, int ed_lno) const;
+    void printHighlight(InlineCursor st, InlineCursor ed, const char *color) const;
+    void printHighlights(Cursor st, Cursor ed, const char *color) const;
 };
 
 struct Code::Cursor {

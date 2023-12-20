@@ -65,6 +65,48 @@ Code::InlineCursor Code::end(int lno) const {
     return {this, lno, lineLen(lno)};
 }
 
+void Code::printLine(int lno) const {
+    std::cerr << std::setw(4) << lno + 1 << " | " << line(lno) << std::endl;
+}
+
+void Code::printLines(int st_lno, int ed_lno) const {
+    for (int lno = st_lno; lno <= ed_lno; lno++) {
+        printLine(lno);
+    }
+}
+
+void Code::printHighlight(InlineCursor st, InlineCursor ed, const char *color) const {
+    int lno = st.lno;
+    auto ic = begin(lno);
+    std::cerr << "     | ";
+    for (; ic != st; ++ic) {
+        std::cerr << ' ';
+    }
+    std::cerr << color;
+    for (; ic != ed; ++ic) {
+        std::cerr << '~';
+    }
+    std::cerr << RESET;
+    for (; ic != end(lno); ++ic) {
+        std::cerr << ' ';
+    }
+    std::cerr << std::endl;
+}
+
+void Code::printHighlights(Cursor st, Cursor ed, const char *color) const {
+    InlineCursor ist = st;
+    InlineCursor ied = ed;
+    if (ed.cno == 0) {
+        ied = ++InlineCursor(++ed);
+    }
+    for (int lno = ist.lno; lno <= ied.lno; lno++) {
+        InlineCursor st_ic = (lno == ist.lno) ? ist : begin(lno);
+        InlineCursor ed_ic = (lno == ied.lno) ? ied : end(lno);
+        printLine(lno);
+        printHighlight(st_ic, ed_ic, color);
+    }
+}
+
 Code::Cursor::Cursor(const Code *code, int lno, int cno) : code(code), lno(lno), cno(cno) {}
 
 Code::Cursor::Cursor(InlineCursor ic) : code(ic.code), lno(ic.lno), cno(ic.cno) {

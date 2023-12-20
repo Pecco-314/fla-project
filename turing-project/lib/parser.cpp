@@ -97,6 +97,7 @@ void Parser::parse(bool verbose) {
         if (verbose) {
             std::cerr << ERR << "Syntax error at " << UL << code.path() << ":" << err.st.lno + 1 << ":"
                       << err.st.cno + 1 << RESET << ": " << err.msg << std::endl;
+            code.printHighlights(err.st, err.ed, RED);
         } else {
             std::cerr << "syntax error" << std::endl;
         }
