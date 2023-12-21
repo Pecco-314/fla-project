@@ -11,7 +11,7 @@ class TuringMachine {
     std::vector<std::string> Q;
 
   public:
-    void parse(std::string_view path, bool verbose = false);
+    void parse(std::string_view path);
     void run(std::string_view input, bool verbose = false);
 };
 

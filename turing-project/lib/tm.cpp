@@ -2,9 +2,9 @@
 #include "parser.h"
 #include <iostream>
 
-void TuringMachine::parse(std::string_view tm_path, bool verbose) {
+void TuringMachine::parse(std::string_view tm_path) {
     Parser parser(tm_path, this);
-    parser.parse(verbose);
+    parser.parse();
 }
 
 void TuringMachine::run(std::string_view input, bool verbose) {

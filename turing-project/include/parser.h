@@ -25,7 +25,7 @@ class Parser {
 
   public:
     Parser(std::string_view path, TuringMachine *tm);
-    void parse(bool verbose = false);
+    void parse();
 };
 
 #endif
