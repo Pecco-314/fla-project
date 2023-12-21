@@ -41,19 +41,18 @@ int Code::lineLen(int lno) const {
 }
 
 char Code::charAt(const Cursor &cs) const {
-    return lines_[cs.lno][cs.cno];
-}
-
-Code::Cursor Code::begin() const {
-    Cursor bg = {this, 0, 0};
-    if (lineLen(0) == 0) {
-        return bg.skipLine();
+    if (cs.cno == lineLen(cs.lno)) {
+        return '\n';
     } else {
-        return bg;
+        return lines_[cs.lno][cs.cno];
     }
 }
 
-Code::InlineCursor Code::begin(int lno) const {
+Code::Cursor Code::begin() const {
+    return {this, 0, 0};
+}
+
+Code::Cursor Code::begin(int lno) const {
     return {this, lno, 0};
 }
 
@@ -61,7 +60,7 @@ Code::Cursor Code::end() const {
     return {this, lines(), 0};
 }
 
-Code::InlineCursor Code::end(int lno) const {
+Code::Cursor Code::end(int lno) const {
     return {this, lno, lineLen(lno)};
 }
 
@@ -75,51 +74,42 @@ void Code::printLines(int st_lno, int ed_lno) const {
     }
 }
 
-void Code::printHighlight(InlineCursor st, InlineCursor ed, const char *color) const {
+void Code::printHighlight(Cursor st, Cursor ed, const char *color) const {
     int lno = st.lno;
-    auto ic = begin(lno);
+    auto cs = begin(lno);
     std::cerr << "     | ";
-    for (; ic != st; ++ic) {
+    for (; cs != st; ++cs) {
         std::cerr << ' ';
     }
     std::cerr << color;
-    for (; ic != ed; ++ic) {
+    for (; cs != ed; ++cs) {
         std::cerr << '~';
     }
     std::cerr << RESET;
-    for (; ic != end(lno); ++ic) {
+    for (; cs != end(lno); ++cs) {
         std::cerr << ' ';
     }
     std::cerr << std::endl;
 }
 
 void Code::printHighlights(Cursor st, Cursor ed, const char *color) const {
-    InlineCursor ist = st;
-    InlineCursor ied = ed;
-    if (ed.cno == 0) {
-        ied = ++InlineCursor(++ed);
-    }
+    Cursor ist = st;
+    Cursor ied = ed;
     for (int lno = ist.lno; lno <= ied.lno; lno++) {
-        InlineCursor st_ic = (lno == ist.lno) ? ist : begin(lno);
-        InlineCursor ed_ic = (lno == ied.lno) ? ied : end(lno);
+        Cursor st_ic = (lno == ist.lno) ? ist : begin(lno);
+        Cursor ed_ic = (lno == ied.lno) ? ied : end(lno);
         printLine(lno);
         printHighlight(st_ic, ed_ic, color);
     }
 }
 
-Code::Cursor::Cursor(const Code *code, int lno, int cno) : code(code), lno(lno), cno(cno) {}
-
-Code::Cursor::Cursor(InlineCursor ic) : code(ic.code), lno(ic.lno), cno(ic.cno) {
-    if (ic.eol()) {
-        skipLine();
-    }
-}
+Code::Cursor::Cursor(const Code *code, int lno, int cno)
+    : code(code), lno(lno), cno(cno) {}
 
 Code::Cursor &Code::Cursor::operator++() {
+    if (eof()) { return *this; }
     cno++;
-    if (cno >= code->lineLen(lno)) {
-        skipLine();
-    }
+    if (cno > code->lineLen(lno)) { skipLine(); }
     return *this;
 }
 
@@ -130,10 +120,9 @@ Code::Cursor Code::Cursor::operator++(int) {
 }
 
 Code::Cursor &Code::Cursor::operator--() {
+    if (bof()) { return *this; }
     cno--;
-    if (cno < 0) {
-        skipPrevLine();
-    }
+    if (cno < 0) { skipPrevLine(); }
     return *this;
 }
 
@@ -145,65 +134,34 @@ bool Code::Cursor::operator!=(const Cursor &other) const {
     return lno != other.lno || cno != other.cno;
 }
 
+bool Code::Cursor::operator==(const Cursor &other) const {
+    return lno == other.lno && cno == other.cno;
+}
+
 Code::Cursor &Code::Cursor::skipLine() {
-    for (lno++, cno = 0; !eof() && code->lineLen(lno) == 0; lno++)
-        ;
+    lno++;
+    cno = 0;
     return *this;
 }
 
 Code::Cursor &Code::Cursor::skipPrevLine() {
-    for (lno--; !bof() && code->lineLen(lno) == 0; lno--)
-        ;
-    if (!bof()) {
-        cno = code->lineLen(lno) - 1;
-    } else {
-        cno = 0;
-    }
+    lno--;
+    cno = code->lineLen(lno);
     return *this;
 }
 
 bool Code::Cursor::bof() const {
-    return lno < 0;
+    return lno == 0 && cno == 0;
 }
 
 bool Code::Cursor::eof() const {
     return lno >= code->lines();
 }
 
-Code::InlineCursor::InlineCursor(const Code *code, int lno, int cno) : code(code), lno(lno), cno(cno) {}
-
-Code::InlineCursor::InlineCursor(Cursor cs) : code(cs.code), lno(cs.lno), cno(cs.cno) {}
-
-Code::InlineCursor &Code::InlineCursor::operator++() {
-    cno++;
-    return *this;
-}
-
-Code::InlineCursor Code::InlineCursor::operator++(int) {
-    InlineCursor tmp = *this;
-    ++*this;
-    return tmp;
-}
-
-Code::InlineCursor &Code::InlineCursor::operator--() {
-    cno--;
-    return *this;
-}
-
-Code::InlineCursor Code::InlineCursor::operator--(int) {
-    InlineCursor tmp = *this;
-    --*this;
-    return tmp;
-}
-
-char Code::InlineCursor::operator*() const {
-    return code->charAt(*this);
-}
-
-bool Code::InlineCursor::operator!=(const InlineCursor &other) const {
-    return lno != other.lno || cno != other.cno;
-}
-
-bool Code::InlineCursor::eol() const {
-    return cno >= code->lineLen(lno);
+std::string Code::Cursor::span(const Cursor &ed) const {
+    std::string ret;
+    for (Cursor cs = *this; cs != ed; ++cs) {
+        ret += *cs;
+    }
+    return ret;
 }

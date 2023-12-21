@@ -12,20 +12,19 @@ class Code {
 
   public:
     struct Cursor;
-    struct InlineCursor;
     Code(std::string_view path);
     std::string_view path() const;
     int lines() const;
     std::string_view line(int lno) const;
     int lineLen(int lno) const;
     Cursor begin() const;
-    InlineCursor begin(int lno) const;
+    Cursor begin(int lno) const;
     Cursor end() const;
-    InlineCursor end(int lno) const;
+    Cursor end(int lno) const;
     char charAt(const Cursor &cs) const;
     void printLine(int lno) const;
     void printLines(int st_lno, int ed_lno) const;
-    void printHighlight(InlineCursor st, InlineCursor ed, const char *color) const;
+    void printHighlight(Cursor st, Cursor ed, const char *color) const;
     void printHighlights(Cursor st, Cursor ed, const char *color) const;
 };
 
@@ -35,33 +34,18 @@ struct Code::Cursor {
     int cno;
 
     Cursor(const Code *code, int lno, int cno);
-    Cursor(InlineCursor ic);
     Cursor &operator++();
     Cursor operator++(int);
     Cursor &operator--();
     Cursor operator--(int);
     char operator*() const;
     bool operator!=(const Cursor &other) const;
+    bool operator==(const Cursor &other) const;
     Cursor &skipLine();
     Cursor &skipPrevLine();
+    std::string span(const Cursor &ed) const;
     bool bof() const;
     bool eof() const;
-};
-
-struct Code::InlineCursor {
-    const Code *code;
-    int lno;
-    int cno;
-
-    InlineCursor(const Code *code, int lno, int cno);
-    InlineCursor(Cursor cs);
-    InlineCursor &operator++();
-    InlineCursor operator++(int);
-    InlineCursor &operator--();
-    InlineCursor operator--(int);
-    char operator*() const;
-    bool operator!=(const InlineCursor &other) const;
-    bool eol() const;
 };
 
 #endif
