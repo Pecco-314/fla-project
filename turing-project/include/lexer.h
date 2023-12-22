@@ -14,6 +14,8 @@ class Lexer {
     Status status;
     std::vector<Token> tokens;
 
+  public:
+    Lexer(std::shared_ptr<Code> code);
     void skip();
     void skipLine();
     void extend();
@@ -21,9 +23,6 @@ class Lexer {
     std::string span() const;
     bool eof() const;
     void store();
-
-  public:
-    Lexer(std::shared_ptr<Code> code);
     std::vector<Token> lex();
 };
 
