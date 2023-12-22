@@ -32,6 +32,7 @@ struct Code::Cursor {
     int cno;
 
     Cursor(const Code *code, int lno, int cno);
+    Cursor();
     Cursor &operator++();
     Cursor operator++(int);
     Cursor &operator--();

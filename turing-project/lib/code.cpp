@@ -88,6 +88,8 @@ void Code::printHighlight(Cursor st, Cursor ed, const char *color) const {
 Code::Cursor::Cursor(const Code *code, int lno, int cno)
     : code(code), lno(lno), cno(cno) {}
 
+Code::Cursor::Cursor() : code(nullptr), lno(0), cno(0) {}
+
 Code::Cursor &Code::Cursor::operator++() {
     if (eof()) { return *this; }
     cno++;
