@@ -64,42 +64,24 @@ Code::Cursor Code::end(int lno) const {
     return {this, lno, lineLen(lno)};
 }
 
-void Code::printLine(int lno) const {
-    std::cerr << std::setw(4) << lno + 1 << " | " << line(lno) << std::endl;
-}
-
-void Code::printLines(int st_lno, int ed_lno) const {
-    for (int lno = st_lno; lno <= ed_lno; lno++) {
-        printLine(lno);
-    }
+void Code::printLineHighlight(Cursor st, Cursor ed, const char *color) const {
+    int lno = st.lno;
+    if (st == ed) { ++ed; }
+    std::string_view bf = line(lno).substr(0, st.cno);
+    std::string_view hl = line(lno).substr(st.cno, ed.cno - st.cno);
+    std::string_view af = line(lno).substr(ed.cno);
+    std::cerr << std::setw(4) << lno + 1 << " | " << bf << color << hl << RESET << af
+              << std::endl;
+    std::cerr << "     | " << std::string(bf.size(), ' ') << color << '^'
+              << std::string(hl.size() - 1, '~') << RESET << std::string(af.size(), ' ')
+              << std::endl;
 }
 
 void Code::printHighlight(Cursor st, Cursor ed, const char *color) const {
-    int lno = st.lno;
-    auto cs = begin(lno);
-    std::cerr << "     | ";
-    for (; cs != st; ++cs) {
-        std::cerr << ' ';
-    }
-    std::cerr << color;
-    for (; cs != ed; ++cs) {
-        std::cerr << '~';
-    }
-    std::cerr << RESET;
-    for (; cs != end(lno); ++cs) {
-        std::cerr << ' ';
-    }
-    std::cerr << std::endl;
-}
-
-void Code::printHighlights(Cursor st, Cursor ed, const char *color) const {
-    Cursor ist = st;
-    Cursor ied = ed;
-    for (int lno = ist.lno; lno <= ied.lno; lno++) {
-        Cursor st_ic = (lno == ist.lno) ? ist : begin(lno);
-        Cursor ed_ic = (lno == ied.lno) ? ied : end(lno);
-        printLine(lno);
-        printHighlight(st_ic, ed_ic, color);
+    for (int lno = st.lno; lno <= ed.lno; lno++) {
+        Cursor st_ic = (lno == st.lno) ? st : begin(lno);
+        Cursor ed_ic = (lno == ed.lno) ? ed : end(lno);
+        printLineHighlight(st_ic, ed_ic, color);
     }
 }
 
