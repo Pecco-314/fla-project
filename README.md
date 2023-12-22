@@ -13,13 +13,21 @@
 cmake -B build && cmake --build build
 ```
 
-如果成功，会在项目文件夹下创建一个`build`文件夹和一个`bin`文件夹。你可以执行以下命令来检验构建是否成功：
+如果成功，会在项目文件夹下创建一个`build`文件夹和一个`bin`文件夹，你可以在`bin`文件夹中找到一个名为`turing`的可执行文件。你可以执行以下命令来检验构建是否成功：
 
 ```bash
 ./bin/turing --help
 ```
 
 如果打印出帮助信息，说明构建成功。
+
+默认情况下构建的是Release版本，如果想构建Debug版本，可以执行以下命令：
+
+```bash
+cmake -B build_debug -DCMAKE_BUILD_TYPE=Debug && cmake --build build_debug
+```
+
+如果成功，你可以在`bin`文件夹中找到一个名为`turing_debug`的可执行文件。
 
 ## 运行
 基本用法为：
