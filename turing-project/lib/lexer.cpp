@@ -1,4 +1,5 @@
 #include "lexer.h"
+#include "error.h"
 Lexer::Lexer(std::shared_ptr<Code> code) : code(code), st(code->begin()), ed(st), status(Status::INITIAL) {}
 
 std::vector<Token> Lexer::lex() {
@@ -19,7 +20,7 @@ std::vector<Token> Lexer::lex() {
                 extend();
                 store();
             } else {
-                throw mkerr(CodeError::Type::LEXER_INVALID_CHAR);
+                throw CodeError{CodeError::Type::LEXER_INVALID_CHAR, code, st, ed};
             }
             break;
         case Status::WORD:
@@ -65,10 +66,6 @@ std::string Lexer::span() const {
 
 bool Lexer::eof() const {
     return ed.eof();
-}
-
-CodeError Lexer::mkerr(CodeError::Type type) const {
-    return {type, st, ed};
 }
 
 void Lexer::store() {

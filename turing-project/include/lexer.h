@@ -2,7 +2,6 @@
 #define __LEXER_H__
 
 #include "code.h"
-#include "error.h"
 #include "token.h"
 #include <memory>
 
@@ -20,7 +19,6 @@ class Lexer {
     void extend();
     char chr() const;
     std::string span() const;
-    CodeError mkerr(CodeError::Type) const;
     bool eof() const;
     void store();
 
