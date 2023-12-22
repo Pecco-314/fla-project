@@ -27,7 +27,7 @@ void CodeError::log(bool verbose) const {
             std::cerr << ERR << "Invalid character: " << Util::quoted(*st) << std::endl;
             break;
         }
-        st.code->printHighlights(st, ed, RED);
+        st.code->printHighlight(st, ed, RED);
     } else {
         std::cerr << "Syntax error" << std::endl;
     }
