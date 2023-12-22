@@ -24,7 +24,7 @@ void CodeError::log(bool verbose) const {
     if (verbose) {
         switch (type) {
         case Type::LEXER_INVALID_CHAR:
-            std::cerr << ERR << "Invalid character: " << st.span(ed) << std::endl;
+            std::cerr << ERR << "Invalid character: " << Util::quoted(*st) << std::endl;
             break;
         }
         st.code->printHighlights(st, ed, RED);
