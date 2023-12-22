@@ -14,7 +14,7 @@ std::vector<Token> Lexer::lex() {
                 extend();
                 status = Status::WORD;
             } else if (chr() == '#') {
-                skip();
+                extend();
                 status = Status::PARAM;
             } else if (isgraph(chr())) {
                 extend();
