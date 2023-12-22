@@ -11,4 +11,6 @@
 #define WARN    YELLOW BOLD "warning: " RESET
 #define NOTE    BLUE BOLD "note: " RESET
 
+#define HEX     "0123456789abcdef"
+
 #endif
