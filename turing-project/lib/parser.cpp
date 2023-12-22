@@ -3,7 +3,6 @@
 #include <cctype>
 #include <iostream>
 
-Parser::Parser(std::string_view path, TuringMachine *tm) : code(path), tm(tm) {}
 
 void Parser::parseSkipped(Code::Cursor &cs0) {
     auto cs = cs0;
@@ -103,4 +102,6 @@ void Parser::parse(bool verbose) {
         }
         exit(1);
     }
+Parser::Parser(std::shared_ptr<Code> code, TuringMachine* tm)
+    : code(code), tm(tm) {}
 }

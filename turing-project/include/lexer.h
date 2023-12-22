@@ -4,10 +4,12 @@
 #include "code.h"
 #include "error.h"
 #include "token.h"
+#include <memory>
 
 class Lexer {
   private:
     enum class Status;
+    std::shared_ptr<Code> code;
     Code::Cursor st;
     Code::Cursor ed;
     Status status;
@@ -23,7 +25,7 @@ class Lexer {
     void store();
 
   public:
-    Lexer(Code *code);
+    Lexer(std::shared_ptr<Code> code);
     std::vector<Token> lex();
 };
 

@@ -2,8 +2,8 @@
 #include "parser.h"
 #include <iostream>
 
-void TuringMachine::parse(std::string_view tm_path) {
-    Parser parser(tm_path, this);
+void TuringMachine::parse(std::shared_ptr<Code> code) {
+    Parser parser(code, this);
     parser.parse();
 }
 

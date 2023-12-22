@@ -27,7 +27,8 @@ int main(int argc, char *argv[]) {
             throw ArgError{ArgError::Type::TOO_FEW_ARGS, ""};
         }
         TuringMachine tm;
-        tm.parse(tm_path);
+        auto code = std::make_shared<Code>(tm_path);
+        tm.parse(code);
         tm.run(input, verbose);
     } catch (ArgError &e) {
         e.log();

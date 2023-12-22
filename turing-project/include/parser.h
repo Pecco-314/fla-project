@@ -14,7 +14,6 @@ struct ParseError {
 
 class Parser {
   private:
-    Code code;
     TuringMachine *tm;
 
     void parseSkipped(Code::Cursor& cs0);
@@ -22,9 +21,10 @@ class Parser {
     bool parseStr(std::string_view str, Code::Cursor& cs0, bool throw_err = false);
     std::optional<std::string> parseId(Code::Cursor& cs0, bool throw_err = false);
     void parseQ(Code::Cursor& cs0);
+    std::shared_ptr<Code> code;
 
   public:
-    Parser(std::string_view path, TuringMachine *tm);
+    Parser(std::shared_ptr<Code> code, TuringMachine *tm);
     void parse();
 };
 

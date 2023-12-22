@@ -1,5 +1,5 @@
 #include "lexer.h"
-Lexer::Lexer(Code *code) : st(code->begin()), ed(st), status(Status::INITIAL) {}
+Lexer::Lexer(std::shared_ptr<Code> code) : code(code), st(code->begin()), ed(st), status(Status::INITIAL) {}
 
 std::vector<Token> Lexer::lex() {
     while (!eof()) {
