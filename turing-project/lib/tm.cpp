@@ -7,9 +7,11 @@ void TuringMachine::parse(std::shared_ptr<Code> code) {
     parser.parse();
 }
 
+void TuringMachine::addState(std::string_view name) {
+    Q.emplace(name);
+}
+
 void TuringMachine::run(std::string_view input, bool verbose) {
-    if (verbose) {
-        std::cout << "Input: " << input << std::endl;
-    }
+    if (verbose) { std::cout << "Input: " << input << std::endl; }
     // TODO: Implement this function
 }

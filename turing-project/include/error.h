@@ -28,6 +28,11 @@ struct CodeError {
 
 enum class CodeError::Type {
     LEXER_INVALID_CHAR,
+    PARSER_EXPECTED_Q,
+    PARSER_EXPECTED_EQUAL,
+    PARSER_EXPECTED_LBRACE, 
+    PARSER_EXPECTED_ID,
+    PARSER_UNCLOSED_BRACE,
 };
 
 #endif

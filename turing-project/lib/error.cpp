@@ -26,6 +26,21 @@ void CodeError::log(bool verbose) const {
         case Type::LEXER_INVALID_CHAR:
             std::cerr << ERR << "Invalid character: " << Util::quoted(*st) << std::endl;
             break;
+        case Type::PARSER_EXPECTED_Q:
+            std::cerr << ERR << "Expected #Q" << std::endl;
+            break;
+        case Type::PARSER_EXPECTED_EQUAL:
+            std::cerr << ERR << "Expected '='" << std::endl;
+            break;
+        case Type::PARSER_EXPECTED_LBRACE:
+            std::cerr << ERR << "Expected '{'" << std::endl;
+            break;
+        case Type::PARSER_EXPECTED_ID:
+            std::cerr << ERR << "Expected identifier" << std::endl;
+            break;
+        case Type::PARSER_UNCLOSED_BRACE:
+            std::cerr << ERR << "Unclosed brace" << std::endl;
+            break;
         }
         st.code->printHighlight(st, ed, RED);
     } else {

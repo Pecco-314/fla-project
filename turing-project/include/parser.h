@@ -3,28 +3,20 @@
 
 #include "code.h"
 #include "tm.h"
-#include <optional>
-#include <string>
-
-struct ParseError {
-    Code::Cursor st;
-    Code::Cursor ed;
-    std::string msg;
-};
+#include "token.h"
 
 class Parser {
   private:
+    std::shared_ptr<Code> code;
+    std::vector<Token> tokens;
+    std::vector<Token>::iterator it;
     TuringMachine *tm;
 
-    void parseSkipped(Code::Cursor& cs0);
-    bool parseChar(char c, Code::Cursor& cs0, bool throw_err = false);
-    bool parseStr(std::string_view str, Code::Cursor& cs0, bool throw_err = false);
-    std::optional<std::string> parseId(Code::Cursor& cs0, bool throw_err = false);
-    void parseQ(Code::Cursor& cs0);
-    std::shared_ptr<Code> code;
+    void parseQ();
 
   public:
     Parser(std::shared_ptr<Code> code, TuringMachine *tm);
+    Token peek(int cnt = 0) const;
     void parse();
 };
 

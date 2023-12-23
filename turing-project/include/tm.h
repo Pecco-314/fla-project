@@ -4,17 +4,18 @@
 #include "code.h"
 #include <memory>
 #include <string_view>
-#include <vector>
+#include <set>
 
 class TuringMachine {
     friend class Parser;
 
   private:
-    std::vector<std::string> Q;
+    std::set<std::string> Q;
 
   public:
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);
+    void addState(std::string_view name);
 };
 
 #endif
