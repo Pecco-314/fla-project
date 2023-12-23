@@ -12,12 +12,14 @@ class TuringMachine {
   private:
     std::set<std::string> Q;
     std::set<char> S;
+    std::set<char> G;
 
   public:
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);
     void addState(std::string_view name);
-    void addSymbol(char c);
+    void addInputSymbol(char c);
+    void addTapeSymbol(char c);
 };
 
 #endif

@@ -24,5 +24,5 @@ bool Token::isID() const {
 
 bool Token::isValidChar() const {
     return isgraph(val[0]) && val[0] != ',' && val[0] != ';' && val[0] != '{' &&
-           val[0] != '}' && val[0] != '*' && val[0] != '_';
+           val[0] != '}' && val[0] != '*';
 }
