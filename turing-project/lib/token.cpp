@@ -3,10 +3,6 @@
 Token::Token(std::string_view val, const Code::Cursor &st, const Code::Cursor &ed)
     : val(val), st(st), ed(ed) {}
 
-bool Token::isNull() const {
-    return val.empty();
-}
-
 bool Token::isStr(std::string_view val) const {
     return this->val == val;
 }

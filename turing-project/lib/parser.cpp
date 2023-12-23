@@ -6,45 +6,57 @@ Parser::Parser(std::shared_ptr<Code> code, TuringMachine *tm)
     : code(code), tm(tm) {}
 
 Token Parser::peek(int cnt) const {
-    return it + cnt >= tokens.end() ? Token{} : *(it + cnt);
+    return it + cnt >= tokens.end() ? eof() : *(it + cnt);
+}
+
+Token Parser::eof() const {
+    return {"", tokens.back().ed, tokens.back().ed};
+}
+
+Token Parser::cur() {
+    return it == tokens.end() ? eof() : *it;
+}
+
+void Parser::next() {
+    ++it;
 }
 
 void Parser::parseQ() {
     if (peek().isStr("#Q")) {
-        ++it;
+        next();
         if (peek().isChar('=')) {
-            ++it;
+            next();
             if (peek().isChar('{')) {
-                auto brace_bg = it;
-                ++it;
+                auto brace_bg = cur();
+                next();
                 for (;;) {
                     if (peek().isID()) {
                         tm->addState(peek().val);
-                        ++it;
+                        next();
                     } else {
-                        throw CodeError{CodeError::Type::PARSER_EXPECTED_ID, code, it->st,
-                                        it->ed};
+                        throw CodeError{CodeError::Type::PARSER_EXPECTED_ID, code, cur().st,
+                                        cur().ed};
                     }
                     if (peek().isChar('}')) {
-                        ++it;
+                        next();
                         break;
                     } else if (peek().isChar(',')) {
-                        ++it;
+                        next();
                         continue;
                     } else {
                         throw CodeError{CodeError::Type::PARSER_UNCLOSED_BRACE, code,
-                                        brace_bg->st, it->st};
+                                        brace_bg.st, cur().st};
                     }
                 }
             } else {
-                throw CodeError{CodeError::Type::PARSER_EXPECTED_LBRACE, code, it->st,
-                                it->ed};
+                throw CodeError{CodeError::Type::PARSER_EXPECTED_LBRACE, code, cur().st,
+                                cur().ed};
             }
         } else {
-            throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, code, it->st, it->ed};
+            throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, code, cur().st, cur().ed};
         }
     } else {
-        throw CodeError{CodeError::Type::PARSER_EXPECTED_Q, code, it->st, it->ed};
+        throw CodeError{CodeError::Type::PARSER_EXPECTED_Q, code, cur().st, cur().ed};
     }
 }
 
