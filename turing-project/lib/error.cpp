@@ -38,8 +38,8 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EXPECTED_ID:
             std::cerr << ERR << "Expected identifier" << std::endl;
             break;
-        case Type::PARSER_UNCLOSED_BRACE:
-            std::cerr << ERR << "Unclosed brace" << std::endl;
+        case Type::PARSER_UNCLOSED_SET:
+            std::cerr << ERR << "Unclosed set" << std::endl;
             break;
         case Type::PARSER_EXPECTED_S:
             std::cerr << ERR << "Expected #S" << std::endl;

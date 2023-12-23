@@ -42,7 +42,7 @@ void Parser::parseQ() {
                         next();
                         continue;
                     } else {
-                        throw CodeError{CodeError::Type::PARSER_UNCLOSED_BRACE, code,
+                        throw CodeError{CodeError::Type::PARSER_UNCLOSED_SET, code,
                                         brace_bg.st, peek().st};
                     }
                 }
@@ -85,7 +85,7 @@ void Parser::parseS() {
                         next();
                         continue;
                     } else {
-                        throw CodeError{CodeError::Type::PARSER_UNCLOSED_BRACE, code,
+                        throw CodeError{CodeError::Type::PARSER_UNCLOSED_SET, code,
                                         brace_bg.st, peek().st};
                     }
                 }
