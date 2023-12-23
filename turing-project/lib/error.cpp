@@ -48,6 +48,9 @@ void CodeError::log(bool verbose) const {
             std::cerr << ERR << "Expected valid character" << std::endl;
             std::cerr << NOTE << "Valid characters are: ASCII graph characters except for `,;{}*_`"<< std::endl;
             break;
+        case Type::PARSER_EMPTY_SET:
+            std::cerr << ERR << "Set is empty" << std::endl;
+            break;
         }
         st.code->printHighlight(st, ed, RED);
     } else {

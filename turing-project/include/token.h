@@ -9,6 +9,7 @@ struct Token {
     Code::Cursor ed;
 
     Token(std::string_view val, const Code::Cursor &st, const Code::Cursor &ed);
+    bool operator==(const Token &other) const;
     bool isStr(std::string_view val) const;
     bool isChar(char c) const;
     bool isID() const;

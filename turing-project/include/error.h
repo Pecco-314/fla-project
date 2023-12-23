@@ -35,6 +35,7 @@ enum class CodeError::Type {
     PARSER_EXPECTED_ID,
     PARSER_EXPECTED_VALID_CHAR,
     PARSER_UNCLOSED_BRACE,
+    PARSER_EMPTY_SET,
 };
 
 #endif

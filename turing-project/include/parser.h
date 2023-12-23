@@ -18,7 +18,6 @@ class Parser {
   public:
     Parser(std::shared_ptr<Code> code, TuringMachine *tm);
     Token peek(int cnt = 0) const;
-    Token cur();
     void next();
     Token eof() const;
     void parse();
