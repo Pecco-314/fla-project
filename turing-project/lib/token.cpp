@@ -13,9 +13,12 @@ bool Token::isChar(char c) const {
 
 bool Token::isID() const {
     for (auto c : val) {
-        if (!isalnum(c) && c != '_') {
-            return false;
-        }
+        if (!isalnum(c) && c != '_') { return false; }
     }
     return true;
+}
+
+bool Token::isValidChar() const {
+    return isgraph(val[0]) && val[0] != ',' && val[0] != ';' && val[0] != '{' &&
+           val[0] != '}' && val[0] != '*' && val[0] != '_';
 }

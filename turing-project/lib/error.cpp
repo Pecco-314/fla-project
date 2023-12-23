@@ -41,6 +41,13 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_UNCLOSED_BRACE:
             std::cerr << ERR << "Unclosed brace" << std::endl;
             break;
+        case Type::PARSER_EXPECTED_S:
+            std::cerr << ERR << "Expected #S" << std::endl;
+            break;
+        case Type::PARSER_EXPECTED_VALID_CHAR:
+            std::cerr << ERR << "Expected valid character" << std::endl;
+            std::cerr << NOTE << "Valid characters are: ASCII graph characters except for `,;{}*_`"<< std::endl;
+            break;
         }
         st.code->printHighlight(st, ed, RED);
     } else {

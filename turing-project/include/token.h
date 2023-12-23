@@ -12,6 +12,7 @@ struct Token {
     bool isStr(std::string_view val) const;
     bool isChar(char c) const;
     bool isID() const;
+    bool isValidChar() const;
 };
 
 #endif
