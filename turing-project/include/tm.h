@@ -15,6 +15,7 @@ class TuringMachine {
     std::set<char> S;        // input symbols
     std::set<char> G;        // tape symbols
     std::string q0;          // initial state
+    char B = '_';            // blank symbol
     std::map<std::string, Code::Span, std::less<>> span_map;
 
   public:

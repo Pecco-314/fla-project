@@ -38,6 +38,9 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EXPECTED_Q0:
             std::cerr << ERR << "Expected #q0" << std::endl;
             break;
+        case Type::PARSER_EXPECTED_B:
+            std::cerr << ERR << "Expected #B" << std::endl;
+            break;
         case Type::PARSER_EXPECTED_EQUAL:
             std::cerr << ERR << "Expected '='" << std::endl;
             break;
@@ -59,6 +62,9 @@ void CodeError::log(bool verbose) const {
             break;
         case Type::PARSER_EMPTY_SET:
             std::cerr << ERR << "Set is empty" << std::endl;
+            break;
+        case Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK:
+            std::cerr << ERR << "Expected underscore as blank character" << std::endl;
             break;
         case Type::VALIDATOR_MISSING_UNDERSCORE_IN_G:
             std::cerr << ERR << "Tape alphabet must contain underscore" << std::endl;

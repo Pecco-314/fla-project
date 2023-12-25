@@ -16,6 +16,7 @@ class Parser {
     void parseS();
     void parseG();
     void parseq0();
+    void parseB();
 
   public:
     Parser(std::shared_ptr<Code> code, TuringMachine *tm);

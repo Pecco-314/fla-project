@@ -168,6 +168,26 @@ void Parser::parseq0() {
     tm->setSpan("q0", code->span(bg.span, peek(-1).span));
 }
 
+void Parser::parseB() {
+    auto bg = peek();
+    if (peek().isStr("#B")) {
+        next();
+        if (peek().isChar('=')) {
+            next();
+            if (peek().isChar('_')) {
+                next();
+            } else {
+                throw CodeError{CodeError::Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK, peek().span};
+            }
+        } else {
+            throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, peek().span};
+        }
+    } else {
+        throw CodeError{CodeError::Type::PARSER_EXPECTED_B, peek().span};
+    }
+    tm->setSpan("B", code->span(bg.span, peek(-1).span));
+}
+
 void Parser::parse() {
     auto lexer = std::make_shared<Lexer>(code);
     tokens = lexer->lex();
@@ -176,5 +196,6 @@ void Parser::parse() {
     parseS();
     parseG();
     parseq0();
+    parseB();
     tm->validate();
 }
