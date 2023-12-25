@@ -21,7 +21,6 @@ class Lexer {
     void extend();
     char chr() const;
     std::string span() const;
-    bool eof() const;
     void store();
     std::vector<Token> lex();
 };
@@ -30,6 +29,7 @@ enum class Lexer::Status {
     INITIAL,
     WORD,
     PARAM,
+    END,
 };
 
 #endif

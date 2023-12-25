@@ -4,10 +4,12 @@ Lexer::Lexer(std::shared_ptr<Code> code)
     : code(code), st(code->begin()), ed(st), status(Status::INITIAL) {}
 
 std::vector<Token> Lexer::lex() {
-    while (!eof()) {
+    while (status != Status::END) {
         switch (status) {
         case Status::INITIAL:
-            if (isspace(chr())) {
+            if (chr() == '\0') {
+                status = Status::END;
+            } else if (isspace(chr())) {
                 skip();
             } else if (chr() == ';') {
                 skipLine();
@@ -40,6 +42,8 @@ std::vector<Token> Lexer::lex() {
                 status = Status::INITIAL;
             }
             break;
+        case Status::END:
+            break;
         }
     }
     return tokens;
@@ -63,10 +67,6 @@ char Lexer::chr() const {
 
 std::string Lexer::span() const {
     return st.span(ed);
-}
-
-bool Lexer::eof() const {
-    return ed.eof();
 }
 
 void Lexer::store() {
