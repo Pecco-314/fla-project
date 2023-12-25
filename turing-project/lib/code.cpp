@@ -74,8 +74,8 @@ void Code::printLineHighlight(Span span, const char *color) const {
     std::string_view af = line(lno).substr(span.ed_cno);
     std::cerr << std::setw(4) << lno + 1 << " | " << bf << color << hl << RESET << af
               << std::endl;
-    std::cerr << "     | " << std::string(bf.size(), ' ') << color << '^'
-              << std::string(hl.size() - 1, '~') << RESET << std::string(af.size(), ' ')
+    std::cerr << "     | " << std::string(bf.size(), ' ') << color
+              << std::string(hl.size(), '~') << RESET << std::string(af.size(), ' ')
               << std::endl;
 }
 
