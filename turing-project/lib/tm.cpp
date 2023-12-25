@@ -22,6 +22,10 @@ void TuringMachine::addTapeSymbol(char c) {
     G.emplace(c);
 }
 
+void TuringMachine::setInitialState(std::string_view name) {
+    q0 = name;
+}
+
 void TuringMachine::setSpan(std::string_view name, Code::Span span) {
     span_map.emplace(name, span);
 }
@@ -37,6 +41,9 @@ void TuringMachine::validate() const {
     }
     if (!std::includes(G.begin(), G.end(), S.begin(), S.end())) {
         throw CodeError{CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G, getSpan("S")};
+    }
+    if (!Q.count(q0)) {
+        throw CodeError{CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE, getSpan("q0")};
     }
 }
 

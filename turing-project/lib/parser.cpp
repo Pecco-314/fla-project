@@ -147,6 +147,27 @@ void Parser::parseG() {
     tm->setSpan("G", code->span(bg.span, peek(-1).span));
 }
 
+void Parser::parseq0() {
+    auto bg = peek();
+    if (peek().isStr("#q0")) {
+        next();
+        if (peek().isChar('=')) {
+            next();
+            if (peek().isID()) {
+                tm->setInitialState(peek().val);
+                next();
+            } else {
+                throw CodeError{CodeError::Type::PARSER_EXPECTED_ID, peek().span};
+            }
+        } else {
+            throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, peek().span};
+        }
+    } else {
+        throw CodeError{CodeError::Type::PARSER_EXPECTED_Q0, peek().span};
+    }
+    tm->setSpan("q0", code->span(bg.span, peek(-1).span));
+}
+
 void Parser::parse() {
     auto lexer = std::make_shared<Lexer>(code);
     tokens = lexer->lex();
@@ -154,5 +175,6 @@ void Parser::parse() {
     parseQ();
     parseS();
     parseG();
+    parseq0();
     tm->validate();
 }

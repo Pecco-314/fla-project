@@ -35,6 +35,9 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EXPECTED_G:
             std::cerr << ERR << "Expected #G" << std::endl;
             break;
+        case Type::PARSER_EXPECTED_Q0:
+            std::cerr << ERR << "Expected #q0" << std::endl;
+            break;
         case Type::PARSER_EXPECTED_EQUAL:
             std::cerr << ERR << "Expected '='" << std::endl;
             break;
@@ -62,6 +65,9 @@ void CodeError::log(bool verbose) const {
             break;
         case Type::VALIDATOR_S_NOT_SUBSET_OF_G:
             std::cerr << ERR << "Input alphabet must be a subset of tape alphabet" << std::endl;
+            break;
+        case Type::VALIDATOR_INVALID_INITIAL_STATE:
+            std::cerr << ERR << "Initial state must be a valid state" << std::endl;
             break;
         }
         span.code->printHighlight(span, RED);
