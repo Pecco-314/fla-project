@@ -11,9 +11,9 @@ class TuringMachine {
     friend class Parser;
 
   private:
-    std::set<std::string> Q;
-    std::set<char> S;
-    std::set<char> G;
+    std::set<std::string> Q; // states
+    std::set<char> S;        // input symbols
+    std::set<char> G;        // tape symbols
     std::map<std::string, Code::Span, std::less<>> span_map;
 
   public:
