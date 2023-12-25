@@ -66,12 +66,12 @@ Code::Cursor Code::end(int lno) const {
     return {shared_from_this(), lno, lineLen(lno)};
 }
 
-void Code::printLineHighlight(Cursor st, Cursor ed, const char *color) const {
-    int lno = st.lno;
-    if (st == ed) { ++ed; }
-    std::string_view bf = line(lno).substr(0, st.cno);
-    std::string_view hl = line(lno).substr(st.cno, ed.cno - st.cno);
-    std::string_view af = line(lno).substr(ed.cno);
+void Code::printLineHighlight(Span span, const char *color) const {
+    int lno = span.st_lno;
+    if (span.empty()) { span.extend(); }
+    std::string_view bf = line(lno).substr(0, span.st_cno);
+    std::string_view hl = line(lno).substr(span.st_cno, span.ed_cno - span.st_cno);
+    std::string_view af = line(lno).substr(span.ed_cno);
     std::cerr << std::setw(4) << lno + 1 << " | " << bf << color << hl << RESET << af
               << std::endl;
     std::cerr << "     | " << std::string(bf.size(), ' ') << color << '^'
@@ -79,12 +79,25 @@ void Code::printLineHighlight(Cursor st, Cursor ed, const char *color) const {
               << std::endl;
 }
 
-void Code::printHighlight(Cursor st, Cursor ed, const char *color) const {
-    for (int lno = st.lno; lno <= ed.lno; lno++) {
-        Cursor st_ic = (lno == st.lno) ? st : begin(lno);
-        Cursor ed_ic = (lno == ed.lno) ? ed : end(lno);
-        printLineHighlight(st_ic, ed_ic, color);
+void Code::printHighlight(Span span, const char *color) const {
+    auto &&code = span.code;
+    for (int lno = span.st_lno; lno <= span.ed_lno; lno++) {
+        Cursor st_cs = (lno == span.st_lno) ? span.begin() : begin(lno);
+        Cursor ed_cs = (lno == span.ed_lno) ? span.end() : end(lno);
+        printLineHighlight(code->span(st_cs, ed_cs), color);
     }
+}
+
+Code::Span Code::span(const Cursor &st, const Cursor &ed) const {
+    return {shared_from_this(), st.lno, st.cno, ed.lno, ed.cno};
+}
+
+Code::Span Code::span(int st_lno, int st_cno, int ed_lno, int ed_cno) const {
+    return {shared_from_this(), st_lno, st_cno, ed_lno, ed_cno};
+}
+
+Code::Span Code::span(const Span &st, const Span &ed) const {
+    return {shared_from_this(), st.st_lno, st.st_cno, ed.ed_lno, ed.ed_cno};
 }
 
 Code::Cursor::Cursor(std::shared_ptr<const Code> code, int lno, int cno)
@@ -142,10 +155,51 @@ bool Code::Cursor::eof() const {
     return lno >= code->lines();
 }
 
-std::string Code::Cursor::span(const Cursor &ed) const {
-    std::string ret;
-    for (Cursor cs = *this; cs != ed; ++cs) {
-        ret += *cs;
+Code::Span::Span(std::shared_ptr<const Code> code, int st_lno, int st_cno, int ed_lno,
+                 int ed_cno)
+    : code(code), st_lno(st_lno), st_cno(st_cno), ed_lno(ed_lno), ed_cno(ed_cno) {}
+
+Code::Span::Span(std::shared_ptr<const Code> code, const Cursor &st, const Cursor &ed)
+    : Span(code, st.lno, st.cno, ed.lno, ed.cno) {}
+
+bool Code::Span::operator==(const Span &other) const {
+    return st_lno == other.st_lno && st_cno == other.st_cno && ed_lno == other.ed_lno &&
+           ed_cno == other.ed_cno;
+}
+
+Code::Cursor Code::Span::begin() const {
+    return {code, st_lno, st_cno};
+}
+
+Code::Cursor Code::Span::end() const {
+    return {code, ed_lno, ed_cno};
+}
+
+std::string Code::Span::str() const {
+    std::string res;
+    for (Cursor cs = begin(); cs != end(); ++cs) {
+        res += *cs;
     }
-    return ret;
+    return res;
+}
+
+void Code::Span::extend() {
+    auto cs = ++end();
+    ed_lno = cs.lno;
+    ed_cno = cs.cno;
+}
+
+void Code::Span::extendLine() {
+    auto cs = end().skipLine();
+    ed_lno = cs.lno;
+    ed_cno = cs.cno;
+}
+
+void Code::Span::collapse() {
+    st_lno = ed_lno;
+    st_cno = ed_cno;
+}
+
+bool Code::Span::empty() const {
+    return st_lno == ed_lno && st_cno == ed_cno;
 }

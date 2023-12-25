@@ -24,7 +24,7 @@ void CodeError::log(bool verbose) const {
     if (verbose) {
         switch (type) {
         case Type::LEXER_INVALID_CHAR:
-            std::cerr << ERR << "Invalid character: " << Util::quoted(*st) << std::endl;
+            std::cerr << ERR << "Invalid character: " << Util::quoted(*span.begin()) << std::endl;
             break;
         case Type::PARSER_EXPECTED_Q:
             std::cerr << ERR << "Expected #Q" << std::endl;
@@ -58,7 +58,7 @@ void CodeError::log(bool verbose) const {
             std::cerr << ERR << "Set is empty" << std::endl;
             break;
         }
-        st.code->printHighlight(st, ed, RED);
+        span.code->printHighlight(span, RED);
     } else {
         std::cerr << "Syntax error" << std::endl;
     }

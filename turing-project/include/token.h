@@ -5,10 +5,9 @@
 
 struct Token {
     std::string val;
-    Code::Cursor st;
-    Code::Cursor ed;
+    Code::Span span;
 
-    Token(std::string_view val, const Code::Cursor &st, const Code::Cursor &ed);
+    Token(Code::Span span);
     bool operator==(const Token &other) const;
     bool isStr(std::string_view val) const;
     bool isChar(char c) const;

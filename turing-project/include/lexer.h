@@ -8,9 +8,7 @@
 class Lexer {
   private:
     enum class Status;
-    std::shared_ptr<Code> code;
-    Code::Cursor st;
-    Code::Cursor ed;
+    Code::Span span;
     Status status;
     std::vector<Token> tokens;
 
@@ -20,7 +18,7 @@ class Lexer {
     void skipLine();
     void extend();
     char chr() const;
-    std::string span() const;
+    std::string spanStr() const;
     void store();
     std::vector<Token> lex();
 };

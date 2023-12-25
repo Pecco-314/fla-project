@@ -1,7 +1,7 @@
 #include "lexer.h"
 #include "error.h"
 Lexer::Lexer(std::shared_ptr<Code> code)
-    : code(code), st(code->begin()), ed(st), status(Status::INITIAL) {}
+    : span(code, code->begin(), code->begin()), status(Status::INITIAL) {}
 
 std::vector<Token> Lexer::lex() {
     while (status != Status::END) {
@@ -23,7 +23,7 @@ std::vector<Token> Lexer::lex() {
                 extend();
                 store();
             } else {
-                throw CodeError{CodeError::Type::LEXER_INVALID_CHAR, st, ed};
+                throw CodeError{CodeError::Type::LEXER_INVALID_CHAR, span};
             }
             break;
         case Status::WORD:
@@ -50,26 +50,28 @@ std::vector<Token> Lexer::lex() {
 }
 
 void Lexer::skip() {
-    ed = ++st;
+    span.extend();
+    span.collapse();
 }
 
 void Lexer::skipLine() {
-    ed = st.skipLine();
+    span.extendLine();
+    span.collapse();
 }
 
 void Lexer::extend() {
-    ++ed;
+    span.extend();
 }
 
 char Lexer::chr() const {
-    return *ed;
+    return *span.end();
 }
 
-std::string Lexer::span() const {
-    return st.span(ed);
+std::string Lexer::spanStr() const {
+    return span.str();
 }
 
 void Lexer::store() {
-    tokens.emplace_back(span(), st, ed);
-    st = ed;
+    tokens.push_back(span);
+    span.collapse();
 }

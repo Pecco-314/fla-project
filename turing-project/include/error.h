@@ -19,8 +19,7 @@ enum class ArgError::Type {
 struct CodeError {
     enum class Type;
     Type type;
-    Code::Cursor st;
-    Code::Cursor ed;
+    Code::Span span;
     void log(bool verbose) const;
 };
 
