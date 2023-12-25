@@ -41,7 +41,9 @@ int Code::lineLen(int lno) const {
 }
 
 char Code::charAt(const Cursor &cs) const {
-    if (cs.cno == lineLen(cs.lno)) {
+    if (cs.lno >= lines()) {
+        return '\0';
+    } else if (cs.cno == lineLen(cs.lno)) {
         return '\n';
     } else {
         return lines_[cs.lno][cs.cno];
