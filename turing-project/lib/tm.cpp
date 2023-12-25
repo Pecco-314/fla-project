@@ -1,5 +1,6 @@
 #include "tm.h"
 #include "parser.h"
+#include <cassert>
 #include <iostream>
 
 void TuringMachine::parse(std::shared_ptr<Code> code) {
@@ -17,6 +18,15 @@ void TuringMachine::addInputSymbol(char c) {
 
 void TuringMachine::addTapeSymbol(char c) {
     G.emplace(c);
+}
+
+void TuringMachine::setSpan(std::string_view name, Code::Span span) {
+    span_map.emplace(name, span);
+}
+
+Code::Span TuringMachine::getSpan(std::string_view name) const {
+    assert(span_map.find(name) != span_map.end());
+    return span_map.find(name)->second;
 }
 
 void TuringMachine::run(std::string_view input, bool verbose) {

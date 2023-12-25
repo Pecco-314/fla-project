@@ -17,6 +17,7 @@ void Parser::next() {
 }
 
 void Parser::parseQ() {
+    auto bg = peek();
     if (peek().isStr("#Q")) {
         next();
         if (peek().isChar('=')) {
@@ -54,9 +55,11 @@ void Parser::parseQ() {
     } else {
         throw CodeError{CodeError::Type::PARSER_EXPECTED_Q, peek().span};
     }
+    tm->setSpan("Q", code->span(bg.span, peek(-1).span));
 }
 
 void Parser::parseS() {
+    auto bg = peek();
     if (peek().isStr("#S")) {
         next();
         if (peek().isChar('=')) {
@@ -98,9 +101,11 @@ void Parser::parseS() {
     } else {
         throw CodeError{CodeError::Type::PARSER_EXPECTED_S, peek().span};
     }
+    tm->setSpan("S", code->span(bg.span, peek(-1).span));
 }
 
 void Parser::parseG() {
+    auto bg = peek();
     if (peek().isStr("#G")) {
         next();
         if (peek().isChar('=')) {
@@ -139,6 +144,7 @@ void Parser::parseG() {
     } else {
         throw CodeError{CodeError::Type::PARSER_EXPECTED_G, peek().span};
     }
+    tm->setSpan("G", code->span(bg.span, peek(-1).span));
 }
 
 void Parser::parse() {
@@ -148,5 +154,4 @@ void Parser::parse() {
     parseQ();
     parseS();
     parseG();
-    // TODO: validate TM
 }
