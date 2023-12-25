@@ -4,8 +4,9 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <memory>
 
-class Code {
+class Code : public std::enable_shared_from_this<Code> {
   private:
     std::string path_;
     std::vector<std::string> lines_;
@@ -27,11 +28,11 @@ class Code {
 };
 
 struct Code::Cursor {
-    const Code *code;
+    std::shared_ptr<const Code> code;
     int lno;
     int cno;
 
-    Cursor(const Code *code, int lno, int cno);
+    Cursor(std::shared_ptr<const Code> code, int lno, int cno);
     Cursor &operator++();
     Cursor operator++(int);
     Cursor &operator--();

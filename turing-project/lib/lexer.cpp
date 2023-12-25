@@ -1,6 +1,7 @@
 #include "lexer.h"
 #include "error.h"
-Lexer::Lexer(std::shared_ptr<Code> code) : code(code), st(code->begin()), ed(st), status(Status::INITIAL) {}
+Lexer::Lexer(std::shared_ptr<Code> code)
+    : code(code), st(code->begin()), ed(st), status(Status::INITIAL) {}
 
 std::vector<Token> Lexer::lex() {
     while (!eof()) {
@@ -20,7 +21,7 @@ std::vector<Token> Lexer::lex() {
                 extend();
                 store();
             } else {
-                throw CodeError{CodeError::Type::LEXER_INVALID_CHAR, code, st, ed};
+                throw CodeError{CodeError::Type::LEXER_INVALID_CHAR, st, ed};
             }
             break;
         case Status::WORD:

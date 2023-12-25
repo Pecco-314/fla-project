@@ -49,19 +49,19 @@ char Code::charAt(const Cursor &cs) const {
 }
 
 Code::Cursor Code::begin() const {
-    return {this, 0, 0};
+    return {shared_from_this(), 0, 0};
 }
 
 Code::Cursor Code::begin(int lno) const {
-    return {this, lno, 0};
+    return {shared_from_this(), lno, 0};
 }
 
 Code::Cursor Code::end() const {
-    return {this, lines(), 0};
+    return {shared_from_this(), lines(), 0};
 }
 
 Code::Cursor Code::end(int lno) const {
-    return {this, lno, lineLen(lno)};
+    return {shared_from_this(), lno, lineLen(lno)};
 }
 
 void Code::printLineHighlight(Cursor st, Cursor ed, const char *color) const {
@@ -85,7 +85,7 @@ void Code::printHighlight(Cursor st, Cursor ed, const char *color) const {
     }
 }
 
-Code::Cursor::Cursor(const Code *code, int lno, int cno)
+Code::Cursor::Cursor(std::shared_ptr<const Code> code, int lno, int cno)
     : code(code), lno(lno), cno(cno) {}
 
 Code::Cursor &Code::Cursor::operator++() {

@@ -2,7 +2,6 @@
 #define __ERROR_H__
 
 #include "code.h"
-#include <memory>
 
 struct ArgError {
     enum class Type;
@@ -20,7 +19,6 @@ enum class ArgError::Type {
 struct CodeError {
     enum class Type;
     Type type;
-    std::shared_ptr<Code> code;
     Code::Cursor st;
     Code::Cursor ed;
     void log(bool verbose) const;
