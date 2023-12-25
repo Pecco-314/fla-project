@@ -35,7 +35,7 @@ void TuringMachine::validate() const {
     if (!G.count('_')) {
         throw CodeError{CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_G, getSpan("G")};
     }
-    if (!std::includes(S.begin(), S.end(), G.begin(), G.end())) {
+    if (!std::includes(G.begin(), G.end(), S.begin(), S.end())) {
         throw CodeError{CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G, getSpan("S")};
     }
 }
