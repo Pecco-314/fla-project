@@ -1,5 +1,7 @@
 #include "tm.h"
+#include "error.h"
 #include "parser.h"
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 
@@ -27,6 +29,15 @@ void TuringMachine::setSpan(std::string_view name, Code::Span span) {
 Code::Span TuringMachine::getSpan(std::string_view name) const {
     assert(span_map.find(name) != span_map.end());
     return span_map.find(name)->second;
+}
+
+void TuringMachine::validate() const {
+    if (!G.count('_')) {
+        throw CodeError{CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_G, getSpan("G")};
+    }
+    if (!std::includes(S.begin(), S.end(), G.begin(), G.end())) {
+        throw CodeError{CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G, getSpan("S")};
+    }
 }
 
 void TuringMachine::run(std::string_view input, bool verbose) {

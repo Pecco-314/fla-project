@@ -57,6 +57,12 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EMPTY_SET:
             std::cerr << ERR << "Set is empty" << std::endl;
             break;
+        case Type::VALIDATOR_MISSING_UNDERSCORE_IN_G:
+            std::cerr << ERR << "Tape alphabet must contain underscore" << std::endl;
+            break;
+        case Type::VALIDATOR_S_NOT_SUBSET_OF_G:
+            std::cerr << ERR << "Input alphabet must be a subset of tape alphabet" << std::endl;
+            break;
         }
         span.code->printHighlight(span, RED);
     } else {

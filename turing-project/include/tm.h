@@ -2,10 +2,10 @@
 #define __TURING_H__
 
 #include "code.h"
-#include <memory>
-#include <string_view>
-#include <set>
 #include <map>
+#include <memory>
+#include <set>
+#include <string_view>
 
 class TuringMachine {
     friend class Parser;
@@ -18,6 +18,7 @@ class TuringMachine {
 
   public:
     void parse(std::shared_ptr<Code> code);
+    void validate() const;
     void run(std::string_view input, bool verbose = false);
     void addState(std::string_view name);
     void addInputSymbol(char c);

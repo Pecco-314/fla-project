@@ -154,4 +154,5 @@ void Parser::parse() {
     parseQ();
     parseS();
     parseG();
+    tm->validate();
 }
