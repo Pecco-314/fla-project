@@ -68,6 +68,11 @@ Code::Cursor Code::end(int lno) const {
 
 void Code::printLineHighlight(Span span, const char *color) const {
     int lno = span.st_lno;
+    if (span.eof()) {
+        std::cerr << std::setw(4) << lno + 1 << " |" << std::endl;
+        std::cerr << "     | " << color << "~" << RESET << std::endl;
+        return;
+    }
     if (span.empty()) { span.extend(); }
     std::string_view bf = line(lno).substr(0, span.st_cno);
     std::string_view hl = line(lno).substr(span.st_cno, span.ed_cno - span.st_cno);

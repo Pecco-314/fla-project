@@ -9,7 +9,7 @@ Token Parser::peek(int cnt) const {
 }
 
 Token Parser::eofToken() const {
-    return tokens.back().span;
+    return code->span(code->end(), code->end());
 }
 
 void Parser::next() {
