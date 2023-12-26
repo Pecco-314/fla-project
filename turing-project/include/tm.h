@@ -8,8 +8,6 @@
 #include <string_view>
 
 class TuringMachine {
-    friend class Parser;
-
   private:
     std::set<std::string> Q; // states
     std::set<char> S;        // input symbols
