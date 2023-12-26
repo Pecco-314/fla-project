@@ -43,6 +43,9 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EXPECTED_B:
             std::cerr << "Expected #B" << std::endl;
             break;
+        case Type::PARSER_EXPECTED_F:
+            std::cerr << "Expected #F" << std::endl;
+            break;
         case Type::PARSER_EXPECTED_EQUAL:
             std::cerr << "Expected '='" << std::endl;
             break;
@@ -75,6 +78,9 @@ void CodeError::log(bool verbose) const {
             break;
         case Type::VALIDATOR_INVALID_INITIAL_STATE:
             std::cerr << "Initial state must be a valid state" << std::endl;
+            break;
+        case Type::VALIDATOR_F_NOT_SUBSET_OF_Q:
+            std::cerr << "Final states must be a subset of states" << std::endl;
             break;
         }
         span.code->printHighlight(span, RED BOLD);

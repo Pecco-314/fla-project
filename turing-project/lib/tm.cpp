@@ -26,6 +26,10 @@ void TuringMachine::setInitialState(std::string_view name) {
     q0 = name;
 }
 
+void TuringMachine::addFinalState(std::string_view name) {
+    F.emplace(name);
+}
+
 void TuringMachine::setSpan(std::string_view name, Code::Span span) {
     span_map.emplace(name, span);
 }
@@ -44,6 +48,9 @@ void TuringMachine::validate() const {
     }
     if (!Q.count(q0)) {
         throw CodeError{CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE, getSpan("q0")};
+    }
+    if (!std::includes(Q.begin(), Q.end(), F.begin(), F.end())) {
+        throw CodeError{CodeError::Type::VALIDATOR_F_NOT_SUBSET_OF_Q, getSpan("F")};
     }
 }
 

@@ -177,7 +177,8 @@ void Parser::parseB() {
             if (peek().isChar('_')) {
                 next();
             } else {
-                throw CodeError{CodeError::Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK, peek().span};
+                throw CodeError{CodeError::Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK,
+                                peek().span};
             }
         } else {
             throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, peek().span};
@@ -186,6 +187,48 @@ void Parser::parseB() {
         throw CodeError{CodeError::Type::PARSER_EXPECTED_B, peek().span};
     }
     tm->setSpan("B", code->span(bg.span, peek(-1).span));
+}
+
+void Parser::parseF() {
+    auto bg = peek();
+    if (peek().isStr("#F")) {
+        next();
+        if (peek().isChar('=')) {
+            next();
+            if (peek().isChar('{')) {
+                auto brace_bg = peek();
+                next();
+                for (;;) {
+                    if (peek().isID()) {
+                        tm->addFinalState(peek().val);
+                        next();
+                    } else if (peek().isChar('}') && brace_bg == peek(-1)) {
+                        throw CodeError{CodeError::Type::PARSER_EMPTY_SET,
+                                        code->span(brace_bg.span, peek().span)};
+                    } else {
+                        throw CodeError{CodeError::Type::PARSER_EXPECTED_ID, peek().span};
+                    }
+                    if (peek().isChar('}')) {
+                        next();
+                        break;
+                    } else if (peek().isChar(',')) {
+                        next();
+                        continue;
+                    } else {
+                        throw CodeError{CodeError::Type::PARSER_UNCLOSED_SET,
+                                        code->span(brace_bg.span, peek(-1).span)};
+                    }
+                }
+            } else {
+                throw CodeError{CodeError::Type::PARSER_EXPECTED_LBRACE, peek().span};
+            }
+        } else {
+            throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, peek().span};
+        }
+    } else {
+        throw CodeError{CodeError::Type::PARSER_EXPECTED_F, peek().span};
+    }
+    tm->setSpan("F", code->span(bg.span, peek(-1).span));
 }
 
 void Parser::parse() {
@@ -197,5 +240,6 @@ void Parser::parse() {
     parseG();
     parseq0();
     parseB();
+    parseF();
     tm->validate();
 }
