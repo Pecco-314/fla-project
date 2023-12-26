@@ -68,6 +68,7 @@ struct Code::Span {
     void extendLine();
     void collapse();
     bool empty() const;
+    bool eof() const;
 };
 
 #endif

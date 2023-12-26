@@ -203,3 +203,7 @@ void Code::Span::collapse() {
 bool Code::Span::empty() const {
     return st_lno == ed_lno && st_cno == ed_cno;
 }
+
+bool Code::Span::eof() const {
+    return st_lno >= code->lines();
+}
