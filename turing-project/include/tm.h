@@ -17,6 +17,7 @@ class TuringMachine {
     std::string q0;          // initial state
     char B = '_';            // blank symbol
     std::set<std::string> F; // final states
+    int N;                   // number of tapes
     std::map<std::string, Code::Span, std::less<>> span_map;
 
   public:
@@ -28,6 +29,7 @@ class TuringMachine {
     void addTapeSymbol(char c);
     void setInitialState(std::string_view name);
     void addFinalState(std::string_view name);
+    void setNumTapes(int n);
     void setSpan(std::string_view name, Code::Span span);
     Code::Span getSpan(std::string_view name) const;
 };

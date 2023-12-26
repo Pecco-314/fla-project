@@ -13,6 +13,7 @@ struct Token {
     bool isChar(char c) const;
     bool isID() const;
     bool isValidChar() const;
+    int toInt() const;
 };
 
 #endif

@@ -1,4 +1,5 @@
 #include "token.h"
+#include "error.h"
 
 Token::Token(Code::Span span) : val(span.str()), span(span) {}
 
@@ -24,4 +25,12 @@ bool Token::isID() const {
 bool Token::isValidChar() const {
     return isgraph(val[0]) && val[0] != ',' && val[0] != ';' && val[0] != '{' &&
            val[0] != '}' && val[0] != '*';
+}
+
+int Token::toInt() const {
+    try {
+        return std::stoi(val);
+    } catch (std::invalid_argument &e) {
+        throw CodeError{CodeError::Type::PARSER_EXPECTED_INTEGER, span};
+    }
 }

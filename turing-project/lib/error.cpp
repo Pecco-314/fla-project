@@ -46,6 +46,9 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EXPECTED_F:
             std::cerr << "Expected #F" << std::endl;
             break;
+        case Type::PARSER_EXPECTED_N:
+            std::cerr << "Expected #N" << std::endl;
+            break;
         case Type::PARSER_EXPECTED_EQUAL:
             std::cerr << "Expected '='" << std::endl;
             break;
@@ -57,6 +60,9 @@ void CodeError::log(bool verbose) const {
             break;
         case Type::PARSER_UNCLOSED_SET:
             std::cerr << "Unclosed set" << std::endl;
+            break;
+        case Type::PARSER_EXPECTED_INTEGER:
+            std::cerr << "Expected integer" << std::endl;
             break;
         case Type::PARSER_EXPECTED_VALID_CHAR:
             std::cerr << "Expected valid character (valid characters are: ASCII graph characters except for `,;{}*`)"<< std::endl;
@@ -81,6 +87,9 @@ void CodeError::log(bool verbose) const {
             break;
         case Type::VALIDATOR_F_NOT_SUBSET_OF_Q:
             std::cerr << "Final states must be a subset of states" << std::endl;
+            break;
+        case Type::VALIDATOR_INVALID_NUM_TAPES:
+            std::cerr << "Number of tapes must be a positive integer" << std::endl;
             break;
         }
         span.code->printHighlight(span, RED BOLD);

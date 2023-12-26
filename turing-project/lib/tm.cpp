@@ -30,6 +30,10 @@ void TuringMachine::addFinalState(std::string_view name) {
     F.emplace(name);
 }
 
+void TuringMachine::setNumTapes(int n) {
+    N = n;
+}
+
 void TuringMachine::setSpan(std::string_view name, Code::Span span) {
     span_map.emplace(name, span);
 }
@@ -51,6 +55,9 @@ void TuringMachine::validate() const {
     }
     if (!std::includes(Q.begin(), Q.end(), F.begin(), F.end())) {
         throw CodeError{CodeError::Type::VALIDATOR_F_NOT_SUBSET_OF_Q, getSpan("F")};
+    }
+    if (N <= 0) {
+        throw CodeError{CodeError::Type::VALIDATOR_INVALID_NUM_TAPES, getSpan("N")};
     }
 }
 

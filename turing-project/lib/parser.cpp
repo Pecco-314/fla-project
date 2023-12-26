@@ -231,6 +231,24 @@ void Parser::parseF() {
     tm->setSpan("F", code->span(bg.span, peek(-1).span));
 }
 
+void Parser::parseN() {
+    auto bg = peek();
+    if (peek().isStr("#N")) {
+        next();
+        if (peek().isChar('=')) {
+            next();
+            auto intval = peek().toInt();
+            tm->setNumTapes(intval);
+            next();
+        } else {
+            throw CodeError{CodeError::Type::PARSER_EXPECTED_EQUAL, peek().span};
+        }
+    } else {
+        throw CodeError{CodeError::Type::PARSER_EXPECTED_N, peek().span};
+    }
+    tm->setSpan("N", code->span(bg.span, peek(-1).span));
+}
+
 void Parser::parse() {
     auto lexer = std::make_shared<Lexer>(code);
     tokens = lexer->lex();
@@ -241,5 +259,6 @@ void Parser::parse() {
     parseq0();
     parseB();
     parseF();
+    parseN();
     tm->validate();
 }
