@@ -12,6 +12,9 @@ class Parser {
     std::vector<Token>::iterator it;
     TuringMachine *tm;
 
+    bool parseText(std::string_view s, bool throws = true);
+    bool parseChar(char c, bool throws = true);
+
     void parseQ();
     void parseS();
     void parseG();

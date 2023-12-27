@@ -28,32 +28,8 @@ void CodeError::log(bool verbose) const {
         case Type::LEXER_INVALID_CHAR:
             std::cerr << "Invalid character: " << Util::quoted(*span.begin()) << std::endl;
             break;
-        case Type::PARSER_EXPECTED_Q:
-            std::cerr << "Expected #Q" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_S:
-            std::cerr << "Expected #S" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_G:
-            std::cerr << "Expected #G" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_Q0:
-            std::cerr << "Expected #q0" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_B:
-            std::cerr << "Expected #B" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_F:
-            std::cerr << "Expected #F" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_N:
-            std::cerr << "Expected #N" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_EQUAL:
-            std::cerr << "Expected '='" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_LBRACE:
-            std::cerr << "Expected '{'" << std::endl;
+        case Type::PARSER_EXPECTED_TEXT:
+            std::cerr << "Expected `" <<  expected << "`" << std::endl;
             break;
         case Type::PARSER_EXPECTED_ID:
             std::cerr << "Expected identifier" << std::endl;
