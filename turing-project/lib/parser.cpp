@@ -20,31 +20,32 @@ Token Parser::consume() {
     return it >= tokens.end() ? eofToken() : *it++;
 }
 
-std::optional<Token> Parser::parseText(std::string_view s, bool throws) {
-    if (peek().isStr(s)) {
+std::optional<Token> Parser::parseIf(std::function<bool(Token)> pred,
+                                     std::string expected, bool throws) {
+    if (pred(peek())) {
         return consume();
     } else {
         if (throws) {
-            throw CodeError{CodeError::Type::PARSER_EXPECTED_TEXT, peek().span,
-                            std::string{s}};
+            throw CodeError{CodeError::Type::PARSER_EXPECTED, peek().span, expected};
         }
         return {};
     }
+}
+
+std::optional<Token> Parser::parseText(std::string_view s, bool throws) {
+    return parseIf([s](Token tok) { return tok.isStr(s); }, "`" + std::string(s) + "`",
+                   throws);
 }
 
 std::optional<Token> Parser::parseChar(char c, bool throws) {
-    if (peek().isChar(c)) {
-        return consume();
-    } else {
-        if (throws) {
-            throw CodeError{CodeError::Type::PARSER_EXPECTED_TEXT, peek().span,
-                            std::string{c}};
-        }
-        return {};
-    }
+    return parseIf([c](Token tok) { return tok.isChar(c); },
+                   "'" + std::string(1, c) + "'", throws);
 }
 
-void Parser::parseQ() {
+std::optional<Token> Parser::parseInt(bool throws) {
+    return parseIf([](Token tok) { return tok.isInt(); }, "non-negative integer", throws);
+}
+
     auto bg = peek();
     parseText("#Q") && parseChar('=') && parseChar('{');
     auto brace_bg = peek(-1);
