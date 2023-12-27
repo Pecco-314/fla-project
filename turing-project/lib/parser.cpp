@@ -16,33 +16,31 @@ void Parser::next() {
     ++it;
 }
 
-bool Parser::parseText(std::string_view s, bool throws) {
 Token Parser::consume() {
     return it >= tokens.end() ? eofToken() : *it++;
 }
 
+std::optional<Token> Parser::parseText(std::string_view s, bool throws) {
     if (peek().isStr(s)) {
-        next();
-        return true;
+        return consume();
     } else {
         if (throws) {
             throw CodeError{CodeError::Type::PARSER_EXPECTED_TEXT, peek().span,
                             std::string{s}};
         }
-        return false;
+        return {};
     }
 }
 
-bool Parser::parseChar(char c, bool throws) {
+std::optional<Token> Parser::parseChar(char c, bool throws) {
     if (peek().isChar(c)) {
-        next();
-        return true;
+        return consume();
     } else {
         if (throws) {
             throw CodeError{CodeError::Type::PARSER_EXPECTED_TEXT, peek().span,
                             std::string{c}};
         }
-        return false;
+        return {};
     }
 }
 
