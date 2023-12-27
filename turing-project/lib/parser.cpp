@@ -17,6 +17,10 @@ void Parser::next() {
 }
 
 bool Parser::parseText(std::string_view s, bool throws) {
+Token Parser::consume() {
+    return it >= tokens.end() ? eofToken() : *it++;
+}
+
     if (peek().isStr(s)) {
         next();
         return true;
