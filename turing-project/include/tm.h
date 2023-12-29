@@ -2,7 +2,7 @@
 #define __TURING_H__
 
 #include "code.h"
-#include <map>
+#include "token.h"
 #include <memory>
 #include <set>
 #include <string_view>
@@ -16,20 +16,27 @@ class TuringMachine {
     char B = '_';            // blank symbol
     std::set<std::string> F; // final states
     int N;                   // number of tapes
-    std::map<std::string, Code::Span, std::less<>> span_map;
+
+    std::vector<Token> state_tokens;
+    std::vector<Token> input_symbol_tokens;
+    std::vector<Token> tape_symbol_tokens;
+    Token initial_state_token;
+    Token blank_symbol_token;
+    std::vector<Token> final_state_tokens;
+    Token num_tapes_token;
 
   public:
     void parse(std::shared_ptr<Code> code);
     void validate() const;
     void run(std::string_view input, bool verbose = false);
-    void addState(std::string_view name);
-    void addInputSymbol(char c);
-    void addTapeSymbol(char c);
-    void setInitialState(std::string_view name);
-    void addFinalState(std::string_view name);
-    void setNumTapes(int n);
-    void setSpan(std::string_view name, Code::Span span);
-    Code::Span getSpan(std::string_view name) const;
+    
+    void setStates(std::vector<Token> tokens);
+    void setInputSymbols(std::vector<Token> tokens);
+    void setTapeSymbols(std::vector<Token> tokens);
+    void setInitialState(Token token);
+    void setBlankSymbol(Token token);
+    void setFinalStates(std::vector<Token> tokens);
+    void setNumTapes(Token token);
 };
 
 #endif

@@ -2,7 +2,6 @@
 #include "error.h"
 #include "parser.h"
 #include <algorithm>
-#include <cassert>
 #include <iostream>
 
 void TuringMachine::parse(std::shared_ptr<Code> code) {
@@ -10,54 +9,69 @@ void TuringMachine::parse(std::shared_ptr<Code> code) {
     parser.parse();
 }
 
-void TuringMachine::addState(std::string_view name) {
-    Q.emplace(name);
+void TuringMachine::setStates(std::vector<Token> tokens) {
+    state_tokens = tokens;
+    for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
+        Q.emplace(tokens[i].strval());
+    }
 }
 
-void TuringMachine::addInputSymbol(char c) {
-    S.emplace(c);
+void TuringMachine::setInputSymbols(std::vector<Token> tokens) {
+    input_symbol_tokens = tokens;
+    for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
+        S.emplace(tokens[i].charval());
+    }
 }
 
-void TuringMachine::addTapeSymbol(char c) {
-    G.emplace(c);
+void TuringMachine::setTapeSymbols(std::vector<Token> tokens) {
+    tape_symbol_tokens = tokens;
+    for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
+        G.emplace(tokens[i].charval());
+    }
 }
 
-void TuringMachine::setInitialState(std::string_view name) {
-    q0 = name;
+void TuringMachine::setInitialState(Token token) {
+    initial_state_token = token;
+    q0 = token.strval();
 }
 
-void TuringMachine::addFinalState(std::string_view name) {
-    F.emplace(name);
+void TuringMachine::setBlankSymbol(Token token) {
+    blank_symbol_token = token;
+    B = token.charval();
 }
 
-void TuringMachine::setNumTapes(int n) {
-    N = n;
+void TuringMachine::setFinalStates(std::vector<Token> tokens) {
+    final_state_tokens = tokens;
+    for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
+        F.emplace(tokens[i].strval());
+    }
 }
 
-void TuringMachine::setSpan(std::string_view name, Code::Span span) {
-    span_map.emplace(name, span);
-}
-
-Code::Span TuringMachine::getSpan(std::string_view name) const {
-    assert(span_map.find(name) != span_map.end());
-    return span_map.find(name)->second;
+void TuringMachine::setNumTapes(Token token) {
+    num_tapes_token = token;
+    N = token.intval();
 }
 
 void TuringMachine::validate() const {
+    auto &&code = initial_state_token.span.code;
     if (!G.count('_')) {
-        throw CodeError{CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_G, getSpan("G")};
+        throw CodeError{
+            CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_G,
+            code->span(tape_symbol_tokens.front().span, tape_symbol_tokens.back().span)};
     }
     if (!std::includes(G.begin(), G.end(), S.begin(), S.end())) {
-        throw CodeError{CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G, getSpan("S")};
+        throw CodeError{CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G,
+                        code->span(input_symbol_tokens.front().span,
+                                   input_symbol_tokens.back().span)};
     }
     if (!Q.count(q0)) {
-        throw CodeError{CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE, getSpan("q0")};
+        throw CodeError{CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE,
+                        initial_state_token.span};
     }
     if (!std::includes(Q.begin(), Q.end(), F.begin(), F.end())) {
-        throw CodeError{CodeError::Type::VALIDATOR_F_NOT_SUBSET_OF_Q, getSpan("F")};
-    }
-    if (N <= 0) {
-        throw CodeError{CodeError::Type::VALIDATOR_INVALID_NUM_TAPES, getSpan("N")};
+        throw CodeError{
+            CodeError::Type::VALIDATOR_F_NOT_SUBSET_OF_Q,
+            code->span(final_state_tokens.front().span, final_state_tokens.back().span)};
     }
 }
 
