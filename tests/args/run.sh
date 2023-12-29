@@ -29,3 +29,12 @@ testargs no_tm_path "$TURING" 1
 testargs no_input "$TURING 1" 1
 testargs too_many_args "$TURING 1 2 3" 1
 testargs invalid_option "$TURING -x" 1
+
+tempdir=Testing/Temporary/testargs
+rm -rf $tempdir
+mkdir -p $tempdir
+touch $tempdir/unreadable.tm
+chmod -r $tempdir/unreadable.tm
+testargs read_dir "$TURING $tempdir input" 1
+testargs not_exist "$TURING $tempdir/not_exist.tm input" 1
+testargs unreadable "$TURING $tempdir/unreadable.tm input" 1
