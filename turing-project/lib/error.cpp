@@ -28,20 +28,11 @@ void CodeError::log(bool verbose) const {
         case Type::LEXER_INVALID_CHAR:
             std::cerr << "Invalid character: " << Util::quoted(*span.begin()) << std::endl;
             break;
-        case Type::PARSER_EXPECTED_TEXT:
-            std::cerr << "Expected `" <<  expected << "`" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_ID:
-            std::cerr << "Expected identifier" << std::endl;
+        case Type::PARSER_EXPECTED:
+            std::cerr << "Expected " <<  expected << std::endl;
             break;
         case Type::PARSER_UNCLOSED_SET:
             std::cerr << "Unclosed set" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_INTEGER:
-            std::cerr << "Expected integer" << std::endl;
-            break;
-        case Type::PARSER_EXPECTED_VALID_CHAR:
-            std::cerr << "Expected valid character (valid characters are: ASCII graph characters except for `,;{}*`)"<< std::endl;
             break;
         case Type::PARSER_UNEXPECTED_UNDERSCORE:
             std::cerr << "Input alphabet cannot contain underscore" << std::endl; 
