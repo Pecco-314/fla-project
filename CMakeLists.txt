@@ -26,3 +26,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/turing-project/lib/ LIB)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 add_executable(${TARGET_NAME} ${MAIN} ${LIB})
+
+enable_testing()
+set(TEST_DIR ${PROJECT_SOURCE_DIR}/tests)
+add_test(NAME test_args COMMAND bash ${TEST_DIR}/args/run.sh)
