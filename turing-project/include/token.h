@@ -8,6 +8,7 @@ struct Token {
     Code::Span span;
 
     Token(Code::Span span);
+    Token() = default;
     bool operator==(const Token &other) const;
     bool isStr(std::string_view val) const;
     bool isChar(char c) const;

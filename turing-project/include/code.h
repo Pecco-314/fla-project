@@ -36,6 +36,7 @@ struct Code::Cursor {
     int lno;
     int cno;
 
+    Cursor() = default;
     Cursor(std::shared_ptr<const Code> code, int lno, int cno);
     Cursor &operator++();
     Cursor operator++(int);
@@ -57,6 +58,7 @@ struct Code::Span {
     int ed_lno;
     int ed_cno;
 
+    Span() = default;
     Span(std::shared_ptr<const Code> code, int st_lno, int st_cno, int ed_lno,
          int ed_cno);
     Span(std::shared_ptr<const Code> code, const Cursor &st, const Cursor &ed);
