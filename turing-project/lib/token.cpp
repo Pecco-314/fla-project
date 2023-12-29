@@ -32,3 +32,19 @@ bool Token::isInt() const {
     }
     return true;
 }
+
+std::string Token::strval() const {
+    return val;
+}
+
+char Token::charval() const {
+    return val[0];
+}
+
+int Token::intval() const {
+    int ret = 0;
+    for (auto c : val) {
+        ret = ret * 10 + c - '0';
+    }
+    return ret;
+}
