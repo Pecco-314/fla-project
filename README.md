@@ -24,7 +24,7 @@ cmake -B build && cmake --build build
 默认情况下构建的是Release版本，如果想构建Debug版本，可以执行以下命令：
 
 ```bash
-cmake -B build_debug -DCMAKE_BUILD_TYPE=Debug && cmake --build build_debug
+cmake -B debug -DCMAKE_BUILD_TYPE=Debug && cmake --build debug
 ```
 
 如果成功，你可以在`bin`文件夹中找到一个名为`turing_debug`的可执行文件。
