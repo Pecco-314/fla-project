@@ -1,1 +1,1 @@
-error: Testing/Temporary/testargs is not a regular file
+error: "Testing/Temporary/testargs" is not a regular file

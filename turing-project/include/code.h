@@ -5,18 +5,19 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <filesystem>
 #include "color.h"
 
 class Code : public std::enable_shared_from_this<Code> {
   private:
-    std::string path_;
+    std::filesystem::path path_;
     std::vector<std::string> lines_;
 
   public:
     struct Cursor;
     struct Span;
-    Code(std::string_view path);
-    std::string_view path() const;
+    Code(std::filesystem::path path);
+    std::filesystem::path path() const;
     int lines() const;
     std::string_view line(int lno) const;
     int lineLen(int lno) const;
