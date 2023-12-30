@@ -23,8 +23,10 @@ endif()
 include_directories(${PROJECT_SOURCE_DIR}/turing-project/include)
 set(MAIN ${PROJECT_SOURCE_DIR}/turing-project/main.cpp)
 aux_source_directory(${PROJECT_SOURCE_DIR}/turing-project/src/ CPP_SRC)
+add_library(turing_lib STATIC ${CPP_SRC})
 
-add_executable(${TARGET_NAME} ${MAIN} ${CPP_SRC})
+add_executable(${TARGET_NAME} ${MAIN})
+target_link_libraries(${TARGET_NAME} turing_lib)
 add_custom_command(
     TARGET ${TARGET_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/bin
