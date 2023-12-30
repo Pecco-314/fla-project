@@ -34,4 +34,4 @@ add_custom_command(
 
 enable_testing()
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/tests)
-add_test(NAME test_args COMMAND bash ${TEST_DIR}/args/run.sh)
+add_test(NAME test_args COMMAND bash ${TEST_DIR}/args/test.sh)
