@@ -10,18 +10,18 @@ testargs() {
     $command 1>/dev/null 2>$TEST_DIR/$test_name/actual.txt
     local ret=$?
     if [ $ret -ne $code ]; then
-        echo "Test $test_name failed: command $command should return $code, but got $ret"
+        echo "Test case $test_name failed: command $command should return $code, but got $ret"
         exit 1
     fi
     diff $TEST_DIR/$test_name/expected.txt $TEST_DIR/$test_name/actual.txt > $TEST_DIR/$test_name/diff.txt
     if [ $? -ne 0 ]; then
-        echo "Test $test_name failed: command $command failed with wrong output"
+        echo "Test case $test_name failed: command $command failed with wrong output"
         echo "Diff:"
         echo "----------------------"
         echo "$(cat $TEST_DIR/$test_name/diff.txt)"
         exit 1
     fi
-
+    echo "Test case $test_name passed"
 }
 
 testargs help "$TURING -h" 0
