@@ -4,16 +4,16 @@
 
 Code::Code(std::filesystem::path path) : path_(path) {
     if (!std::filesystem::exists(path_)) {
-        std::cerr << ERR << UL << path << RESET << " does not exist" << std::endl;
+        std::cerr << ERR << path << " does not exist" << std::endl;
         exit(1);
     }
     if (!std::filesystem::is_regular_file(path_)) {
-        std::cerr << ERR << UL << path << RESET << " is not a regular file" << std::endl;
+        std::cerr << ERR << path << " is not a regular file" << std::endl;
         exit(1);
     }
     std::ifstream tmfile(path_);
     if (!tmfile.good()) {
-        std::cerr << ERR << "Unable to read " << UL << path << RESET << std::endl;
+        std::cerr << ERR << "Unable to read " << path << std::endl;
         exit(1);
     }
     std::string line;
