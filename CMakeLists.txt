@@ -24,8 +24,13 @@ include_directories(${PROJECT_SOURCE_DIR}/turing-project/include)
 set(MAIN ${PROJECT_SOURCE_DIR}/turing-project/main.cpp)
 aux_source_directory(${PROJECT_SOURCE_DIR}/turing-project/lib/ LIB)
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 add_executable(${TARGET_NAME} ${MAIN} ${LIB})
+add_custom_command(
+    TARGET ${TARGET_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/bin
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${TARGET_NAME}> ${PROJECT_SOURCE_DIR}/bin
+    COMMENT "Copying executable to bin directory"
+)
 
 enable_testing()
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/tests)
