@@ -1,5 +1,4 @@
 #include "util.h"
-#include "constants.h"
 #include <iostream>
 
 void Util::usage() {
@@ -31,6 +30,7 @@ std::string Util::quoted(char ch) {
     } else if (isprint(ch)) {
         return {'\'', ch, '\''};
     } else {
+        static const char HEX[] = "0123456789ABCDEF";
         unsigned char c = ch;
         return {'\'', '\\', 'x', HEX[c / 16], HEX[c % 16], '\''};
     }
