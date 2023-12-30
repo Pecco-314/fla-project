@@ -18,7 +18,7 @@ std::ostream &operator<<(std::ostream &os, const TermColor &color) {
     return os;
 }
 
-std::ostream &operator<<(std::ostream &os, const Paint &paint) {
+std::ostream &operator<<(std::ostream &os, const Painted &paint) {
     os << paint.color << paint.text << RESET;
     return os;
 }

@@ -27,19 +27,21 @@ const inline TermColor RESET = {0};
 const inline TermColor BOLD = {1};
 const inline TermColor UL = {4};
 
-class Paint {
+class Painted {
   private:
     std::string_view text;
     TermColor color;
 
   public:
-    Paint() = default;
-    Paint(std::string_view text, TermColor color) : text(text), color(color) {}
-    friend std::ostream &operator<<(std::ostream &os, const Paint &paint);
+    Painted() = default;
+    Painted(std::string_view text, TermColor color) : text(text), color(color) {}
+    friend std::ostream &operator<<(std::ostream &os, const Painted &paint);
 };
 
-const inline Paint ERR = {"error: ", RED | BOLD};
-const inline Paint WARN = {"warning: ", YELLOW | BOLD};
-const inline Paint NOTE = {"note: ", BLUE | BOLD};
+const inline Painted ERR = {"error: ", RED | BOLD};
+const inline Painted WARN = {"warning: ", YELLOW | BOLD};
+const inline Painted NOTE = {"note: ", BLUE | BOLD};
+const inline Painted FAILED = {"failed: ", RED | BOLD};
+const inline Painted PASSED = {"passed: ", GREEN | BOLD};
 
 #endif
