@@ -1,5 +1,4 @@
 #include "code.h"
-#include "constants.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -66,7 +65,7 @@ Code::Cursor Code::end(int lno) const {
     return {shared_from_this(), lno, lineLen(lno)};
 }
 
-void Code::printLineHighlight(Span span, const char *color) const {
+void Code::printLineHighlight(Span span, TermColor color) const {
     int lno = span.st_lno;
     if (span.eof()) {
         std::cerr << std::setw(4) << lno + 1 << " |" << std::endl;
@@ -84,7 +83,7 @@ void Code::printLineHighlight(Span span, const char *color) const {
               << std::endl;
 }
 
-void Code::printHighlight(Span span, const char *color) const {
+void Code::printHighlight(Span span, TermColor color) const {
     auto &&code = span.code;
     for (int lno = span.st_lno; lno <= span.ed_lno; lno++) {
         Cursor st_cs = (lno == span.st_lno) ? span.begin() : begin(lno);

@@ -1,5 +1,5 @@
 #include "error.h"
-#include "constants.h"
+#include "color.h"
 #include "util.h"
 #include <iostream>
 
@@ -59,7 +59,7 @@ void CodeError::log(bool verbose) const {
             std::cerr << "Number of tapes must be a positive integer" << std::endl;
             break;
         }
-        span.code->printHighlight(span, RED BOLD);
+        span.code->printHighlight(span, RED | BOLD);
     } else {
         std::cerr << "Syntax error" << std::endl;
     }
