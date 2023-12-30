@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TURING=../bin/turing
+TURING=$(find . -maxdepth 1 -type f -executable -name 'turing*')
 TEST_DIR=../tests/args
 
 testargs() {
