@@ -2,7 +2,7 @@
 #include <iostream>
 
 void Util::usage() {
-    std::cerr << "Usage: turing [-v|--verbose] [-h|--help] <tm_path> <input>"
+    std::cerr << "Usage: turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>"
               << std::endl;
 }
 

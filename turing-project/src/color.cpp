@@ -1,6 +1,12 @@
 #include "color.h"
 #include <unistd.h>
 
+bool TermColor::force_color = false;
+
+void TermColor::setForceColor(bool force_color) {
+    TermColor::force_color = force_color;
+}
+
 TermColor TermColor::operator|(const TermColor &other) const {
     TermColor ret = *this;
     for (auto color : other.colors) {
@@ -10,7 +16,7 @@ TermColor TermColor::operator|(const TermColor &other) const {
 }
 
 std::ostream &operator<<(std::ostream &os, const TermColor &color) {
-    if (isatty(STDERR_FILENO)) {
+    if (TermColor::force_color || isatty(STDERR_FILENO)) {
         for (auto c : color.colors) {
             os << "\033[" << c << "m";
         }

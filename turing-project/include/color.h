@@ -7,12 +7,14 @@
 class TermColor {
   private:
     std::vector<int> colors;
+    static bool force_color;
 
   public:
     TermColor() = default;
     TermColor(int color...) : colors{color} {}
     TermColor operator|(const TermColor &other) const;
     friend std::ostream &operator<<(std::ostream &os, const TermColor &color);
+    static void setForceColor(bool force_color = true);
 };
 
 const inline TermColor BLACK = {30};
