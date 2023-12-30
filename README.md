@@ -27,7 +27,7 @@ cmake -B build && cmake --build build
 cmake -B debug -DCMAKE_BUILD_TYPE=Debug && cmake --build debug
 ```
 
-如果成功，你可以在`bin`文件夹中找到一个名为`turing_debug`的可执行文件。
+如果成功，你可以在`bin`文件夹中找到一个名为`turing_d`的可执行文件。
 
 ## 运行
 基本用法为：

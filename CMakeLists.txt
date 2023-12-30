@@ -13,11 +13,9 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     message("Build type: Debug")
     add_compile_options(-Wall -Wextra -Wpedantic -Werror -O0 -fsanitize=address -ggdb)
     add_link_options(-fsanitize=address)
-    set(TARGET_NAME turing_debug)
 else()
     message("Build type: Release")
     add_compile_options(-Wall -Wextra -Wpedantic -Werror -O3)
-    set(TARGET_NAME turing)
 endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/turing-project/include)
@@ -25,13 +23,18 @@ set(MAIN ${PROJECT_SOURCE_DIR}/turing-project/main.cpp)
 aux_source_directory(${PROJECT_SOURCE_DIR}/turing-project/src/ CPP_SRC)
 add_library(turing_lib STATIC ${CPP_SRC})
 
-add_executable(${TARGET_NAME} ${MAIN})
-target_link_libraries(${TARGET_NAME} turing_lib)
+add_executable(turing ${MAIN})
+target_link_libraries(turing turing_lib)
 add_custom_command(
-    TARGET ${TARGET_NAME} POST_BUILD
+    TARGET turing POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/bin
-    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${TARGET_NAME}> ${PROJECT_SOURCE_DIR}/bin
+    COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:turing> ${PROJECT_SOURCE_DIR}/bin/${TURING_EXECUTABLE}
     COMMENT "Copying executable to bin directory"
+)
+
+set_target_properties(turing PROPERTIES
+    DEBUG_POSTFIX "_d"
+    RELEASE_POSTFIX ""
 )
 
 enable_testing()
