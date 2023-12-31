@@ -131,6 +131,12 @@ Code::Cursor &Code::Cursor::operator--() {
     return *this;
 }
 
+Code::Cursor Code::Cursor::operator--(int) {
+    Cursor tmp = *this;
+    --*this;
+    return tmp;
+}
+
 char Code::Cursor::operator*() const {
     return code->charAt(*this);
 }
