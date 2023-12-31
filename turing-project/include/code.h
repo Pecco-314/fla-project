@@ -66,6 +66,7 @@ struct Code::Span {
          int ed_cno);
     Span(std::shared_ptr<const Code> code, const Cursor &st, const Cursor &ed);
     bool operator==(const Span &other) const;
+    bool operator!=(const Span &other) const;
     Cursor begin() const;
     Cursor end() const;
     std::string str() const;

@@ -185,6 +185,10 @@ bool Code::Span::operator==(const Span &other) const {
            ed_cno == other.ed_cno;
 }
 
+bool Code::Span::operator!=(const Span &other) const {
+    return !(*this == other);
+}
+
 Code::Cursor Code::Span::begin() const {
     return {code, st_lno, st_cno};
 }
