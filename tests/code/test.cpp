@@ -70,5 +70,64 @@ int main() {
     sp3.collapse();
     simpletest("span_eof_3", sp3.eof(), true);
 
+    std::stringstream ss;
+    test_file->printHighlight(test_file->span(0, 0, 0, 0), RED, ss);
+    simpletest("print_highlight_1", ss.str(),
+               "   1 | " + Painted("H", RED) + "ello!\n"
+               "     | " + Painted("~", RED) + "     \n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(0, 0, 0, 5), RED, ss);
+    simpletest("print_highlight_2", ss.str(),
+               "   1 | " + Painted("Hello", RED) + "!\n"
+               "     | " + Painted("~~~~~", RED) + " \n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(0, 0, 0, 6), RED, ss);
+    simpletest("print_highlight_3", ss.str(),
+               "   1 | " + Painted("Hello!", RED) + "\n"
+               "     | " + Painted("~~~~~~", RED) + "\n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(0, 5, 1, 0), RED, ss);
+    simpletest("print_highlight_4", ss.str(),
+               "   1 | Hello" + Painted("!", RED) + "\n"
+               "     |      " + Painted("~", RED) + "\n"
+               "   2 | " + Painted("", RED) + "\n"
+               "     | " + Painted("", RED) + "\n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(0, 0, 2, 0), RED, ss);
+    simpletest("print_highlight_5", ss.str(),
+               "   1 | " + Painted("Hello!", RED) + "\n"
+               "     | " + Painted("~~~~~~", RED) + "\n"
+               "   2 | " + Painted("", RED) + "\n"
+               "     | " + Painted("", RED) + "\n"
+               "   3 | " + Painted("T", RED) + "his is a test file with 4 lines, but the 2nd and 4th lines are empty." + "\n"
+               "     | " + Painted("~", RED) + "                                                                     " + "\n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(0, 0, 2, 1), RED, ss);
+    simpletest("print_highlight_6", ss.str(),
+               "   1 | " + Painted("Hello!", RED) + "\n"
+               "     | " + Painted("~~~~~~", RED) + "\n"
+               "   2 | " + Painted("", RED) + "\n"
+               "     | " + Painted("", RED) + "\n"
+               "   3 | " + Painted("T", RED) + "his is a test file with 4 lines, but the 2nd and 4th lines are empty." + "\n"
+               "     | " + Painted("~", RED) + "                                                                     " + "\n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(0, 5, 2, 4), RED, ss);
+    simpletest("print_highlight_7", ss.str(),
+               "   1 | Hello" + Painted("!", RED) + "\n"
+               "     |      " + Painted("~", RED) + "\n"
+               "   2 | " + Painted("", RED) + "\n"
+               "     | " + Painted("", RED) + "\n"
+               "   3 | " + Painted("This", RED) + " is a test file with 4 lines, but the 2nd and 4th lines are empty.\n"
+               "     | " + Painted("~~~~", RED) + "                                                                  \n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(3, 0, 3, 0), RED, ss);
+    simpletest("print_highlight_8", ss.str(),
+               "   4 | " + Painted("", RED) + "\n"
+               "     | " + Painted("", RED) + "\n");
+    ss.str("");
+    test_file->printHighlight(test_file->span(4, 0, 4, 0), RED, ss);
+    simpletest("print_highlight_9", ss.str(),
+               "   5 | " + Painted(" ", RED) + "\n"
+               "     | " + Painted("~", RED) + "\n");
     return 0;
 }
