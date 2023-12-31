@@ -6,6 +6,7 @@
 #include <string_view>
 #include <vector>
 #include <filesystem>
+#include <iostream>
 #include "color.h"
 
 class Code : public std::enable_shared_from_this<Code> {
@@ -29,8 +30,8 @@ class Code : public std::enable_shared_from_this<Code> {
     Span span(int st_lno, int st_cno, int ed_lno, int ed_cno) const;
     Span span(const Span &st, const Span &ed) const;
     char charAt(const Cursor &cs) const;
-    void printLineHighlight(Span span, TermColor color) const;
-    void printHighlight(Span span, TermColor color) const;
+    void printLineHighlight(Span span, TermColor color, std::ostream& os = std::cerr) const;
+    void printHighlight(Span span, TermColor color, std::ostream& os = std::cerr) const;
 };
 
 struct Code::Cursor {

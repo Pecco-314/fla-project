@@ -69,30 +69,29 @@ Code::Cursor Code::end(int lno) const {
     return {shared_from_this(), lno, lineLen(lno)};
 }
 
-void Code::printLineHighlight(Span span, TermColor color) const {
+void Code::printLineHighlight(Span span, TermColor color, std::ostream &os) const {
     int lno = span.st_lno;
     if (span.eof()) {
-        std::cerr << std::setw(4) << lno + 1 << " |" << std::endl;
-        std::cerr << "     | " << color << "~" << RESET << std::endl;
+        os << std::setw(4) << lno + 1 << " |" << std::endl;
+        os << "     | " << color << "~" << RESET << std::endl;
         return;
     }
     if (span.empty()) { span.extend(); }
     std::string_view bf = line(lno).substr(0, span.st_cno);
     std::string_view hl = line(lno).substr(span.st_cno, span.ed_cno - span.st_cno);
     std::string_view af = line(lno).substr(span.ed_cno);
-    std::cerr << std::setw(4) << lno + 1 << " | " << bf << color << hl << RESET << af
-              << std::endl;
-    std::cerr << "     | " << std::string(bf.size(), ' ') << color
-              << std::string(hl.size(), '~') << RESET << std::string(af.size(), ' ')
-              << std::endl;
+    os << std::setw(4) << lno + 1 << " | " << bf << color << hl << RESET << af
+       << std::endl;
+    os << "     | " << std::string(bf.size(), ' ') << color << std::string(hl.size(), '~')
+       << RESET << std::string(af.size(), ' ') << std::endl;
 }
 
-void Code::printHighlight(Span span, TermColor color) const {
+void Code::printHighlight(Span span, TermColor color, std::ostream &os) const {
     auto &&code = span.code;
     for (int lno = span.st_lno; lno <= span.ed_lno; lno++) {
         Cursor st_cs = (lno == span.st_lno) ? span.begin() : begin(lno);
         Cursor ed_cs = (lno == span.ed_lno) ? span.end() : end(lno);
-        printLineHighlight(code->span(st_cs, ed_cs), color);
+        printLineHighlight(code->span(st_cs, ed_cs), color, os);
     }
 }
 
@@ -169,7 +168,7 @@ bool Code::Cursor::eof() const {
     return lno >= code->lines();
 }
 
-std::ostream& operator<<(std::ostream &os, const Code::Cursor &cs) {
+std::ostream &operator<<(std::ostream &os, const Code::Cursor &cs) {
     return os << cs.code->path() << ":" << cs.lno + 1 << ":" << cs.cno + 1;
 }
 
@@ -230,7 +229,7 @@ bool Code::Span::eof() const {
     return st_lno >= code->lines();
 }
 
-std::ostream& operator<<(std::ostream &os, const Code::Span &span) {
+std::ostream &operator<<(std::ostream &os, const Code::Span &span) {
     return os << span.code->path() << ":" << span.st_lno + 1 << ":" << span.st_cno + 1
               << "-" << span.ed_lno + 1 << ":" << span.ed_cno + 1;
 }
