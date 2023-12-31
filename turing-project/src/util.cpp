@@ -1,6 +1,6 @@
 #include "util.h"
 
-std::string Util::quoted(char ch) {
+std::string util::quoted(char ch) {
     if (ch == '\n') {
         return "'\\n'";
     } else if (ch == '\t') {

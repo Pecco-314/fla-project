@@ -26,7 +26,8 @@ void CodeError::log(bool verbose) const {
         std::cerr << BOLD << span.code->path() << ":" << span.st_lno + 1 << ":" << span.st_cno + 1 << ": " << ERR;
         switch (type) {
         case Type::LEXER_INVALID_CHAR:
-            std::cerr << "Invalid character: " << Util::quoted(*span.begin()) << std::endl;
+            std::cerr << "Invalid character: " << util::quoted(*span.begin())
+                      << std::endl;
             break;
         case Type::PARSER_EXPECTED:
             std::cerr << "Expected " <<  expected << std::endl;

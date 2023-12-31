@@ -3,8 +3,10 @@
 
 #include <string>
 
-struct Util {
-    static std::string quoted(char ch);
-};
+namespace util {
+
+std::string quoted(char ch);
+
+} // namespace util
 
 #endif
