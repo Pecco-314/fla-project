@@ -72,18 +72,18 @@ Code::Cursor Code::end(int lno) const {
 void Code::printLineHighlight(Span span, TermColor color, std::ostream &os) const {
     int lno = span.st_lno;
     if (span.eof()) {
-        os << std::setw(4) << lno + 1 << " |" << std::endl;
-        os << "     | " << color << "~" << RESET << std::endl;
+        os << std::setw(4) << lno + 1 << " | " << Painted(" ", color) << std::endl;
+        os << "     | " << Painted("~", color) << std::endl;
         return;
     }
     if (span.empty()) { span.extend(); }
     std::string_view bf = line(lno).substr(0, span.st_cno);
     std::string_view hl = line(lno).substr(span.st_cno, span.ed_cno - span.st_cno);
     std::string_view af = line(lno).substr(span.ed_cno);
-    os << std::setw(4) << lno + 1 << " | " << bf << color << hl << RESET << af
+    os << std::setw(4) << lno + 1 << " | " << bf << Painted(hl, color) << af << std::endl;
+    os << "     | " << std::string(bf.size(), ' ')
+       << Painted(std::string(hl.size(), '~'), color) << std::string(af.size(), ' ')
        << std::endl;
-    os << "     | " << std::string(bf.size(), ' ') << color << std::string(hl.size(), '~')
-       << RESET << std::string(af.size(), ' ') << std::endl;
 }
 
 void Code::printHighlight(Span span, TermColor color, std::ostream &os) const {
