@@ -1,11 +1,25 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 
+#include "color.h"
+#include <iostream>
 #include <sstream>
 
 namespace util {
 
 std::string quoted(char ch);
+
+template <typename T, typename U>
+void simpletest(std::string_view name, const T &actual, const U &expected) {
+    if (actual != expected) {
+        std::cerr << FAILED << name << std::endl;
+        std::cerr << "expected: " << expected << std::endl;
+        std::cerr << "  actual: " << actual << std::endl;
+        exit(1);
+    } else {
+        std::cerr << PASSED << name << std::endl;
+    }
+}
 
 inline std::string format(std::string_view fmt) {
     std::string s;
