@@ -1,0 +1,4 @@
+Hello!
+This is a test file with 4 lines.
+The last line is a empty line.
+

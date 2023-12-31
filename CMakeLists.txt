@@ -47,3 +47,7 @@ add_test(NAME test_util COMMAND test_util)
 add_executable(test_args ${TEST_DIR}/args/test.cpp)
 target_link_libraries(test_args turing_lib)
 add_test(NAME test_args COMMAND test_args)
+
+add_executable(test_code ${TEST_DIR}/code/test.cpp)
+target_link_libraries(test_code turing_lib)
+add_test(NAME test_code COMMAND test_code)
