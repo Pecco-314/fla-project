@@ -40,3 +40,7 @@ set_target_properties(turing PROPERTIES
 enable_testing()
 set(TEST_DIR ${PROJECT_SOURCE_DIR}/tests)
 add_test(NAME test_args COMMAND bash ${TEST_DIR}/args/test.sh)
+
+add_executable(test_util ${TEST_DIR}/util/test.cpp)
+target_link_libraries(test_util turing_lib)
+add_test(NAME test_util COMMAND test_util)
