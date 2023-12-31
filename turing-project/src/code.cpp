@@ -36,11 +36,11 @@ int Code::lines() const {
 }
 
 std::string_view Code::line(int lno) const {
-    return lines_[lno];
+    return lines_.at(lno);
 }
 
 int Code::lineLen(int lno) const {
-    return lines_[lno].size();
+    return lines_.at(lno).size();
 }
 
 char Code::charAt(const Cursor &cs) const {
@@ -49,7 +49,7 @@ char Code::charAt(const Cursor &cs) const {
     } else if (cs.cno == lineLen(cs.lno)) {
         return '\n';
     } else {
-        return lines_[cs.lno][cs.cno];
+        return lines_.at(cs.lno).at(cs.cno);
     }
 }
 
