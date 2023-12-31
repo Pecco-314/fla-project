@@ -13,6 +13,7 @@ class TermColor {
     TermColor() = default;
     TermColor(int color...) : colors{color} {}
     TermColor operator|(const TermColor &other) const;
+    std::string str() const;
     friend std::ostream &operator<<(std::ostream &os, const TermColor &color);
     static void setForceColor(bool force_color = true);
 };
@@ -37,6 +38,10 @@ class Painted {
   public:
     Painted() = default;
     Painted(std::string_view text, TermColor color) : text(text), color(color) {}
+    std::string str() const;
+    friend std::string operator+(std::string_view str, const Painted &paint);
+    friend std::string operator+(const Painted &paint, std::string_view str);
+    friend std::string operator+(const Painted &paint1, const Painted &paint2);
     friend std::ostream &operator<<(std::ostream &os, const Painted &paint);
 };
 
