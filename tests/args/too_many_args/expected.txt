@@ -1,2 +1,0 @@
-error: Too many arguments
-note: Usage: turing [-v|--verbose] [-h|--help] <tm_path> <input>

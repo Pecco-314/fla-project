@@ -1,2 +1,0 @@
-error: Invalid option: -x
-note: Usage: turing [-v|--verbose] [-h|--help] <tm_path> <input>
