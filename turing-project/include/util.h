@@ -4,7 +4,6 @@
 #include <string>
 
 struct Util {
-    static void usage();
     static std::string quoted(char ch);
 };
 

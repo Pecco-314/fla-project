@@ -1,10 +1,4 @@
 #include "util.h"
-#include <iostream>
-
-void Util::usage() {
-    std::cerr << "Usage: turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>"
-              << std::endl;
-}
 
 std::string Util::quoted(char ch) {
     if (ch == '\n') {

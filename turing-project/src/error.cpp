@@ -1,5 +1,6 @@
 #include "error.h"
 #include "color.h"
+#include "constants.h"
 #include "util.h"
 #include <iostream>
 
@@ -16,8 +17,7 @@ void ArgError::log() const {
         std::cerr << "Too few arguments" << std::endl;
         break;
     }
-    std::cerr << NOTE;
-    Util::usage();
+    std::cerr << NOTE << USAGE << std::endl;
     exit(1);
 }
 

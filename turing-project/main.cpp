@@ -1,6 +1,7 @@
+#include "constants.h"
 #include "error.h"
 #include "tm.h"
-#include "util.h"
+#include <iostream>
 
 int main(int argc, char *argv[]) {
     std::string tm_path, input;
@@ -9,7 +10,7 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; ++i) {
             std::string arg(argv[i]);
             if (arg == "-h" || arg == "--help") {
-                Util::usage();
+                std::cerr << USAGE << std::endl;
                 exit(0);
             } else if (arg == "-v" || arg == "--verbose") {
                 verbose = true;
