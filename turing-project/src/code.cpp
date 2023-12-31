@@ -1,19 +1,24 @@
 #include "code.h"
+#include "messages.h"
+#include "util.hpp"
 #include <fstream>
 #include <iostream>
 
+using namespace util;
+using namespace msg;
+
 Code::Code(std::filesystem::path path) : path_(path) {
-    if (!std::filesystem::exists(path_)) {
-        std::cerr << ERR << path << " does not exist" << std::endl;
+    if (!std::filesystem::exists(path)) {
+        std::cerr << ERR << format(FILE_NOT_EXIST, path) << std::endl;
         exit(1);
     }
-    if (!std::filesystem::is_regular_file(path_)) {
-        std::cerr << ERR << path << " is not a regular file" << std::endl;
+    if (!std::filesystem::is_regular_file(path)) {
+        std::cerr << ERR << format(NOT_A_REGULAR_FILE, path) << std::endl;
         exit(1);
     }
-    std::ifstream tmfile(path_);
+    std::ifstream tmfile(path);
     if (!tmfile.good()) {
-        std::cerr << ERR << "Unable to read " << path << std::endl;
+        std::cerr << ERR << format(UNABLE_TO_READ, path) << std::endl;
         exit(1);
     }
     std::string line;

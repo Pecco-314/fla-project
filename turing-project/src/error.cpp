@@ -1,22 +1,23 @@
 #include "error.h"
 #include "color.h"
 #include "messages.h"
-#include "util.h"
+#include "util.hpp"
 #include <iostream>
 
+using namespace util;
 using namespace msg;
 
 void ArgError::log() const {
     std::cerr << ERR;
     switch (type) {
     case Type::INVALID_OPTION:
-        std::cerr << "Invalid option: " << arg << std::endl;
+        std::cerr << format(INVALID_OPTION, arg) << std::endl;
         break;
     case Type::TOO_MANY_ARGS:
-        std::cerr << "Too many arguments" << std::endl;
+        std::cerr << TOO_MANY_ARGS << std::endl;
         break;
     case Type::TOO_FEW_ARGS:
-        std::cerr << "Too few arguments" << std::endl;
+        std::cerr << TOO_FEW_ARGS << std::endl;
         break;
     }
     std::cerr << NOTE << USAGE << std::endl;
