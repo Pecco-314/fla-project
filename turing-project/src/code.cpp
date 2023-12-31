@@ -169,6 +169,10 @@ bool Code::Cursor::eof() const {
     return lno >= code->lines();
 }
 
+std::ostream& operator<<(std::ostream &os, const Code::Cursor &cs) {
+    return os << cs.code->path() << ":" << cs.lno + 1 << ":" << cs.cno + 1;
+}
+
 Code::Span::Span(std::shared_ptr<const Code> code, int st_lno, int st_cno, int ed_lno,
                  int ed_cno)
     : code(code), st_lno(st_lno), st_cno(st_cno), ed_lno(ed_lno), ed_cno(ed_cno) {}
@@ -220,4 +224,9 @@ bool Code::Span::empty() const {
 
 bool Code::Span::eof() const {
     return st_lno >= code->lines();
+}
+
+std::ostream& operator<<(std::ostream &os, const Code::Span &span) {
+    return os << span.code->path() << ":" << span.st_lno + 1 << ":" << span.st_cno + 1
+              << "-" << span.ed_lno + 1 << ":" << span.ed_cno + 1;
 }

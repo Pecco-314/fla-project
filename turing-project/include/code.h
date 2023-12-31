@@ -51,6 +51,7 @@ struct Code::Cursor {
     Cursor &skipPrevLine();
     bool bof() const;
     bool eof() const;
+    friend std::ostream &operator<<(std::ostream &os, const Cursor &cs);
 };
 
 struct Code::Span {
@@ -73,6 +74,7 @@ struct Code::Span {
     void collapse();
     bool empty() const;
     bool eof() const;
+    friend std::ostream &operator<<(std::ostream &os, const Span &span);
 };
 
 #endif

@@ -26,7 +26,7 @@ void ArgError::log() const {
 
 void CodeError::log(bool verbose) const {
     if (verbose) {
-        std::cerr << BOLD << span.code->path() << ":" << span.st_lno + 1 << ":" << span.st_cno + 1 << ": " << ERR;
+        std::cerr << BOLD << span.begin() << ": " << ERR;
         switch (type) {
         case Type::LEXER_INVALID_CHAR:
             std::cerr << "Invalid character: " << util::quoted(*span.begin())
