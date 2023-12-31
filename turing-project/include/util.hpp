@@ -41,6 +41,15 @@ inline std::string quoted(char ch) {
     return "'" + escaped(ch) + "'";
 }
 
+inline std::string quoted(std::string_view s) {
+    std::string quoted = "\"";
+    for (auto &&ch : s) {
+        quoted += escaped(ch);
+    }
+    quoted += "\"";
+    return quoted;
+}
+
 template <typename T, typename U>
 void simpletest(std::string_view name, const T &actual, const U &expected) {
     if (actual != expected) {

@@ -1,5 +1,5 @@
 #include "color.h"
-#include "util.h"
+#include "util.hpp"
 
 int main() {
     using namespace util;
@@ -17,6 +17,11 @@ int main() {
     simpletest("quoted_printable", quoted('a'), "'a'");
     simpletest("quoted_small_nonprintable", quoted('\x01'), "'\\x01'");
     simpletest("quoted_large_nonprintable", quoted('\xff'), "'\\xFF'");
+
+    simpletest("quoted_string_empty", quoted(""), "\"\"");
+    simpletest("quoted_string_nonempty", quoted("hello"), "\"hello\"");
+    simpletest("quoted_string_with_escape", quoted("hello\nworld"), "\"hello\\nworld\"");
+    simpletest("quoted_string_with_nonprintable", quoted("\xBEST"), "\"\\xBEST\"");
 
     simpletest("format_empty", format(""), "");
     simpletest("format_no_args", format("hello"), "hello");
