@@ -51,3 +51,7 @@ add_test(NAME test_args COMMAND test_args)
 add_executable(test_code ${TEST_DIR}/code/test.cpp)
 target_link_libraries(test_code turing_lib)
 add_test(NAME test_code COMMAND test_code)
+
+add_executable(test_lexer ${TEST_DIR}/lexer/test.cpp)
+target_link_libraries(test_lexer turing_lib)
+add_test(NAME test_lexer COMMAND test_lexer)
