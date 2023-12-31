@@ -50,12 +50,26 @@ inline std::string quoted(std::string_view s) {
     return quoted;
 }
 
+template <typename T> inline std::string to_string(const T &val) {
+    std::stringstream ss;
+    ss << val;
+    return ss.str();
+}
+
 template <typename T, typename U>
 void simpletest(std::string_view name, const T &actual, const U &expected) {
     if (actual != expected) {
         std::cerr << FAILED << name << std::endl;
-        std::cerr << "expected: " << expected << std::endl;
-        std::cerr << "  actual: " << actual << std::endl;
+        auto expected_str = to_string(expected);
+        auto actual_str = to_string(actual);
+        if (expected_str.find('\n') != std::string::npos ||
+            actual_str.find('\n') != std::string::npos) {
+            std::cerr << "expected: " << std::endl << expected_str << std::endl;
+            std::cerr << "actual: " << std::endl << actual_str << std::endl;
+        } else {
+            std::cerr << "expected: " << expected_str << std::endl;
+            std::cerr << "  actual: " << actual_str << std::endl;
+        }
         exit(1);
     } else {
         std::cerr << PASSED << name << std::endl;
