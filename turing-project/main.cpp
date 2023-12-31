@@ -1,4 +1,5 @@
 #include "constants.h"
+#include "messages.h"
 #include "error.h"
 #include "tm.h"
 #include <iostream>
@@ -10,7 +11,7 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; ++i) {
             std::string arg(argv[i]);
             if (arg == "-h" || arg == "--help") {
-                std::cerr << USAGE << std::endl;
+                std::cerr << msg::USAGE << std::endl;
                 exit(0);
             } else if (arg == "-v" || arg == "--verbose") {
                 verbose = true;

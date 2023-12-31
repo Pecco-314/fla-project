@@ -1,8 +1,10 @@
 #include "error.h"
 #include "color.h"
-#include "constants.h"
+#include "messages.h"
 #include "util.h"
 #include <iostream>
+
+using namespace msg;
 
 void ArgError::log() const {
     std::cerr << ERR;
