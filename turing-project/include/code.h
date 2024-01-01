@@ -80,6 +80,7 @@ struct Code::Span {
     void collapse();
     bool empty() const;
     bool eof() const;
+    bool nextTo(const Span &other) const;
     friend std::ostream &operator<<(std::ostream &os, const Span &span);
 };
 

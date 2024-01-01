@@ -48,3 +48,9 @@ int Token::intval() const {
     }
     return ret;
 }
+
+void Token::operator+=(const Token &other) {
+    val += other.val;
+    span.ed_lno = other.span.ed_lno;
+    span.ed_cno = other.span.ed_cno;
+}

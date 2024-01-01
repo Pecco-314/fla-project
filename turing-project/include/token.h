@@ -18,6 +18,7 @@ struct Token {
     std::string strval() const;
     char charval() const;
     int intval() const;
+    void operator+=(const Token &other);
 };
 
 #endif

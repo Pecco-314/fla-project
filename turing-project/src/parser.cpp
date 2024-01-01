@@ -69,6 +69,14 @@ std::vector<Token> Parser::parseSet(std::function<std::optional<Token>()> pred) 
     return ret;
 }
 
+Token Parser::combineTokens() {
+    auto token = consume();
+    while (!token.span.eof() && token.span.nextTo(peek().span)) {
+        token += consume();
+    }
+    return token;
+}
+
 void Parser::parseQ() {
     parseText("#Q");
     parseChar('=');

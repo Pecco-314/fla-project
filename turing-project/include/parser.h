@@ -19,6 +19,7 @@ class Parser {
     std::optional<Token> parseChar(char c, bool throws = true);
     std::optional<Token> parseInt(bool throws = true);
     std::vector<Token> parseSet(std::function<std::optional<Token>()> pred);
+    Token combineTokens();
 
     void parseQ();
     void parseS();

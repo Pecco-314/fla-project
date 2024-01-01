@@ -246,6 +246,10 @@ bool Code::Span::eof() const {
     return st_lno >= code->lines();
 }
 
+bool Code::Span::nextTo(const Span &other) const {
+    return ed_lno == other.st_lno && ed_cno == other.st_cno;
+}
+
 std::ostream &operator<<(std::ostream &os, const Code::Span &span) {
     return os << span.code->path() << ":" << span.st_lno + 1 << ":" << span.st_cno + 1
               << "-" << span.ed_lno + 1 << ":" << span.ed_cno + 1;
