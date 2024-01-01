@@ -22,6 +22,10 @@ const inline std::string VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET = "Tape a
 const inline std::string VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET = "Input alphabet is not a subset of tape alphabet";
 const inline std::string VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES = "Final states are not a subset of states";
 const inline std::string VALIDATOR_INVALID_INITIAL_STATE = "Initial state is not a valid state";
+const inline std::string NON_NEGATIVE_INTEGER = "non-negative integer";
+const inline std::string IDENTIFIER = "identifier";
+const inline std::string VALID_CHAR = "ASCII graphic character except for ';', ',', '{', '}', '*' and '_'";
+const inline std::string VALID_CHAR_OR_UNDERSCORE = "ASCII graphic character except for ';', ',', '{', '}' and '*'";
 
 } // namespace msg
 

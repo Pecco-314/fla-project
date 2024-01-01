@@ -1,7 +1,10 @@
 #include "parser.h"
 #include "error.h"
 #include "lexer.h"
+#include "messages.h"
 #include "util.hpp"
+
+using namespace msg;
 
 Parser::Parser(std::shared_ptr<Code> code, TuringMachine *tm) : code(code), tm(tm) {}
 
@@ -42,7 +45,7 @@ std::optional<Token> Parser::parseChar(char c, bool throws) {
 }
 
 std::optional<Token> Parser::parseInt(bool throws) {
-    return parseIf([](Token tok) { return tok.isInt(); }, "non-negative integer", throws);
+    return parseIf([](Token tok) { return tok.isInt(); }, NON_NEGATIVE_INTEGER, throws);
 }
 
 std::vector<Token> Parser::parseSet(std::function<std::optional<Token>()> pred) {
@@ -69,18 +72,16 @@ std::vector<Token> Parser::parseSet(std::function<std::optional<Token>()> pred) 
 void Parser::parseQ() {
     parseText("#Q");
     parseChar('=');
-    tm->setStates(parseSet([this]() {
-        return parseIf([](Token tok) { return tok.isID(); }, "identifier");
-    }));
+    tm->setStates(parseSet(
+        [this]() { return parseIf([](Token tok) { return tok.isID(); }, IDENTIFIER); }));
 }
 
 void Parser::parseS() {
     parseText("#S");
     parseChar('=');
     tm->setInputSymbols(parseSet([this]() {
-        return parseIf(
-            [](Token tok) { return tok.isValidChar() && !tok.isChar('_'); },
-            "ASCII graphic character except for ';', ',', '{', '}', '*' and '_'");
+        return parseIf([](Token tok) { return tok.isValidChar() && !tok.isChar('_'); },
+                       VALID_CHAR_OR_UNDERSCORE);
     }));
 }
 
@@ -97,7 +98,7 @@ void Parser::parseq0() {
     parseText("#q0");
     parseChar('=');
     tm->setInitialState(
-        parseIf([](Token tok) { return tok.isID(); }, "identifier").value());
+        parseIf([](Token tok) { return tok.isID(); }, IDENTIFIER).value());
 }
 
 void Parser::parseB() {
@@ -109,9 +110,8 @@ void Parser::parseB() {
 void Parser::parseF() {
     parseText("#F");
     parseChar('=');
-    tm->setFinalStates(parseSet([this]() {
-        return parseIf([](Token tok) { return tok.isID(); }, "identifier");
-    }));
+    tm->setFinalStates(parseSet(
+        [this]() { return parseIf([](Token tok) { return tok.isID(); }, IDENTIFIER); }));
 }
 
 void Parser::parseN() {
