@@ -1,5 +1,5 @@
 #include "color.h"
-#include "util.hpp"
+#include "util.h"
 
 int main() {
     using namespace util;

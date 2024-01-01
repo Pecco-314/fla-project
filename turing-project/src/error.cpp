@@ -1,7 +1,7 @@
 #include "error.h"
 #include "color.h"
 #include "str_literals.h"
-#include "util.hpp"
+#include "util.h"
 #include <iostream>
 
 using namespace util;

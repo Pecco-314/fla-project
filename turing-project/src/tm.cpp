@@ -2,7 +2,7 @@
 #include "error.h"
 #include "parser.h"
 #include "str_literals.h"
-#include "util.hpp"
+#include "util.h"
 #include <algorithm>
 #include <iostream>
 

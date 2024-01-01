@@ -1,6 +1,6 @@
 #include "lexer.h"
 #include "error.h"
-#include "util.hpp"
+#include "util.h"
 #include <fstream>
 
 using namespace util;

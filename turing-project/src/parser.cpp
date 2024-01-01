@@ -2,7 +2,7 @@
 #include "error.h"
 #include "lexer.h"
 #include "str_literals.h"
-#include "util.hpp"
+#include "util.h"
 
 using namespace str_literals;
 
