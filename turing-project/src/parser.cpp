@@ -81,7 +81,7 @@ void Parser::parseS() {
     parseChar('=');
     tm->setInputSymbols(parseSet([this]() {
         return parseIf([](Token tok) { return tok.isValidChar() && !tok.isChar('_'); },
-                       VALID_CHAR_OR_UNDERSCORE);
+                       VALID_CHAR);
     }));
 }
 
@@ -90,7 +90,7 @@ void Parser::parseG() {
     parseChar('=');
     tm->setTapeSymbols(parseSet([this]() {
         return parseIf([](Token tok) { return tok.isValidChar(); },
-                       "ASCII graphic character except for ';', ',', '{', '}' and '*'");
+                       VALID_CHAR_OR_UNDERSCORE);
     }));
 }
 
