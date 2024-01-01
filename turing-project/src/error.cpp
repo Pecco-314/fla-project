@@ -61,16 +61,16 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK:
             std::cerr << "Expected underscore as blank character" << std::endl;
             break;
-        case Type::VALIDATOR_MISSING_UNDERSCORE_IN_G:
+        case Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
             std::cerr << "Tape alphabet must contain underscore" << std::endl;
             break;
-        case Type::VALIDATOR_S_NOT_SUBSET_OF_G:
+        case Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
             std::cerr << "Input alphabet must be a subset of tape alphabet" << std::endl;
             break;
         case Type::VALIDATOR_INVALID_INITIAL_STATE:
             std::cerr << "Initial state must be a valid state" << std::endl;
             break;
-        case Type::VALIDATOR_F_NOT_SUBSET_OF_Q:
+        case Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
             std::cerr << "Final states must be a subset of states" << std::endl;
             break;
         case Type::VALIDATOR_INVALID_NUM_TAPES:
@@ -98,13 +98,13 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
         return os << "PARSER_EMPTY_SET";
     case CodeError::Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK:
         return os << "PARSER_EXPECTED_UNDERSCORE_AS_BLANK";
-    case CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_G:
+    case CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
         return os << "VALIDATOR_MISSING_UNDERSCORE_IN_G";
-    case CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G:
+    case CodeError::Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
         return os << "VALIDATOR_S_NOT_SUBSET_OF_G";
     case CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE:
         return os << "VALIDATOR_INVALID_INITIAL_STATE";
-    case CodeError::Type::VALIDATOR_F_NOT_SUBSET_OF_Q:
+    case CodeError::Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
         return os << "VALIDATOR_F_NOT_SUBSET_OF_Q";
     case CodeError::Type::VALIDATOR_INVALID_NUM_TAPES:
         return os << "VALIDATOR_INVALID_NUM_TAPES";

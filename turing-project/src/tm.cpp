@@ -56,11 +56,11 @@ void TuringMachine::validate() const {
     auto &&code = initial_state_token.span.code;
     if (!G.count('_')) {
         throw CodeError{
-            CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_G,
+            CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET,
             code->span(tape_symbol_tokens.front().span, tape_symbol_tokens.back().span)};
     }
     if (!std::includes(G.begin(), G.end(), S.begin(), S.end())) {
-        throw CodeError{CodeError::Type::VALIDATOR_S_NOT_SUBSET_OF_G,
+        throw CodeError{CodeError::Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET,
                         code->span(input_symbol_tokens.front().span,
                                    input_symbol_tokens.back().span)};
     }
@@ -70,7 +70,7 @@ void TuringMachine::validate() const {
     }
     if (!std::includes(Q.begin(), Q.end(), F.begin(), F.end())) {
         throw CodeError{
-            CodeError::Type::VALIDATOR_F_NOT_SUBSET_OF_Q,
+            CodeError::Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES,
             code->span(final_state_tokens.front().span, final_state_tokens.back().span)};
     }
 }
