@@ -57,9 +57,6 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_EMPTY_SET:
             std::cerr << PARSER_EMPTY_SET << std::endl;
             break;
-        case Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK:
-            std::cerr << PARSER_EXPECTED_UNDERSCORE_AS_BLANK << std::endl;
-            break;
         case Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
             std::cerr << VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET << std::endl;
             break;
@@ -94,8 +91,6 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
         return os << "PARSER_UNEXPECTED_UNDERSCORE";
     case CodeError::Type::PARSER_EMPTY_SET:
         return os << "PARSER_EMPTY_SET";
-    case CodeError::Type::PARSER_EXPECTED_UNDERSCORE_AS_BLANK:
-        return os << "PARSER_EXPECTED_UNDERSCORE_AS_BLANK";
     case CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
         return os << "VALIDATOR_MISSING_UNDERSCORE_IN_G";
     case CodeError::Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
