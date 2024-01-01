@@ -5,6 +5,9 @@
 #include <iostream>
 #include <set>
 #include <sstream>
+#ifndef NDEBUG
+#include <cassert>
+#endif
 
 namespace util {
 
@@ -142,6 +145,18 @@ template <typename T> std::ostream &operator<<(std::ostream &os, const std::set<
     }
     os << "}";
     return os;
+}
+
+inline void assume(bool expr) {
+#ifndef NDEBUG
+    assert(expr);
+#else
+#if defined(__GNUC__) || defined(__GNUG__) || defined(__clang__)
+    if (!expr) { __builtin_unreachable(); }
+#elif defined(_MSC_VER)
+    if (!expr) { __assume(0); }
+#endif
+#endif
 }
 
 #define TEST_ERROR(name, codes, error_type, error_check)                                 \

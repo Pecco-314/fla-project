@@ -2,7 +2,6 @@
 #include "color.h"
 #include "str_literals.h"
 #include "util.hpp"
-#include <cassert>
 #include <iostream>
 
 using namespace util;
@@ -34,7 +33,8 @@ std::ostream &operator<<(std::ostream &os, const ArgError::Type &et) {
     case ArgError::Type::TOO_FEW_ARGS:
         return os << "TOO_FEW_ARGS";
     default:
-        assert(false);
+        assume(false);
+        exit(1);
     }
 }
 
@@ -88,7 +88,8 @@ void CodeError::log(bool verbose) const {
             std::cerr << format(VALIDATOR_INVALID_DIRECTION, span.str()) << std::endl;
             break;
         default:
-            assert(false);
+            assume(false);
+            exit(1);
         }
         span.code->printHighlight(span, RED | BOLD);
     } else {
@@ -128,6 +129,7 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
     case CodeError::Type::VALIDATOR_INVALID_DIRECTION:
         return os << "VALIDATOR_INVALID_DIRECTION";
     default:
-        assert(false);
+        assume(false);
+        exit(1);
     }
 }
