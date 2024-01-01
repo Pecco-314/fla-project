@@ -26,7 +26,7 @@ class TuringMachine {
     std::string q0;          // initial state
     char B = '_';            // blank symbol
     std::set<std::string> F; // final states
-    int N;                   // number of tapes
+    unsigned int N;          // number of tapes
 
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);

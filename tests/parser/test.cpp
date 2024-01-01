@@ -305,7 +305,7 @@ int main() {
     simpletest("tm_q0", tm->q0, "q0");
     simpletest("tm_B", tm->B, '_');
     simpletest("tm_F", tm->F, std::set<std::string>{"q0", "State_1", "123"});
-    simpletest("tm_N", tm->N, 2);
+    simpletest("tm_N", tm->N, 2u);
 
     return 0;
 }
