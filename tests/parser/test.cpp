@@ -26,7 +26,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t1_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t1_span", e.span, code->span(0, 0, 0, 0));
-        simpletest("t1_expected", e.expected, "\"#Q\"");
+        simpletest("t1_expected", e.info, "\"#Q\"");
     }
     try {
         parse("#");
@@ -34,7 +34,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t2_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t2_span", e.span, code->span(0, 0, 0, 1));
-        simpletest("t2_expected", e.expected, "\"#Q\"");
+        simpletest("t2_expected", e.info, "\"#Q\"");
     }
     try {
         parse("#Q");
@@ -42,7 +42,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t3_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t3_span", e.span, code->span(1, 0, 1, 0));
-        simpletest("t3_expected", e.expected, "'='");
+        simpletest("t3_expected", e.info, "'='");
     }
     try {
         parse("#Q =");
@@ -50,7 +50,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t4_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t4_span", e.span, code->span(1, 0, 1, 0));
-        simpletest("t4_expected", e.expected, "'{'");
+        simpletest("t4_expected", e.info, "'{'");
     }
     try {
         parse("#Q = }");
@@ -58,7 +58,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t5_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t5_span", e.span, code->span(0, 5, 0, 6));
-        simpletest("t5_expected", e.expected, "'{'");
+        simpletest("t5_expected", e.info, "'{'");
     }
     try {
         parse("#Q = {");
@@ -73,7 +73,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t7_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t7_span", e.span, code->span(0, 7, 0, 9));
-        simpletest("t7_expected", e.expected, IDENTIFIER);
+        simpletest("t7_expected", e.info, IDENTIFIER);
     }
     try {
         parse("#Q = { q0, }");
@@ -81,7 +81,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t8_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t8_span", e.span, code->span(0, 11, 0, 12));
-        simpletest("t8_expected", e.expected, IDENTIFIER);
+        simpletest("t8_expected", e.info, IDENTIFIER);
     }
     try {
         parse("#Q = { q0, State_1, 123, hello-world }");
@@ -96,7 +96,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t10_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t10_span", e.span, code->span(1, 0, 1, 0));
-        simpletest("t10_expected", e.expected, "\"#S\"");
+        simpletest("t10_expected", e.info, "\"#S\"");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -105,7 +105,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t11_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t11_span", e.span, code->span(1, 7, 1, 9));
-        simpletest("t11_expected", e.expected, VALID_CHAR);
+        simpletest("t11_expected", e.info, VALID_CHAR);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -114,7 +114,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t12_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t12_span", e.span, code->span(1, 10, 1, 11));
-        simpletest("t12_expected", e.expected, VALID_CHAR);
+        simpletest("t12_expected", e.info, VALID_CHAR);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -123,7 +123,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t13_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t13_span", e.span, code->span(2, 0, 2, 0));
-        simpletest("t13_expected", e.expected, "\"#G\"");
+        simpletest("t13_expected", e.info, "\"#G\"");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -133,7 +133,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t14_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t14_span", e.span, code->span(3, 0, 3, 0));
-        simpletest("t14_expected", e.expected, "\"#q0\"");
+        simpletest("t14_expected", e.info, "\"#q0\"");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -144,7 +144,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t15_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t15_span", e.span, code->span(3, 6, 3, 7));
-        simpletest("t15_expected", e.expected, IDENTIFIER);
+        simpletest("t15_expected", e.info, IDENTIFIER);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -155,7 +155,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t16_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t16_span", e.span, code->span(4, 0, 4, 0));
-        simpletest("t16_expected", e.expected, "\"#B\"");
+        simpletest("t16_expected", e.info, "\"#B\"");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -167,7 +167,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t17_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t17_span", e.span, code->span(4, 5, 4, 9));
-        simpletest("t17_expected", e.expected, "'_'");
+        simpletest("t17_expected", e.info, "'_'");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -179,7 +179,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t18_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t18_span", e.span, code->span(5, 0, 5, 0));
-        simpletest("t18_expected", e.expected, "\"#F\"");
+        simpletest("t18_expected", e.info, "\"#F\"");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -192,7 +192,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t19_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t19_span", e.span, code->span(5, 25, 5, 26));
-        simpletest("t19_expected", e.expected, IDENTIFIER);
+        simpletest("t19_expected", e.info, IDENTIFIER);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -205,7 +205,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t20_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t20_span", e.span, code->span(6, 0, 6, 0));
-        simpletest("t20_expected", e.expected, "\"#N\"");
+        simpletest("t20_expected", e.info, "\"#N\"");
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -219,7 +219,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t21_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t21_span", e.span, code->span(6, 4, 6, 5));
-        simpletest("t21_expected", e.expected, NON_NEGATIVE_INTEGER);
+        simpletest("t21_expected", e.info, NON_NEGATIVE_INTEGER);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -233,7 +233,7 @@ int main() {
         auto code = e.span.code;
         simpletest("t22_type", e.type, CodeError::Type::PARSER_EXPECTED);
         simpletest("t22_span", e.span, code->span(6, 5, 6, 6));
-        simpletest("t22_expected", e.expected, NON_NEGATIVE_INTEGER);
+        simpletest("t22_expected", e.info, NON_NEGATIVE_INTEGER);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"
@@ -273,8 +273,9 @@ int main() {
               "#N = 2");
     } catch (CodeError &e) {
         auto code = e.span.code;
-        simpletest("t25_type", e.type, CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE);
+        simpletest("t25_type", e.type, CodeError::Type::VALIDATOR_INVALID_STATE);
         simpletest("t25_span", e.span, code->span(3, 6, 3, 8));
+        simpletest("t25_expected", e.info, INITIAL_STATE);
     }
     try {
         parse("#Q = { q0, State_1, 123, helloworld }\n"

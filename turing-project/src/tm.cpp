@@ -1,8 +1,11 @@
 #include "tm.h"
 #include "error.h"
 #include "parser.h"
+#include "str_literals.h"
 #include <algorithm>
 #include <iostream>
+
+using namespace str_literals;
 
 void TuringMachine::parse(std::shared_ptr<Code> code) {
     Parser parser(code, this);
@@ -66,8 +69,8 @@ void TuringMachine::validate() const {
                                    input_symbol_tokens.back().span)};
     }
     if (!Q.count(q0)) {
-        throw CodeError{CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE,
-                        initial_state_token.span};
+        throw CodeError{CodeError::Type::VALIDATOR_INVALID_STATE,
+                        initial_state_token.span, INITIAL_STATE};
     }
     if (!std::includes(Q.begin(), Q.end(), F.begin(), F.end())) {
         throw CodeError{

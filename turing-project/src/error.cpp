@@ -46,7 +46,7 @@ void CodeError::log(bool verbose) const {
             std::cerr << format(LEXER_INVALID_CHAR, quoted(span.front())) << std::endl;
             break;
         case Type::PARSER_EXPECTED:
-            std::cerr << format(PARSER_EXPECTED, expected) << std::endl;
+            std::cerr << format(PARSER_EXPECTED, info) << std::endl;
             break;
         case Type::PARSER_UNCLOSED_SET:
             std::cerr << PARSER_UNCLOSED_SET << std::endl;
@@ -63,8 +63,8 @@ void CodeError::log(bool verbose) const {
         case Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
             std::cerr << VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET << std::endl;
             break;
-        case Type::VALIDATOR_INVALID_INITIAL_STATE:
-            std::cerr << VALIDATOR_INVALID_INITIAL_STATE << std::endl;
+        case Type::VALIDATOR_INVALID_STATE:
+            std::cerr << format(VALIDATOR_INVALID_STATE, info) << std::endl;
             break;
         case Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
             std::cerr << VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES << std::endl;
@@ -95,8 +95,8 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
         return os << "VALIDATOR_MISSING_UNDERSCORE_IN_G";
     case CodeError::Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
         return os << "VALIDATOR_S_NOT_SUBSET_OF_G";
-    case CodeError::Type::VALIDATOR_INVALID_INITIAL_STATE:
-        return os << "VALIDATOR_INVALID_INITIAL_STATE";
+    case CodeError::Type::VALIDATOR_INVALID_STATE:
+        return os << "VALIDATOR_INVALID_STATE";
     case CodeError::Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
         return os << "VALIDATOR_F_NOT_SUBSET_OF_Q";
     default:

@@ -22,7 +22,7 @@ struct CodeError {
     enum class Type;
     Type type;
     Code::Span span;
-    std::string expected = "";
+    std::string info = "";
     void log(bool verbose) const;
 };
 
@@ -34,7 +34,7 @@ enum class CodeError::Type {
     PARSER_EMPTY_SET,
     VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET,
     VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET,
-    VALIDATOR_INVALID_INITIAL_STATE,
+    VALIDATOR_INVALID_STATE,
     VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES,
 };
 
