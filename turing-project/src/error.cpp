@@ -92,13 +92,13 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
     case CodeError::Type::PARSER_EMPTY_SET:
         return os << "PARSER_EMPTY_SET";
     case CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
-        return os << "VALIDATOR_MISSING_UNDERSCORE_IN_G";
+        return os << "VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET";
     case CodeError::Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
-        return os << "VALIDATOR_S_NOT_SUBSET_OF_G";
+        return os << "VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET";
     case CodeError::Type::VALIDATOR_INVALID_STATE:
         return os << "VALIDATOR_INVALID_STATE";
     case CodeError::Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
-        return os << "VALIDATOR_F_NOT_SUBSET_OF_Q";
+        return os << "VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES";
     default:
         assert(false);
     }
