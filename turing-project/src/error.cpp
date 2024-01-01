@@ -1,12 +1,12 @@
 #include "error.h"
 #include "color.h"
-#include "messages.h"
+#include "str_literals.h"
 #include "util.hpp"
 #include <cassert>
 #include <iostream>
 
 using namespace util;
-using namespace msg;
+using namespace str_literals;
 
 void ArgError::log() const {
     std::cerr << ERR;

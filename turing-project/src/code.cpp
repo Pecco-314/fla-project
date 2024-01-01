@@ -1,11 +1,11 @@
 #include "code.h"
-#include "messages.h"
+#include "str_literals.h"
 #include "util.hpp"
 #include <fstream>
 #include <iostream>
 
 using namespace util;
-using namespace msg;
+using namespace str_literals;
 
 Code::Code(std::filesystem::path path) : path_(path) {
     if (!std::filesystem::exists(path)) {

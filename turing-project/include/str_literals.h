@@ -1,9 +1,9 @@
-#ifndef __MESSAGES_H__
-#define __MESSAGES_H__
+#ifndef __STR_LITERALS_H__
+#define __STR_LITERALS_H__
 
 #include <string>
 
-namespace msg {
+namespace str_literals {
 
 const inline std::string USAGE = "Usage: turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>";
 const inline std::string INVALID_OPTION = "Invalid option: {}";
@@ -27,6 +27,6 @@ const inline std::string IDENTIFIER = "identifier";
 const inline std::string VALID_CHAR = "ASCII graphic character except for ';', ',', '{', '}', '*' and '_'";
 const inline std::string VALID_CHAR_OR_UNDERSCORE = "ASCII graphic character except for ';', ',', '{', '}' and '*'";
 
-} // namespace msg
+} // namespace str_literals
 
 #endif

@@ -1,10 +1,10 @@
 #include "parser.h"
 #include "error.h"
 #include "lexer.h"
-#include "messages.h"
+#include "str_literals.h"
 #include "util.hpp"
 
-using namespace msg;
+using namespace str_literals;
 
 Parser::Parser(std::shared_ptr<Code> code, TuringMachine *tm) : code(code), tm(tm) {}
 

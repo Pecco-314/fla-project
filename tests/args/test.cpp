@@ -1,5 +1,5 @@
 #include "color.h"
-#include "messages.h"
+#include "str_literals.h"
 #include "util.hpp"
 #include <filesystem>
 #include <fstream>
@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 
 using namespace util;
-using namespace msg;
+using namespace str_literals;
 
 std::filesystem::path findTuring() {
     std::filesystem::path cur = std::filesystem::current_path();
