@@ -131,5 +131,4 @@ void Parser::parse() {
     parseB();
     parseF();
     parseN();
-    tm->validate();
 }

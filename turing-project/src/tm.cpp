@@ -7,6 +7,7 @@
 void TuringMachine::parse(std::shared_ptr<Code> code) {
     Parser parser(code, this);
     parser.parse();
+    validate();
 }
 
 void TuringMachine::setStates(std::vector<Token> tokens) {

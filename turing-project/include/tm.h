@@ -25,9 +25,10 @@ class TuringMachine {
     std::vector<Token> final_state_tokens;
     Token num_tapes_token;
 
+    void validate() const;
+
   public:
     void parse(std::shared_ptr<Code> code);
-    void validate() const;
     void run(std::string_view input, bool verbose = false);
     
     void setStates(std::vector<Token> tokens);
