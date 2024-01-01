@@ -54,6 +54,12 @@ void CodeError::log(bool verbose) const {
         case Type::PARSER_UNEXPECTED_UNDERSCORE:
             std::cerr << PARSER_UNEXPECTED_UNDERSCORE << std::endl;
             break;
+        case Type::PARSER_TRANSITION_TOO_FEW_ITEMS:
+            std::cerr << PARSER_TRANSITION_TOO_FEW_ITEMS << std::endl;
+            break;
+        case Type::PARSER_TRANSITION_NOT_ON_SAME_LINE:
+            std::cerr << PARSER_TRANSITION_NOT_ON_SAME_LINE << std::endl;
+            break;
         case Type::PARSER_EMPTY_SET:
             std::cerr << PARSER_EMPTY_SET << std::endl;
             break;
@@ -61,13 +67,25 @@ void CodeError::log(bool verbose) const {
             std::cerr << VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET << std::endl;
             break;
         case Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
-            std::cerr << VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET << std::endl;
+            std::cerr << VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET
+                      << std::endl;
             break;
         case Type::VALIDATOR_INVALID_STATE:
             std::cerr << format(VALIDATOR_INVALID_STATE, info) << std::endl;
             break;
         case Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
             std::cerr << VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES << std::endl;
+            break;
+        case Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH:
+            std::cerr << format(VALIDATOR_TRASITION_ITEM_INVALID_LENGTH, span.str())
+                      << std::endl;
+            break;
+        case Type::VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD:
+            std::cerr << format(VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD, span.str())
+                      << std::endl;
+            break;
+        case Type::VALIDATOR_INVALID_DIRECTION:
+            std::cerr << format(VALIDATOR_INVALID_DIRECTION, span.str()) << std::endl;
             break;
         default:
             assert(false);
@@ -89,6 +107,10 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
         return os << "PARSER_UNCLOSED_SET";
     case CodeError::Type::PARSER_UNEXPECTED_UNDERSCORE:
         return os << "PARSER_UNEXPECTED_UNDERSCORE";
+    case CodeError::Type::PARSER_TRANSITION_TOO_FEW_ITEMS:
+        return os << "PARSER_TRANSITION_TOO_FEW_ITEMS";
+    case CodeError::Type::PARSER_TRANSITION_NOT_ON_SAME_LINE:
+        return os << "PARSER_TRANSITION_NOT_ON_SAME_LINE";
     case CodeError::Type::PARSER_EMPTY_SET:
         return os << "PARSER_EMPTY_SET";
     case CodeError::Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
@@ -99,6 +121,12 @@ std::ostream &operator<<(std::ostream &os, const CodeError::Type &e) {
         return os << "VALIDATOR_INVALID_STATE";
     case CodeError::Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
         return os << "VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES";
+    case CodeError::Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH:
+        return os << "VALIDATOR_TRASITION_ITEM_INVALID_LENGTH";
+    case CodeError::Type::VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD:
+        return os << "VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD";
+    case CodeError::Type::VALIDATOR_INVALID_DIRECTION:
+        return os << "VALIDATOR_INVALID_DIRECTION";
     default:
         assert(false);
     }

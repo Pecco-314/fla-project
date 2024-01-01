@@ -77,6 +77,27 @@ Token Parser::combineTokens() {
     return token;
 }
 
+std::optional<std::array<Token, 5>> Parser::parseTransition() {
+    std::array<Token, 5> tokens;
+    for (int i = 0; i < 5; ++i) {
+        tokens[i] = combineTokens();
+    }
+    if (tokens[0].span.eof()) { return {}; }
+    if (!tokens[0].span.eof() && tokens[4].span.eof()) {
+        for (int i = 3; i >= 0; --i) {
+            if (!tokens[i].span.eof()) {
+                throw CodeError{CodeError::Type::PARSER_TRANSITION_TOO_FEW_ITEMS,
+                                code->span(tokens[0].span, tokens[i].span)};
+            }
+        }
+    }
+    if (tokens[0].span.st_lno != tokens[4].span.ed_lno) {
+        throw CodeError{CodeError::Type::PARSER_TRANSITION_NOT_ON_SAME_LINE,
+                        code->span(tokens[0].span, tokens[4].span)};
+    }
+    return tokens;
+}
+
 void Parser::parseQ() {
     parseText("#Q");
     parseChar('=');
@@ -128,6 +149,17 @@ void Parser::parseN() {
     tm->setNumTapes(parseInt().value());
 }
 
+void Parser::parseDelta() {
+    for (;;) {
+        auto t = parseTransition();
+        if (t.has_value()) {
+            tm->addTransition(t.value());
+        } else {
+            break;
+        }
+    }
+}
+
 void Parser::parse() {
     auto lexer = std::make_shared<Lexer>(code);
     tokens = lexer->lex();
@@ -139,4 +171,5 @@ void Parser::parse() {
     parseB();
     parseF();
     parseN();
+    parseDelta();
 }

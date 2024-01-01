@@ -19,6 +19,7 @@ class Parser {
     std::optional<Token> parseChar(char c, bool throws = true);
     std::optional<Token> parseInt(bool throws = true);
     std::vector<Token> parseSet(std::function<std::optional<Token>()> pred);
+    std::optional<std::array<Token, 5>> parseTransition();
     Token combineTokens();
 
     void parseQ();
@@ -28,6 +29,7 @@ class Parser {
     void parseB();
     void parseF();
     void parseN();
+    void parseDelta();
 
   public:
     Parser(std::shared_ptr<Code> code, TuringMachine *tm);
