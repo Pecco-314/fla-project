@@ -168,6 +168,15 @@ bool Code::Cursor::eof() const {
     return lno >= code->lines();
 }
 
+Code::Span Code::Cursor::span() const {
+    auto it = *this;
+    return code->span(*this, ++it);
+}
+
+Code::Span Code::Cursor::span(const Cursor &other) const {
+    return code->span(*this, other);
+}
+
 std::ostream &operator<<(std::ostream &os, const Code::Cursor &cs) {
     return os << cs.code->path() << ":" << cs.lno + 1 << ":" << cs.cno + 1;
 }

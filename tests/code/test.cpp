@@ -39,6 +39,8 @@ int main() {
     simpletest("cursor_eof_2", it3.eof(), true);
     simpletest("cursor_dec_post", it3--, Code::Cursor{test_file, 4, 0});
     simpletest("cursor_dec_post_2", it3, Code::Cursor{test_file, 3, 0});
+    simpletest("cursor_span_1", it3.span(), Code::Span{test_file, 3, 0, 4, 0});
+    simpletest("cursor_span_2", it.span(it3), Code::Span{test_file, 0, 6, 3, 0});
     simpletest("cursor_deref", *it3, '\n');
 
     auto it4 = test_file->begin(0);

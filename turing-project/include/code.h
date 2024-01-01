@@ -52,6 +52,8 @@ struct Code::Cursor {
     Cursor &skipPrevLine();
     bool bof() const;
     bool eof() const;
+    Span span() const;
+    Span span(const Cursor &other) const;
     friend std::ostream &operator<<(std::ostream &os, const Cursor &cs);
 };
 
