@@ -33,7 +33,7 @@ cmake -B debug -DCMAKE_BUILD_TYPE=Debug && cmake --build debug
 基本用法为：
 
 ```bash
-turing <tm_path> <input>
+turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>
 ```
 
 其中，`tm_path`表示图灵机描述文件的路径，`input`表示输入，这里的输入是直接写在命令行里的。
