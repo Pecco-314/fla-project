@@ -119,9 +119,9 @@ int main() {
         simpletest("t20_span", e.span, e.span.code->span(6, 0, 6, 0));
         simpletest("t20_expected", e.info, "\"#N\"");
     })
-    TEST_ERROR("t21", parse(basic + "#N = 0"), CodeError, {
+    TEST_ERROR("t21", parse(basic + "#N = *"), CodeError, {
         simpletest("t21_type", e.type, CodeError::Type::PARSER_EXPECTED);
-        simpletest("t21_span", e.span, e.span.code->span(6, 4, 6, 5));
+        simpletest("t21_span", e.span, e.span.code->span(6, 5, 6, 6));
         simpletest("t21_expected", e.info, NON_NEGATIVE_INTEGER);
     })
     TEST_ERROR("t22", parse(basic + "#N = -1"), CodeError, {
