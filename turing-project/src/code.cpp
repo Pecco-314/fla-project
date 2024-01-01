@@ -196,6 +196,14 @@ Code::Cursor Code::Span::end() const {
     return {code, ed_lno, ed_cno};
 }
 
+char Code::Span::front() const {
+    return code->charAt(begin());
+}
+
+char Code::Span::back() const {
+    return code->charAt(--end());
+}
+
 std::string Code::Span::str() const {
     std::string res;
     for (Cursor cs = begin(); cs != end(); ++cs) {

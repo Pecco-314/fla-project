@@ -70,6 +70,8 @@ struct Code::Span {
     bool operator!=(const Span &other) const;
     Cursor begin() const;
     Cursor end() const;
+    char front() const;
+    char back() const;
     std::string str() const;
     void extend();
     void extendLine();

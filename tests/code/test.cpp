@@ -46,6 +46,8 @@ int main() {
     auto sp1 = test_file->span(it4, it5);
     simpletest("span_1", sp1, Code::Span{test_file, 0, 0, 0, 6});
     simpletest("span_empty_1", sp1.empty(), false);
+    simpletest("span_front", sp1.front(), 'H');
+    simpletest("span_back", sp1.back(), '!');
     sp1.extend();
     simpletest("span_extend", sp1, Code::Span{test_file, 0, 0, 1, 0});
     simpletest("span_str_1", sp1.str(), "Hello!\n");
