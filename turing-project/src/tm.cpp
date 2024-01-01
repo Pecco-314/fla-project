@@ -10,45 +10,45 @@ void TuringMachine::parse(std::shared_ptr<Code> code) {
     validate();
 }
 
-void TuringMachine::setStates(std::vector<Token> tokens) {
+void TuringMachine::setStates(const std::vector<Token> &tokens) {
     state_tokens = tokens;
     for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
         Q.emplace(tokens[i].strval());
     }
 }
 
-void TuringMachine::setInputSymbols(std::vector<Token> tokens) {
+void TuringMachine::setInputSymbols(const std::vector<Token> &tokens) {
     input_symbol_tokens = tokens;
     for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
         S.emplace(tokens[i].charval());
     }
 }
 
-void TuringMachine::setTapeSymbols(std::vector<Token> tokens) {
+void TuringMachine::setTapeSymbols(const std::vector<Token> &tokens) {
     tape_symbol_tokens = tokens;
     for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
         G.emplace(tokens[i].charval());
     }
 }
 
-void TuringMachine::setInitialState(Token token) {
+void TuringMachine::setInitialState(const Token &token) {
     initial_state_token = token;
     q0 = token.strval();
 }
 
-void TuringMachine::setBlankSymbol(Token token) {
+void TuringMachine::setBlankSymbol(const Token &token) {
     blank_symbol_token = token;
     B = token.charval();
 }
 
-void TuringMachine::setFinalStates(std::vector<Token> tokens) {
+void TuringMachine::setFinalStates(const std::vector<Token> &tokens) {
     final_state_tokens = tokens;
     for (int i = 1; i < (int)tokens.size() - 1; i += 2) {
         F.emplace(tokens[i].strval());
     }
 }
 
-void TuringMachine::setNumTapes(Token token) {
+void TuringMachine::setNumTapes(const Token &token) {
     num_tapes_token = token;
     N = token.intval();
 }

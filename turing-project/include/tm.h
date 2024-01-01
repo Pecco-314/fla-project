@@ -30,14 +30,14 @@ class TuringMachine {
 
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);
-    
-    void setStates(std::vector<Token> tokens);
-    void setInputSymbols(std::vector<Token> tokens);
-    void setTapeSymbols(std::vector<Token> tokens);
-    void setInitialState(Token token);
-    void setBlankSymbol(Token token);
-    void setFinalStates(std::vector<Token> tokens);
-    void setNumTapes(Token token);
+
+    void setStates(const std::vector<Token> &tokens);
+    void setInputSymbols(const std::vector<Token> &tokens);
+    void setTapeSymbols(const std::vector<Token> &tokens);
+    void setInitialState(const Token &token);
+    void setBlankSymbol(const Token &token);
+    void setFinalStates(const std::vector<Token> &tokens);
+    void setNumTapes(const Token &token);
 };
 
 #endif
