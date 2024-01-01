@@ -144,6 +144,14 @@ template <typename T> std::ostream &operator<<(std::ostream &os, const std::set<
     return os;
 }
 
+#define TEST_ERROR(name, codes, error_type, error_check)                                 \
+    try {                                                                                \
+        codes;                                                                           \
+        std::cerr << FAILED << name << std::endl;                                        \
+        std::cerr << "should throw " << #error_type << std::endl;                        \
+        exit(1);                                                                         \
+    } catch (const error_type &e) { error_check }
+
 } // namespace util
 
 #endif
