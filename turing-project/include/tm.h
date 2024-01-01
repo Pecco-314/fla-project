@@ -9,14 +9,6 @@
 
 class TuringMachine {
   private:
-    std::set<std::string> Q; // states
-    std::set<char> S;        // input symbols
-    std::set<char> G;        // tape symbols
-    std::string q0;          // initial state
-    char B = '_';            // blank symbol
-    std::set<std::string> F; // final states
-    int N;                   // number of tapes
-
     std::vector<Token> state_tokens;
     std::vector<Token> input_symbol_tokens;
     std::vector<Token> tape_symbol_tokens;
@@ -28,6 +20,14 @@ class TuringMachine {
     void validate() const;
 
   public:
+    std::set<std::string> Q; // states
+    std::set<char> S;        // input symbols
+    std::set<char> G;        // tape symbols
+    std::string q0;          // initial state
+    char B = '_';            // blank symbol
+    std::set<std::string> F; // final states
+    int N;                   // number of tapes
+
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);
     
