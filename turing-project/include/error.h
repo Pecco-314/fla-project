@@ -37,7 +37,6 @@ enum class CodeError::Type {
     VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET,
     VALIDATOR_INVALID_INITIAL_STATE,
     VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES,
-    VALIDATOR_INVALID_NUM_TAPES,
 };
 
 std::ostream &operator<<(std::ostream &os, const CodeError::Type &e);
