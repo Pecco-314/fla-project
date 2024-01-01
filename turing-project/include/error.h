@@ -16,6 +16,8 @@ enum class ArgError::Type {
     TOO_FEW_ARGS,
 };
 
+std::ostream &operator<<(std::ostream &os, const ArgError::Type &et);
+
 struct CodeError {
     enum class Type;
     Type type;
@@ -37,5 +39,7 @@ enum class CodeError::Type {
     VALIDATOR_F_NOT_SUBSET_OF_Q,
     VALIDATOR_INVALID_NUM_TAPES,
 };
+
+std::ostream &operator<<(std::ostream &os, const CodeError::Type &e);
 
 #endif
