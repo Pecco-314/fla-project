@@ -3,6 +3,7 @@
 
 #include "color.h"
 #include <iostream>
+#include <set>
 #include <sstream>
 
 namespace util {
@@ -126,6 +127,21 @@ std::string format(std::string_view fmt, const T &t, Args... args) {
         }
     }
     return ss.str();
+}
+
+template <typename T> std::ostream &operator<<(std::ostream &os, const std::set<T> &s) {
+    os << "{";
+    for (auto it = s.begin(); it != s.end(); it++) {
+        if constexpr (std::is_same_v<T, char> ||
+                      std::is_convertible_v<T, std::string_view>) {
+            os << quoted(*it);
+        } else {
+            os << *it;
+        }
+        if (it != --s.end()) { os << ", "; }
+    }
+    os << "}";
+    return os;
 }
 
 } // namespace util
