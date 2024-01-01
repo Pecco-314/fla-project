@@ -183,7 +183,46 @@ int main() {
             simpletest("t26_type", e.type, CodeError::Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES);
             simpletest("t26_span", e.span, e.span.code->span(5, 5, 5, 25));
         })
-
+    TEST_ERROR("t27", parse(basic + "q0 00 01 rl"), CodeError, {
+        simpletest("t27_type", e.type, CodeError::Type::PARSER_TRANSITION_TOO_FEW_ITEMS);
+        simpletest("t27_span", e.span, e.span.code->span(7, 0, 7, 11));
+    })
+    TEST_ERROR("t28", parse(basic + "q0 00 01 rl 123 q0"), CodeError, {
+        simpletest("t28_type", e.type, CodeError::Type::PARSER_TRANSITION_TOO_FEW_ITEMS);
+        simpletest("t28_span", e.span, e.span.code->span(7, 16, 7, 18));
+    })
+    TEST_ERROR("t29", parse(basic + "q0 00 01 rl\n 123"), CodeError, {
+        simpletest("t29_type", e.type, CodeError::Type::PARSER_TRANSITION_NOT_ON_SAME_LINE);
+        simpletest("t29_span", e.span, e.span.code->span(7, 0, 8, 4));
+    })
+    TEST_ERROR("t30", parse(basic + "invalid 00 01 rl 123"), CodeError, {
+        simpletest("t30_type", e.type, CodeError::Type::VALIDATOR_INVALID_STATE);
+        simpletest("t30_span", e.span, e.span.code->span(7, 0, 7, 7));
+    })
+    TEST_ERROR("t31", parse(basic + "q0 00 01 rl invalid"), CodeError, {
+        simpletest("t31_type", e.type, CodeError::Type::VALIDATOR_INVALID_STATE);
+        simpletest("t31_span", e.span, e.span.code->span(7, 12, 7, 19));
+    })
+    TEST_ERROR("t32", parse(basic + "q0 0 01 lr 123"), CodeError, {
+        simpletest("t32_type", e.type, CodeError::Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH);
+        simpletest("t32_span", e.span, e.span.code->span(7, 3, 7, 4));
+        simpletest("t32_expected", e.info, "2");
+    })
+    TEST_ERROR("t33", parse(basic + "q0 00 01 lrl 123"), CodeError, {
+        simpletest("t33_type", e.type, CodeError::Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH);
+        simpletest("t33_span", e.span, e.span.code->span(7, 9, 7, 12));
+        simpletest("t33_expected", e.info, "2");
+    })
+    TEST_ERROR("t34", parse(basic + "q0 _* 0? rl 123"), CodeError, {
+        simpletest("t34_type", e.type, CodeError::Type::VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD);
+        simpletest("t34_span", e.span, e.span.code->span(7, 7, 7, 8));
+    })
+    TEST_ERROR("t35", parse(basic + "q0 _* 01 *u 123"), CodeError, {
+        simpletest("t35_type", e.type, CodeError::Type::VALIDATOR_INVALID_DIRECTION);
+        simpletest("t35_span", e.span, e.span.code->span(7, 10, 7, 11));
+    })
+    basic += "q0 _* 01 rl 123\n";
+    basic += "q0 0* _* lr helloworld\n";
     auto tm = parse(basic);
     simpletest("tm_q", tm->Q,
                std::set<std::string>{"q0", "State_1", "123", "helloworld"});
@@ -193,6 +232,8 @@ int main() {
     simpletest("tm_B", tm->B, '_');
     simpletest("tm_F", tm->F, std::set<std::string>{"q0", "State_1", "123"});
     simpletest("tm_N", tm->N, 2u);
+    simpletest("tm_delta_1", tm->delta[0], Transition{"q0", "_*", "01", "rl", "123"});
+    simpletest("tm_delta_2", tm->delta[1], Transition{"q0", "0*", "_*", "lr", "helloworld"});
 
     return 0;
 }
