@@ -1,4 +1,5 @@
 #include "lexer.h"
+#include "error.h"
 #include "util.hpp"
 #include <fstream>
 
@@ -64,11 +65,22 @@ void test4() {
     simpletest("t4_4", tokens[4].val, "d");
 }
 
+void test5() {
+    try {
+        auto tokens = lex("2024年");
+    } catch (CodeError &e) {
+        auto code = e.span.code;
+        simpletest("t5", e.type, CodeError::Type::LEXER_INVALID_CHAR);
+        simpletest("t5_span", e.span, code->span(0, 4, 0, 4));
+    }
+}
+
 int main() {
     TermColor::setForceColor();
     test1();
     test2();
     test3();
     test4();
+    test5();
     return 0;
 }
