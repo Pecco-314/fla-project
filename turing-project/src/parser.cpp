@@ -1,6 +1,7 @@
 #include "parser.h"
 #include "error.h"
 #include "lexer.h"
+#include "util.hpp"
 
 Parser::Parser(std::shared_ptr<Code> code, TuringMachine *tm) : code(code), tm(tm) {}
 
@@ -33,13 +34,11 @@ std::optional<Token> Parser::parseIf(std::function<bool(Token)> pred,
 }
 
 std::optional<Token> Parser::parseText(std::string_view s, bool throws) {
-    return parseIf([s](Token tok) { return tok.isStr(s); }, "`" + std::string(s) + "`",
-                   throws);
+    return parseIf([s](Token tok) { return tok.isStr(s); }, util::quoted(s), throws);
 }
 
 std::optional<Token> Parser::parseChar(char c, bool throws) {
-    return parseIf([c](Token tok) { return tok.isChar(c); },
-                   "'" + std::string(1, c) + "'", throws);
+    return parseIf([c](Token tok) { return tok.isChar(c); }, util::quoted(c), throws);
 }
 
 std::optional<Token> Parser::parseInt(bool throws) {
