@@ -18,6 +18,8 @@ class Tape {
     char get(int index) const;
     char get() const;
     bool match(char ch) const;
+    int leftmost() const;
+    int rightmost() const;
     void set(char ch);
     void set(int index, char ch);
     void move(char dir);

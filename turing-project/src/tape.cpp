@@ -62,22 +62,35 @@ bool Tape::match(char ch) const {
     return get() == ch || ch == '*';
 }
 
+int Tape::leftmost() const {
+    return -(int)left.size();
+}
+
+int Tape::rightmost() const {
+    return (int)right.size() - 1;
+}
+
 void Tape::log() const {
+    int lm = leftmost() - 1, rm = rightmost() + 1;
+    while (lm < head && get(lm) == '_') { lm++; }
+    while (rm > head && get(rm) == '_') { rm--; }
+    if (lm > rm) { lm = rm = head; }
+
     std::cout << "Index" << std::setw(2) << std::left << id << ": ";
-    for (int i = -(int)left.size(); i < (int)right.size(); i++) {
+    for (int i = lm; i <= rm; i++) {
         std::cout << abs(i) << " ";
     }
     std::cout << std::endl;
 
     std::cout << "Tape" << std::setw(3) << std::left << id << ": ";
-    for (int i = -(int)left.size(); i < (int)right.size(); i++) {
+    for (int i = lm; i <= rm; i++) {
         int w = std::to_string(abs(i)).length() + 1;
         std::cout << std::setw(w) << std::left << get(i);
     }
     std::cout << std::endl;
 
     std::cout << "Head" << std::setw(3) << std::left << id << ": ";
-    for (int i = -(int)left.size(); i < (int)right.size(); i++) {
+    for (int i = lm; i <= rm; i++) {
         int w = std::to_string(abs(i)).length() + 1;
         std::cout << std::setw(w) << std::left;
         if (i == head) {
