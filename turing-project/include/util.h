@@ -187,7 +187,8 @@ inline int runCommand(std::filesystem::path cmd, std::filesystem::path out,
     for (auto &&arg : args) {
         ss << quoted(arg) << " ";
     }
-    ss << " >" << out << " 2>" << err;
+    if (!out.empty()) { ss << " >" << out; }
+    if (!err.empty()) { ss << " 2>" << err; }
     return WEXITSTATUS(system(ss.str().c_str()));
 }
 
