@@ -152,12 +152,61 @@ void TuringMachine::run(std::string_view input, bool verbose) {
         std::cout << INPUT << input << std::endl;
         std::cout << util::banner("RUN") << std::endl;
     }
+    init(input);
+    for (int i = 0;; ++i) {
+        if (verbose) {
+            std::cout << "Step   : " << i << std::endl;
+            std::cout << "State  : " << state << std::endl;
+            std::cout << "Acc    : " << (acc ? "Yes" : "No") << std::endl;
+            for (int j = 0; j < (int)N; ++j) {
+                tapes[j].log();
+            }
+            std::cout << util::banner("", '-') << std::endl;
+        }
+        if (!step()) { break; }
+    }
+    if (verbose) {
+        std::cout << (acc ? ACC : UNACC) << std::endl;
+        std::cout << RESULT << tapes[0].str() << std::endl;
+    } else {
+        std::cout << (acc ? ACC_Q : UNACC_Q) << " " << tapes[0].str() << std::endl;
+    }
+}
+
+bool TuringMachine::step() {
+    for (auto &&[old_state, old_symbols, new_symbols, direction, new_state] : delta) {
+        if (old_state != state) { continue; }
+        bool match = true;
+        for (int i = 0; i < (int)N; ++i) {
+            if (!tapes[i].match(old_symbols[i])) {
+                match = false;
+                break;
+            }
+        }
+        if (!match) { continue; }
+        for (int i = 0; i < (int)N; ++i) {
+            tapes[i].set(new_symbols[i]);
+            tapes[i].move(direction[i]);
+        }
+        state = new_state;
+        acc = F.count(state);
+        return true;
+    }
+    return false;
+}
+
+void TuringMachine::init(std::string_view input) {
+    tapes.resize(N);
+    tapes[0] = Tape(0, input);
+    for (int i = 1; i < (int)N; ++i) {
+        tapes[i] = Tape(i);
+    }
+    state = q0;
+    acc = false;
 }
 
 void TuringMachine::validateInput(std::string_view input) const {
     for (int i = 0; i < (int)input.length(); ++i) {
-        if (!S.count(input[i])) {
-            throw InputError{std::string{input}, i};
-        }
+        if (!S.count(input[i])) { throw InputError{std::string{input}, i}; }
     }
 }

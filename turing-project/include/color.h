@@ -51,5 +51,10 @@ const inline Painted NOTE = {"note: ", BLUE | BOLD};
 const inline Painted FAILED = {"failed: ", RED | BOLD};
 const inline Painted PASSED = {"passed: ", GREEN | BOLD};
 const inline Painted INPUT = {"input: ", BLUE | BOLD};
+const inline Painted RESULT = {"result: ", BLUE | BOLD};
+const inline Painted ACC = {"ACCEPTED", GREEN | BOLD};
+const inline Painted ACC_Q = {"(ACCEPTED)", GREEN | BOLD};
+const inline Painted UNACC = {"UNACCEPTED", RED | BOLD};
+const inline Painted UNACC_Q = {"(UNACCEPTED)", RED | BOLD};
 
 #endif

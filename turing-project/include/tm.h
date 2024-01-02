@@ -2,6 +2,7 @@
 #define __TURING_H__
 
 #include "code.h"
+#include "tape.h"
 #include "token.h"
 #include <memory>
 #include <set>
@@ -32,7 +33,14 @@ class TuringMachine {
     Token num_tapes_token;
     std::vector<Token> transition_tokens;
 
+    std::vector<Tape> tapes;
+    std::string state;
+    bool acc;
+
     void validate() const;
+    void validateInput(std::string_view input) const;
+    void init(std::string_view input);
+    bool step();
 
   public:
     std::set<std::string> Q;       // states
@@ -46,7 +54,6 @@ class TuringMachine {
 
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);
-    void validateInput(std::string_view input) const;
 
     void setStates(const std::vector<Token> &tokens);
     void setInputSymbols(const std::vector<Token> &tokens);
