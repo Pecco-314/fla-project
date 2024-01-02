@@ -54,6 +54,15 @@ inline std::string quoted(std::string_view s) {
     return quoted;
 }
 
+inline std::string banner(std::string_view info = "", char ch = '=', int width = 45) {
+    int d = width - (int)info.size();
+    if (!info.empty()) { d -= 2; }
+    std::string banner = std::string(d / 2, ch);
+    if (!info.empty()) { banner += " " + std::string(info) + " "; }
+    banner += std::string(d - d / 2, ch);
+    return Painted(banner, BOLD).str();
+}
+
 template <typename T> inline std::string to_string(const T &val) {
     std::stringstream ss;
     ss << val;

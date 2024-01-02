@@ -46,6 +46,7 @@ class TuringMachine {
 
     void parse(std::shared_ptr<Code> code);
     void run(std::string_view input, bool verbose = false);
+    void validateInput(std::string_view input) const;
 
     void setStates(const std::vector<Token> &tokens);
     void setInputSymbols(const std::vector<Token> &tokens);

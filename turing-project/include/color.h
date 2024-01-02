@@ -50,5 +50,6 @@ const inline Painted WARN = {"warning: ", YELLOW | BOLD};
 const inline Painted NOTE = {"note: ", BLUE | BOLD};
 const inline Painted FAILED = {"failed: ", RED | BOLD};
 const inline Painted PASSED = {"passed: ", GREEN | BOLD};
+const inline Painted INPUT = {"input: ", BLUE | BOLD};
 
 #endif

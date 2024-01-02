@@ -37,7 +37,11 @@ int main(int argc, char *argv[]) {
         auto code = std::make_shared<Code>(tm_path);
         tm.parse(code);
         tm.run(input, verbose);
-    } catch (ArgError &e) { e.log(); } catch (CodeError &e) {
+    } catch (ArgError &e) {
+        e.log();
+    } catch (CodeError &e) {
+        e.log(verbose);
+    } catch (InputError &e) {
         e.log(verbose);
     }
     return 0;

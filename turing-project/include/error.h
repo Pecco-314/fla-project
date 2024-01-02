@@ -18,6 +18,12 @@ enum class ArgError::Type {
 
 std::ostream &operator<<(std::ostream &os, const ArgError::Type &et);
 
+struct InputError {
+    std::string input;
+    int index;
+    void log(bool verbose) const;
+};
+
 struct CodeError {
     enum class Type;
     Type type;

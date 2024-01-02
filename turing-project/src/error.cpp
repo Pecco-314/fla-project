@@ -38,6 +38,23 @@ std::ostream &operator<<(std::ostream &os, const ArgError::Type &et) {
     }
 }
 
+void InputError::log(bool verbose) const {
+    if (verbose) {
+        std::cerr << INPUT << input << std::endl;
+        std::cerr << banner("ERR") << std::endl;
+        std::cerr << ERR << "Symbol " << quoted(input[index])
+                  << " in input is not defined in the set of input symbols" << std::endl;
+        std::cerr << INPUT << input.substr(0, index)
+                  << Painted(input.substr(index, 1), RED | BOLD)
+                  << input.substr(index + 1) << std::endl;
+        std::cerr << std::string(7 + index, ' ') << Painted("^", RED | BOLD) << std::endl;
+        std::cerr << banner("END") << std::endl;
+    } else {
+        std::cerr << "Illegal input string" << std::endl;
+    }
+    exit(1);
+}
+
 void CodeError::log(bool verbose) const {
     if (verbose) {
         std::cerr << BOLD << span.begin() << ": " << ERR;

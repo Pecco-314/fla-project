@@ -147,6 +147,17 @@ void TuringMachine::validate() const {
 }
 
 void TuringMachine::run(std::string_view input, bool verbose) {
-    if (verbose) { std::cout << "Input: " << input << std::endl; }
-    // TODO: Implement this function
+    validateInput(input);
+    if (verbose) {
+        std::cout << INPUT << input << std::endl;
+        std::cout << util::banner("RUN") << std::endl;
+    }
+}
+
+void TuringMachine::validateInput(std::string_view input) const {
+    for (int i = 0; i < (int)input.length(); ++i) {
+        if (!S.count(input[i])) {
+            throw InputError{std::string{input}, i};
+        }
+    }
 }
