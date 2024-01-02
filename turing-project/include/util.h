@@ -2,10 +2,10 @@
 #define __UTIL_H__
 
 #include "color.h"
+#include <filesystem>
 #include <iostream>
 #include <set>
 #include <sstream>
-#include <filesystem>
 #ifndef NDEBUG
 #include <cassert>
 #endif
@@ -166,6 +166,19 @@ inline std::filesystem::path findFileWithPrefix(std::string_view prefix) {
     }
     std::cerr << ERR << "turing executable file not found" << std::endl;
     exit(1);
+}
+
+inline int runCommand(std::filesystem::path cmd, std::filesystem::path out,
+                      std::filesystem::path err,
+                      const std::vector<std::string_view> &args) {
+    std::stringstream ss;
+    ss << cmd << " ";
+    for (auto &&arg : args) {
+        ss << quoted(arg) << " ";
+    }
+    ss << " >" << out << " 2>" << err;
+    std::cerr << ss.str() << std::endl;
+    return WEXITSTATUS(system(ss.str().c_str()));
 }
 
 inline void assume(bool expr) {
