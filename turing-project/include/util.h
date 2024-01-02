@@ -120,7 +120,7 @@ inline std::string format(std::string_view fmt) {
             }
         } else {
             s += fmt[i];
-        } 
+        }
     }
     return s;
 }
@@ -188,7 +188,6 @@ inline int runCommand(std::filesystem::path cmd, std::filesystem::path out,
         ss << quoted(arg) << " ";
     }
     ss << " >" << out << " 2>" << err;
-    std::cerr << ss.str() << std::endl;
     return WEXITSTATUS(system(ss.str().c_str()));
 }
 
