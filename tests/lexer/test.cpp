@@ -6,10 +6,11 @@
 using namespace util;
 
 std::vector<Token> lex(std::string_view text) {
-    std::ofstream file("test.tm");
+    auto temp_path = std::filesystem::temp_directory_path() / "test.tm";
+    std::ofstream file(temp_path);
     file << text;
     file.close();
-    auto code = std::make_shared<Code>("test.tm");
+    auto code = std::make_shared<Code>(temp_path);
     Lexer lexer(code);
     return lexer.lex();
 }

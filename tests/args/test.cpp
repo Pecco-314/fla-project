@@ -11,7 +11,7 @@ using namespace str_literals;
 
 std::filesystem::path turing = findFileWithPrefix("turing");
 std::filesystem::path testdir = "../tests/args";
-std::filesystem::path tempdir = "temp";
+std::filesystem::path tempdir = std::filesystem::temp_directory_path() / "testargs";
 std::filesystem::path nonexistdir = tempdir / "nonexist";
 std::filesystem::path unreadabledir = tempdir / "unreadable.txt";
 

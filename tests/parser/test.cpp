@@ -9,10 +9,11 @@ using namespace util;
 using namespace str_literals;
 
 std::unique_ptr<TuringMachine> parse(std::string_view text) {
-    std::ofstream file("test.tm");
+    auto temp_path = std::filesystem::temp_directory_path() / "test.tm";
+    std::ofstream file(temp_path);
     file << text;
     file.close();
-    auto code = std::make_shared<Code>("test.tm");
+    auto code = std::make_shared<Code>(temp_path);
     auto tm = std::make_unique<TuringMachine>();
     tm->parse(code);
     return tm;
