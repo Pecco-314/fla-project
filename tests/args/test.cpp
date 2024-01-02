@@ -31,6 +31,8 @@ void test(std::string_view test_name, std::vector<std::string_view> args,
         lineno++;
         std::string actual_line;
         std::getline(actual_file, actual_line);
+        actual_line = strip(actual_line);
+        expected_line = strip(expected_line);
         if (actual_line != expected_line) {
             std::cerr << FAILED << test_name << std::endl;
             std::cerr << "(in line " << lineno << ")" << std::endl;

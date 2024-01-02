@@ -90,6 +90,17 @@ void simpletest(std::string_view name, const T &actual, const U &expected) {
     }
 }
 
+inline std::string strip(std::string_view s) {
+    int l = 0, r = (int)s.size() - 1;
+    while (l <= r && isspace(s[l])) {
+        l++;
+    }
+    while (l <= r && isspace(s[r])) {
+        r--;
+    }
+    return std::string(s.substr(l, r - l + 1));
+}
+
 inline std::string format(std::string_view fmt) {
     std::string s;
     for (int i = 0; i < (int)fmt.size(); i++) {
