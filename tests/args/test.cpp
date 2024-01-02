@@ -9,18 +9,7 @@
 using namespace util;
 using namespace str_literals;
 
-std::filesystem::path findTuring() {
-    std::filesystem::path cur = std::filesystem::current_path();
-    for (auto &&p : std::filesystem::directory_iterator(cur)) {
-        if (p.is_regular_file() && p.path().filename().string().find("turing") == 0) {
-            return p.path();
-        }
-    }
-    std::cerr << ERR << "turing executable file not found" << std::endl;
-    exit(1);
-}
-
-std::filesystem::path turing = findTuring();
+std::filesystem::path turing = findFileWithPrefix("turing");
 std::filesystem::path testdir = "../tests/args";
 std::filesystem::path tempdir = "temp";
 std::filesystem::path nonexistdir = tempdir / "nonexist";

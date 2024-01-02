@@ -5,6 +5,7 @@
 #include <iostream>
 #include <set>
 #include <sstream>
+#include <filesystem>
 #ifndef NDEBUG
 #include <cassert>
 #endif
@@ -154,6 +155,17 @@ template <typename T> std::ostream &operator<<(std::ostream &os, const std::set<
     }
     os << "}";
     return os;
+}
+
+inline std::filesystem::path findFileWithPrefix(std::string_view prefix) {
+    std::filesystem::path cur = std::filesystem::current_path();
+    for (auto &&p : std::filesystem::directory_iterator(cur)) {
+        if (p.is_regular_file() && p.path().filename().string().find(prefix) == 0) {
+            return p.path();
+        }
+    }
+    std::cerr << ERR << "turing executable file not found" << std::endl;
+    exit(1);
 }
 
 inline void assume(bool expr) {
