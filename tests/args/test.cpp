@@ -15,21 +15,9 @@ std::filesystem::path tempdir = "temp";
 std::filesystem::path nonexistdir = tempdir / "nonexist";
 std::filesystem::path unreadabledir = tempdir / "unreadable.txt";
 
-std::string formatCommand(const std::vector<std::string_view> &args) {
-    std::string command = "sh -c '" + turing.string();
-    for (auto &&arg : args) {
-        command += " " + quoted(arg);
-    }
-    command += " 1>/dev/null 2>";
-    command += tempdir / "actual.txt";
-    command += "'";
-    return command;
-}
-
 void test(std::string_view test_name, std::vector<std::string_view> args,
           int expected_code, std::vector<std::string_view> expected_output) {
-    std::string cmd = formatCommand(args);
-    int actual_code = WEXITSTATUS(system(cmd.data()));
+    int actual_code = runCommand(turing, "/dev/null", tempdir / "actual.txt", args);
     TermColor::setForceColor(true);
     if (actual_code != expected_code) {
         std::cerr << FAILED << test_name << std::endl;
