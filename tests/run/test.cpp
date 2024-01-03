@@ -70,5 +70,6 @@ int main() {
     test("palindrome_detector_2tapes", "100A1A001", true, 1);
     test("right_and_left", "000000000000");
     test("negative", "000000000000");
+    test("trivial", "");
     return 0;
 }
