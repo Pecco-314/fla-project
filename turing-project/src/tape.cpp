@@ -33,14 +33,14 @@ char Tape::get() const {
 void Tape::set(int index, char ch) {
     if (index < 0) {
         if (-index - 1 >= (int)left.size()) {
-            left.resize(-index);
+            left.resize(-index, '_');
         }
-        left[-index - 1] = ch;
+        if (ch != '*') { left[-index - 1] = ch; }
     } else {
         if (index >= (int)right.size()) {
-            right.resize(index + 1);
+            right.resize(index + 1, '_');
         }
-        right[index] = ch;
+        if (ch != '*') { right[index] = ch; }
     }
 }
 
@@ -59,7 +59,7 @@ void Tape::move(char dir) {
 }
 
 bool Tape::match(char ch) const {
-    return get() == ch || ch == '*';
+    return get() == ch || (ch == '*' && get() != '_');
 }
 
 int Tape::leftmost() const {
