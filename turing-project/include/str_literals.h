@@ -5,7 +5,7 @@
 
 namespace str_literals {
 
-const inline std::string USAGE = "Usage: turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>";
+const inline std::string USAGE = "Usage: turing [-v|--verbose] [-h|--help] [-c|--color] [-w|--warn] <tm_path> <input>";
 const inline std::string INVALID_OPTION = "Invalid option: {}";
 const inline std::string TOO_MANY_ARGS = "Too many arguments";
 const inline std::string TOO_FEW_ARGS = "Too few arguments";

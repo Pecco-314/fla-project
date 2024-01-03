@@ -7,7 +7,8 @@
 using namespace util;
 using namespace str_literals;
 
-bool Code::allow_messages_ = false;
+bool Code::allow_warnings_ = false;
+int Code::count_warnings_ = 0;
 
 Code::Code(std::filesystem::path path) : path_(path) {
     if (!std::filesystem::exists(path)) {
@@ -55,8 +56,14 @@ char Code::charAt(const Cursor &cs) const {
     }
 }
 
-void Code::setAllowMessages(bool print_warnings) {
-    allow_messages_ = print_warnings;
+void Code::setAllowWarnings(bool print_warnings) {
+    allow_warnings_ = print_warnings;
+}
+
+void Code::printWarningCount() {
+    if (count_warnings_ > 0) {
+        std::cerr << YELLOW << count_warnings_ << " warnings generated" << RESET << std::endl;
+    }
 }
 
 Code::Cursor Code::begin() const {
@@ -102,11 +109,16 @@ void Code::printHighlight(Span span, TermColor color, std::ostream &os) const {
 }
 
 void Code::printMessages(int level, std::string_view msg, const Span &span) const {
-    if (!allow_messages_) { return; }
     auto &&head = level == 0 ? ERR : level == 1 ? WARN : NOTE;
     auto &&color = level == 0 ? RED | BOLD : level == 1 ? YELLOW | BOLD : BLUE | BOLD;
     std::cerr << BOLD << span.begin() << ": " << head << msg << RESET << std::endl;
     span.code->printHighlight(span, color);
+}
+
+void Code::warning(std::string_view msg, const Span &span) const {
+    if (!allow_warnings_) { return; }
+    printMessages(1, msg, span);
+    count_warnings_++;
 }
 
 Code::Span Code::span(const Cursor &st, const Cursor &ed) const {

@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
     bool read_tm_path = false;
     bool read_input = false;
     bool verbose = false;
+    bool allow_warnings = false;
     try {
         for (int i = 1; i < argc; ++i) {
             std::string arg(argv[i]);
@@ -20,6 +21,8 @@ int main(int argc, char *argv[]) {
                 verbose = true;
             } else if (arg == "-c" || arg == "--color") {
                 TermColor::setForceColor();
+            } else if (arg == "-w" || arg == "--warn") {
+                allow_warnings = true;
             } else if (arg.size() > 1 && arg[0] == '-') {
                 throw ArgError{ArgError::Type::INVALID_OPTION, arg};
             } else if (!read_tm_path) {
@@ -33,11 +36,12 @@ int main(int argc, char *argv[]) {
             }
         }
         if (!read_input) { throw ArgError{ArgError::Type::TOO_FEW_ARGS, ""}; }
-        if (!verbose) { Code::setAllowMessages(false); }
         TuringMachine tm;
         auto code = std::make_shared<Code>(tm_path);
+        code->setAllowWarnings(allow_warnings);
         tm.parse(code);
         tm.run(input, verbose);
+        Code::printWarningCount();
     } catch (ArgError &e) {
         e.log();
     } catch (CodeError &e) {
