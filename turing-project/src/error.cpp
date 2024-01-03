@@ -58,62 +58,58 @@ void InputError::log(bool verbose) const {
 
 void CodeError::log(bool verbose) const {
     if (verbose) {
-        std::cerr << BOLD << span.begin() << ": " << ERR;
+        std::string_view msg;
         switch (type) {
         case Type::LEXER_INVALID_CHAR:
-            std::cerr << format(LEXER_INVALID_CHAR, quoted(span.front())) << std::endl;
+            msg = format(LEXER_INVALID_CHAR, quoted(span.front()));
             break;
         case Type::PARSER_EXPECTED:
-            std::cerr << format(PARSER_EXPECTED, info) << std::endl;
+            msg = format(PARSER_EXPECTED, info);
             break;
         case Type::PARSER_UNCLOSED_SET:
-            std::cerr << PARSER_UNCLOSED_SET << std::endl;
+            msg = PARSER_UNCLOSED_SET;
             break;
         case Type::PARSER_UNEXPECTED_UNDERSCORE:
-            std::cerr << PARSER_UNEXPECTED_UNDERSCORE << std::endl;
+            msg = PARSER_UNEXPECTED_UNDERSCORE;
             break;
         case Type::PARSER_TRANSITION_TOO_FEW_ITEMS:
-            std::cerr << PARSER_TRANSITION_TOO_FEW_ITEMS << std::endl;
+            msg = PARSER_TRANSITION_TOO_FEW_ITEMS;
             break;
         case Type::PARSER_TRANSITION_NOT_ON_SAME_LINE:
-            std::cerr << PARSER_TRANSITION_NOT_ON_SAME_LINE << std::endl;
+            msg = PARSER_TRANSITION_NOT_ON_SAME_LINE;
             break;
         case Type::PARSER_EMPTY_SET:
-            std::cerr << PARSER_EMPTY_SET << std::endl;
+            msg = PARSER_EMPTY_SET;
             break;
         case Type::VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET:
-            std::cerr << VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET << std::endl;
+            msg = VALIDATOR_MISSING_UNDERSCORE_IN_TAPE_ALPHABET;
             break;
         case Type::VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET:
-            std::cerr << VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET
-                      << std::endl;
+            msg = VALIDATOR_INPUT_ALPHABET_NOT_SUBSET_OF_TAPE_ALPHABET;
             break;
         case Type::VALIDATOR_INVALID_STATE:
-            std::cerr << format(VALIDATOR_INVALID_STATE, info) << std::endl;
+            msg = format(VALIDATOR_INVALID_STATE, info);
             break;
         case Type::VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES:
-            std::cerr << VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES << std::endl;
+            msg = VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES;
             break;
         case Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH:
-            std::cerr << format(VALIDATOR_TRASITION_ITEM_INVALID_LENGTH, info)
-                      << std::endl;
+            msg = format(VALIDATOR_TRASITION_ITEM_INVALID_LENGTH, info);
             break;
         case Type::VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD:
-            std::cerr << format(VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD,
-                                quoted(span.front()))
-                      << std::endl;
+            msg = format(VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD,
+                         quoted(span.front()));
             break;
         case Type::VALIDATOR_INVALID_DIRECTION:
-            std::cerr << format(VALIDATOR_INVALID_DIRECTION, quoted(span.front()))
-                      << std::endl;
+            msg = format(VALIDATOR_INVALID_DIRECTION, quoted(span.front()));
             break;
         default:
             assume(false);
             exit(1);
         }
-        span.code->printHighlight(span, RED | BOLD);
+        span.code->printMessages(0, msg, span);
     } else {
-        std::cerr << SYNTAX_ERROR << std::endl;
+        std::cerr << SYNTAX_ERROR;
     }
     exit(1);
 }

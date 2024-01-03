@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
             }
         }
         if (!read_input) { throw ArgError{ArgError::Type::TOO_FEW_ARGS, ""}; }
+        if (!verbose) { Code::setAllowMessages(false); }
         TuringMachine tm;
         auto code = std::make_shared<Code>(tm_path);
         tm.parse(code);

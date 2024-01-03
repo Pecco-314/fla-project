@@ -7,6 +7,8 @@
 using namespace util;
 using namespace str_literals;
 
+bool Code::allow_messages_ = false;
+
 Code::Code(std::filesystem::path path) : path_(path) {
     if (!std::filesystem::exists(path)) {
         std::cerr << ERR << format(FILE_NOT_EXIST, path) << std::endl;
@@ -53,6 +55,10 @@ char Code::charAt(const Cursor &cs) const {
     }
 }
 
+void Code::setAllowMessages(bool print_warnings) {
+    allow_messages_ = print_warnings;
+}
+
 Code::Cursor Code::begin() const {
     return {shared_from_this(), 0, 0};
 }
@@ -93,6 +99,14 @@ void Code::printHighlight(Span span, TermColor color, std::ostream &os) const {
         Cursor ed_cs = (lno == span.ed_lno) ? span.end() : end(lno);
         printLineHighlight(code->span(st_cs, ed_cs), color, os);
     }
+}
+
+void Code::printMessages(int level, std::string_view msg, const Span &span) const {
+    if (!allow_messages_) { return; }
+    auto &&head = level == 0 ? ERR : level == 1 ? WARN : NOTE;
+    auto &&color = level == 0 ? RED | BOLD : level == 1 ? YELLOW | BOLD : BLUE | BOLD;
+    std::cerr << BOLD << span.begin() << ": " << head << msg << RESET << std::endl;
+    span.code->printHighlight(span, color);
 }
 
 Code::Span Code::span(const Cursor &st, const Cursor &ed) const {

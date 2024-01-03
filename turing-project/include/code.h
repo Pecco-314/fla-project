@@ -13,6 +13,7 @@ class Code : public std::enable_shared_from_this<Code> {
   private:
     std::filesystem::path path_;
     std::vector<std::string> lines_;
+    static bool allow_messages_;
 
   public:
     struct Cursor;
@@ -32,6 +33,8 @@ class Code : public std::enable_shared_from_this<Code> {
     char charAt(const Cursor &cs) const;
     void printLineHighlight(Span span, TermColor color, std::ostream& os = std::cerr) const;
     void printHighlight(Span span, TermColor color, std::ostream& os = std::cerr) const;
+    void printMessages(int level, std::string_view msg, const Span &span) const;
+    static void setAllowMessages(bool print_warnings = true);
 };
 
 struct Code::Cursor {
