@@ -6,6 +6,7 @@
 #include <iostream>
 #include <set>
 #include <sstream>
+#include <unistd.h>
 #ifndef NDEBUG
 #include <cassert>
 #endif
@@ -190,6 +191,16 @@ inline int runCommand(std::filesystem::path cmd, std::filesystem::path out,
     if (!out.empty()) { ss << " >" << out; }
     if (!err.empty()) { ss << " 2>" << err; }
     return WEXITSTATUS(system(ss.str().c_str()));
+}
+
+inline bool isatty(std::ostream& ofs) {
+    if (&ofs == &std::cout && ::isatty(STDOUT_FILENO)) {
+        return true;
+    } else if (&ofs == &std::cerr && ::isatty(STDERR_FILENO)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 inline void assume(bool expr) {
