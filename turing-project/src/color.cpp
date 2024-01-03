@@ -1,5 +1,5 @@
 #include "color.h"
-#include <unistd.h>
+#include "util.h"
 
 bool TermColor::force_color = false;
 
@@ -17,34 +17,31 @@ TermColor TermColor::operator|(const TermColor &other) const {
 
 std::string TermColor::str() const {
     std::string ret;
-    if (TermColor::force_color || isatty(STDERR_FILENO)) {
-        for (auto c : colors) {
-            ret += "\033[" + std::to_string(c) + "m";
-        }
+    if (colors.empty()) { return ret; }
+    ret += "\033[";
+    for (auto it = colors.begin(); it != colors.end(); ++it) {
+        ret += std::to_string(*it);
+        ret += it + 1 == colors.end() ? "m" : ";";
     }
     return ret;
 }
 
 std::ostream &operator<<(std::ostream &os, const TermColor &color) {
-    return os << color.str();
+    if (TermColor::force_color || util::isatty(os)) {
+        return os << color.str();
+    } else {
+        return os;
+    }
 }
 
 std::string Painted::str() const {
-    return color.str() + std::string(text) + RESET.str();
+    return color.str() + text + RESET.str();
 }
 
-std::string operator+(std::string_view str, const Painted &paint) {
-    return std::string(str) + paint.str();
-}
-
-std::string operator+(const Painted &paint, std::string_view str) {
-    return paint.str() + std::string(str);
-}
-
-std::string operator+(const Painted &paint1, const Painted &paint2) {
-    return paint1.str() + paint2.str();
+std::string Painted::plaintext() const {
+    return text;
 }
 
 std::ostream &operator<<(std::ostream &os, const Painted &painted) {
-    return os << painted.str();
+    return os << painted.color << painted.text << RESET;
 }

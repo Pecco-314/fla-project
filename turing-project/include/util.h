@@ -62,7 +62,7 @@ inline std::string banner(std::string_view info = "", char ch = '=', int width =
     std::string banner = std::string(d / 2, ch);
     if (!info.empty()) { banner += " " + std::string(info) + " "; }
     banner += std::string(d - d / 2, ch);
-    return Painted(banner, BOLD).str();
+    return banner;
 }
 
 template <typename T> inline std::string to_string(const T &val) {

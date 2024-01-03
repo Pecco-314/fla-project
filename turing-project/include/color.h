@@ -32,16 +32,14 @@ const inline TermColor UL = {4};
 
 class Painted {
   private:
-    std::string_view text;
+    std::string text;
     TermColor color;
 
   public:
     Painted() = default;
     Painted(std::string_view text, TermColor color) : text(text), color(color) {}
     std::string str() const;
-    friend std::string operator+(std::string_view str, const Painted &paint);
-    friend std::string operator+(const Painted &paint, std::string_view str);
-    friend std::string operator+(const Painted &paint1, const Painted &paint2);
+    std::string plaintext() const;
     friend std::ostream &operator<<(std::ostream &os, const Painted &paint);
 };
 

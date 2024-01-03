@@ -25,7 +25,6 @@ void test(std::string_view name, std::string_view input, bool verbose = false,
     args.emplace_back(input);
     if (verbose) { args.push_back("-v"); }
     auto code = util::runCommand(turing, out, err, args);
-    TermColor::setForceColor();
     if (expected_code != code) {
         std::cerr << FAILED << testname << std::endl;
         std::cerr << "expected code: " << expected_code << std::endl;
@@ -63,10 +62,10 @@ void test(std::string_view name, std::string_view input, bool verbose = false,
         }
     }
     std::cerr << PASSED << testname << std::endl;
-    TermColor::setForceColor(false);
 }
 
 int main() {
+    TermColor::setForceColor();
     test("palindrome_detector_2tapes", "1001001", true);
     test("palindrome_detector_2tapes", "100A1A001", true, 1);
     return 0;

@@ -15,10 +15,12 @@ std::filesystem::path tempdir = std::filesystem::temp_directory_path() / "testar
 std::filesystem::path nonexistdir = tempdir / "nonexist";
 std::filesystem::path unreadabledir = tempdir / "unreadable.txt";
 
+std::string ERR_STR = ERR.plaintext();
+std::string NOTE_STR = NOTE.plaintext();
+
 void test(std::string_view test_name, const std::vector<std::string> &args,
           int expected_code, std::vector<std::string> expected_output) {
     int actual_code = runCommand(turing, "/dev/null", tempdir / "actual.txt", args);
-    TermColor::setForceColor(true);
     if (actual_code != expected_code) {
         std::cerr << FAILED << test_name << std::endl;
         std::cerr << "expected code: " << expected_code << std::endl;
@@ -42,10 +44,10 @@ void test(std::string_view test_name, const std::vector<std::string> &args,
         }
     }
     std::cerr << PASSED << test_name << std::endl;
-    TermColor::setForceColor(false);
 }
 
 int main() {
+    TermColor::setForceColor();
     std::filesystem::remove_all(tempdir);
     std::filesystem::create_directories(tempdir);
     std::ofstream out(unreadabledir);
@@ -53,18 +55,18 @@ int main() {
     chmod(unreadabledir.string().data(), 0000);
 
     test("help", {"-h"}, 0, {USAGE});
-    test("no_tm_path", {}, 1, {ERR + TOO_FEW_ARGS, NOTE + USAGE});
-    test("no_input", {"1"}, 1, {ERR + TOO_FEW_ARGS, NOTE + USAGE});
-    test("too_many_args", {"1", "2", "3"}, 1, {ERR + TOO_MANY_ARGS, NOTE + USAGE});
-    test("invalid_option", {"-x"}, 1, {ERR + format(INVALID_OPTION, "-x"), NOTE + USAGE});
+    test("no_tm_path", {}, 1, {ERR_STR + TOO_FEW_ARGS, NOTE_STR + USAGE});
+    test("no_input", {"1"}, 1, {ERR_STR + TOO_FEW_ARGS, NOTE_STR + USAGE});
+    test("too_many_args", {"1", "2", "3"}, 1, {ERR_STR + TOO_MANY_ARGS, NOTE_STR + USAGE});
+    test("invalid_option", {"-x"}, 1, {ERR_STR + format(INVALID_OPTION, "-x"), NOTE_STR + USAGE});
     test("empty_tm_path", {"", ""}, 1,
-         {ERR + format(FILE_NOT_EXIST, std::filesystem::path{})});
+         {ERR_STR + format(FILE_NOT_EXIST, std::filesystem::path{})});
     test("read_dir", {tempdir.string(), "input"}, 1,
-         {ERR + format(NOT_A_REGULAR_FILE, tempdir)});
+         {ERR_STR + format(NOT_A_REGULAR_FILE, tempdir)});
     test("read_nonexist", {(tempdir / "nonexist").string(), "input"}, 1,
-         {ERR + format(FILE_NOT_EXIST, tempdir / "nonexist")});
+         {ERR_STR + format(FILE_NOT_EXIST, tempdir / "nonexist")});
     test("unreadable", {(tempdir / "unreadable.txt").string(), "input"}, 1,
-         {ERR + format(UNABLE_TO_READ, tempdir / "unreadable.txt")});
+         {ERR_STR + format(UNABLE_TO_READ, tempdir / "unreadable.txt")});
 
     return 0;
 }
