@@ -14,7 +14,7 @@ struct Token {
     bool isChar(char c) const;
     bool isID() const;
     bool isValidChar() const;
-    bool isInt() const;
+    bool isPositiveInt() const;
     std::string strval() const;
     char charval() const;
     int intval() const;

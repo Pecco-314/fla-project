@@ -45,7 +45,7 @@ std::optional<Token> Parser::parseChar(char c, bool throws) {
 }
 
 std::optional<Token> Parser::parseInt(bool throws) {
-    return parseIf([](Token tok) { return tok.isInt(); }, NON_NEGATIVE_INTEGER, throws);
+    return parseIf([](Token tok) { return tok.isPositiveInt(); }, POSITIVE_INTEGER, throws);
 }
 
 std::vector<Token> Parser::parseSet(std::function<std::optional<Token>()> pred) {

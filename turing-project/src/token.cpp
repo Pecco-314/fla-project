@@ -26,11 +26,14 @@ bool Token::isValidChar() const {
            val[0] != '{' && val[0] != '}' && val[0] != '*';
 }
 
-bool Token::isInt() const {
+bool Token::isPositiveInt() const {
+    bool is_zero = true;
     for (auto c : val) {
+        if (c == '0' && is_zero) { continue; }
         if (!isdigit(c)) { return false; }
+        is_zero = false;
     }
-    return true;
+    return !is_zero;
 }
 
 std::string Token::strval() const {
