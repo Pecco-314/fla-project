@@ -168,6 +168,7 @@ void TuringMachine::run(std::string_view input, bool verbose) {
     if (verbose) {
         std::cout << (acc ? ACC : UNACC) << std::endl;
         std::cout << RESULT << tapes[0].str() << std::endl;
+        std::cout << util::banner("END") << std::endl;
     } else {
         std::cout << (acc ? ACC_Q : UNACC_Q) << " " << tapes[0].str() << std::endl;
     }
