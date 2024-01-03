@@ -181,7 +181,7 @@ inline std::filesystem::path findFileWithPrefix(std::string_view prefix) {
 
 inline int runCommand(std::filesystem::path cmd, std::filesystem::path out,
                       std::filesystem::path err,
-                      const std::vector<std::string_view> &args) {
+                      const std::vector<std::string> &args) {
     std::stringstream ss;
     ss << cmd << " ";
     for (auto &&arg : args) {

@@ -15,8 +15,8 @@ std::filesystem::path tempdir = std::filesystem::temp_directory_path() / "testar
 std::filesystem::path nonexistdir = tempdir / "nonexist";
 std::filesystem::path unreadabledir = tempdir / "unreadable.txt";
 
-void test(std::string_view test_name, std::vector<std::string_view> args,
-          int expected_code, std::vector<std::string_view> expected_output) {
+void test(std::string_view test_name, const std::vector<std::string> &args,
+          int expected_code, std::vector<std::string> expected_output) {
     int actual_code = runCommand(turing, "/dev/null", tempdir / "actual.txt", args);
     TermColor::setForceColor(true);
     if (actual_code != expected_code) {

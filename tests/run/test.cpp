@@ -20,8 +20,11 @@ void test(std::string_view name, std::string_view input, bool verbose = false,
     auto debug_file = temp_dir / "debug.txt";
     auto out = expected_code ? debug_file : actual_file;
     auto err = expected_code ? actual_file : debug_file;
-    auto code = util::runCommand(turing, out, err,
-                                 {tm_file.string(), input, verbose ? "-v" : ""});
+    std::vector<std::string> args;
+    args.emplace_back(tm_file);
+    args.emplace_back(input);
+    if (verbose) { args.push_back("-v"); }
+    auto code = util::runCommand(turing, out, err, args);
     TermColor::setForceColor();
     if (expected_code != code) {
         std::cerr << FAILED << testname << std::endl;
