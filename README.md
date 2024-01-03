@@ -33,7 +33,7 @@ cmake -B debug -DCMAKE_BUILD_TYPE=Debug && cmake --build debug
 基本用法为：
 
 ```bash
-turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>
+turing [-v|--verbose] [-h|--help] [-c|--color] [-w|--warn] <tm_path> <input>
 ```
 
 其中，`tm_path`表示图灵机描述文件的路径，`input`表示输入，这里的输入是直接写在命令行里的。
@@ -41,5 +41,7 @@ turing [-v|--verbose] [-h|--help] [-c|--color] <tm_path> <input>
 通常情况下，程序只会打印图灵机运行的结果，但可以使用`--verbose`或`-v`参数来获取更加详细的输出。
 
 在终端环境下，程序会采用彩色输出。也可以使用`--color`或`-c`参数来强制在非终端环境下也使用彩色输出。
+
+使用`--warn`或`-w`参数会在输入文件存在不规范的语法时给出警告。
 
 可以使用`--help`或`-h`参数获取帮助信息。
