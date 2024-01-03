@@ -26,11 +26,14 @@ const inline std::string VALIDATOR_INVALID_STATE = "{} is not found in the set o
 const inline std::string VALIDATOR_TRASITION_ITEM_INVALID_LENGTH = "Group of symbols or directions is expected to have {} characters";
 const inline std::string VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD = "{} is not found in the set of tape symbols, and is not '*'";
 const inline std::string VALIDATOR_INVALID_DIRECTION = "{} is not a valid direction";
+const inline std::string INPUT_SYMBOL_NOT_DEFINED = "Symbol {} in input is not defined in the set of input symbols";
 const inline std::string NON_NEGATIVE_INTEGER = "non-negative integer";
 const inline std::string IDENTIFIER = "identifier";
 const inline std::string VALID_CHAR = "ASCII graphic character except for ';', ',', '{', '}', '*' and '_'";
 const inline std::string VALID_CHAR_OR_UNDERSCORE = "ASCII graphic character except for ';', ',', '{', '}' and '*'";
 const inline std::string INITIAL_STATE = "Initial state";
+const inline std::string ILLEGAL_INPUT = "Illegal input string";
+const inline std::string SYNTAX_ERROR = "Syntax error";
 
 } // namespace str_literals
 
