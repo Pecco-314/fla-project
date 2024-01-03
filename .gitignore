@@ -2,5 +2,3 @@
 build/
 debug/
 bin/
-tests/*/*/actual.txt
-tests/*/*/diff.txt
