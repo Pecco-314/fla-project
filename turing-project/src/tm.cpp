@@ -138,6 +138,14 @@ void TuringMachine::validate() const {
                     it.span()};
             }
         }
+        for (auto it = D[i + 1].span.begin(), it2 = D[i + 2].span.begin();
+             it != D[i + 1].span.end(); ++it, ++it2) {
+            if (*it != '*' && *it2 == '*') {
+                code->warning(
+                    WILDCARD_IN_NEW_SYMBOLS_WITHOUT_SAME_PLACE_IN_OLD_SYMBOLS,
+                    it2.span());
+            }
+        }
         for (auto it = D[i + 3].span.begin(); it != D[i + 3].span.end(); ++it) {
             if (*it != 'l' && *it != 'r' && *it != '*') {
                 throw CodeError{CodeError::Type::VALIDATOR_INVALID_DIRECTION, it.span()};

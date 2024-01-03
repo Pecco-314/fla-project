@@ -28,6 +28,7 @@ const inline std::string VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD = "{} is 
 const inline std::string VALIDATOR_INVALID_DIRECTION = "{} is not a valid direction";
 const inline std::string INPUT_SYMBOL_NOT_DEFINED = "Symbol {} in input is not defined in the set of input symbols";
 const inline std::string POSITIVE_INTEGER = "positive integer";
+const inline std::string WILDCARD_IN_NEW_SYMBOLS_WITHOUT_SAME_PLACE_IN_OLD_SYMBOLS = "Using '*' in new symbols without using it in the same place in old symbols";
 const inline std::string IDENTIFIER = "identifier";
 const inline std::string VALID_CHAR = "ASCII graphic character except for ';', ',', '{', '}', '*' and '_'";
 const inline std::string VALID_CHAR_OR_UNDERSCORE = "ASCII graphic character except for ';', ',', '{', '}' and '*'";
