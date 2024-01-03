@@ -104,13 +104,11 @@ void Tape::log() const {
 
 std::string Tape::str() const {
     std::string s;
-    for (auto c : left) {
-        s += c;
+    int lm = leftmost(), rm = rightmost();
+    while (lm <= rm && get(lm) == '_') { lm++; }
+    while (rm >= lm && get(rm) == '_') { rm--; }
+    for (int i = lm; i <= rm; i++) {
+        s += get(i);
     }
-    for (auto c : right) {
-        s += c;
-    }
-    s.erase(0, s.find_first_not_of('_'));
-    s.erase(s.find_last_not_of('_') + 1);
     return s;
 }
