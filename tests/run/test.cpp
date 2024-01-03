@@ -68,5 +68,6 @@ void test(std::string_view name, std::string_view input, bool verbose = false,
 
 int main() {
     test("palindrome_detector_2tapes", "1001001", true);
+    test("palindrome_detector_2tapes", "100A1A001", true, 1);
     return 0;
 }

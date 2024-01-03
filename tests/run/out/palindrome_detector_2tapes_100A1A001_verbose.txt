@@ -1,0 +1,6 @@
+Input: 100A1A001
+==================== ERR ====================
+error: Symbol "A" in input is not defined in the set of input symbols
+Input: 100A1A001
+          ^
+==================== END ====================
