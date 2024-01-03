@@ -73,5 +73,13 @@ int main() {
     test("negative", "000000000000");
     test("negative", "000000000000", true);
     test("trivial", "");
+    test("case1", "ab");
+    test("case1", "aabb");
+    test("case1", "aaabb");
+    test("case1", "aaaabbb");
+    test("case1", "abbba");
+    test("case1", "");
+    test("case1", "aaa");
+    test("case1", "b");
     return 0;
 }
