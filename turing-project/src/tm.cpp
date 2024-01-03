@@ -119,9 +119,9 @@ void TuringMachine::validate() const {
                             util::quoted(D[i + 4].span.str())};
         }
         for (int j = 1; j <= 3; ++j) {
-            if (D[j].strval().length() != N) {
+            if (D[i + j].strval().length() != N) {
                 throw CodeError{CodeError::Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH,
-                                D[j].span, std::to_string(N)};
+                                D[i + j].span, std::to_string(N)};
             }
         }
         for (auto it = D[i + 1].span.begin(); it != D[i + 1].span.end(); ++it) {

@@ -95,8 +95,7 @@ void CodeError::log(bool verbose) const {
             std::cerr << VALIDATOR_FINAL_STATES_NOT_SUBSET_OF_STATES << std::endl;
             break;
         case Type::VALIDATOR_TRASITION_ITEM_INVALID_LENGTH:
-            std::cerr << format(VALIDATOR_TRASITION_ITEM_INVALID_LENGTH,
-                                quoted(span.front()))
+            std::cerr << format(VALIDATOR_TRASITION_ITEM_INVALID_LENGTH, info)
                       << std::endl;
             break;
         case Type::VALIDATOR_NOT_IN_TAPE_SYMBOL_AND_NOT_WILDCARD:
