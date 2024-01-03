@@ -81,5 +81,19 @@ int main() {
     test("case1", "");
     test("case1", "aaa");
     test("case1", "b");
+    test("case2", "c");
+    test("case2", "abc");
+    test("case2", "abaab");
+    test("case2", "abcba");
+    test("case2", "abbbacabbba");
+    test("case2", "");
+    test("case2", "a");
+    test("case2", "b");
+    test("case2", "abbababb");
+    test("case2", "aaabaaab");
+    test("case2", "acc");
+    test("case2", "ccb");
+    test("case2", "bbccb");
+    test("case2", "aaaababababbabababbabbababcaaaababababbabababbabbabab");
     return 0;
 }
